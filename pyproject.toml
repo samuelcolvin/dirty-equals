@@ -28,11 +28,13 @@ classifiers = [
 [tool.poetry.dependencies]
 python = '^3.7.0'
 
+[tool.poetry.group.dev.dependencies]
+pydantic = '^1.9.0'
+
 [tool.poetry.group.test]
 optional = true
 [tool.poetry.group.test.dependencies]
 coverage = '^6.2'
-pydantic = '^1.9.0'
 pytest = '^6.2.5'
 pytest-cov = '^3.0.0'
 pytest-asyncio = '^0.17.2'

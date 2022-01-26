@@ -32,7 +32,7 @@ jobs:
       id: cache
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}
+        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-test
 
     - if: steps.cache.outputs.cache-hit != 'true'
       run: pip install poetry==1.2.0a2
@@ -81,7 +81,7 @@ jobs:
           python-version: '3.9'
 
       - name: set version
-        run: VERSION_PATH=dirty_equals python <(curl -Ls https://bit.ly/alter-python-version)
+        run: VERSION_PATH=dirty_equals python <(curl -Ls https://bit.ly/set__version__)
 
       - run: pip install poetry==1.2.0a2 poetry-version-plugin
 
