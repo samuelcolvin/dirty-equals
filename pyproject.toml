@@ -1,84 +1,84 @@
 [tool.poetry]
-name = 'dirty-equals'
-version = '0'
-description = 'Doing dirty (but extremely useful) things with equals.'
-authors = ['Samuel Colvin <s@muelcolvin.com>']
-readme = 'README.md'
-homepage = 'https://github.com/samuelcolvin/dirty-equals'
-repository = 'https://github.com/samuelcolvin/dirty-equals'
-license = 'MIT'
+name = "dirty-equals"
+version = "0"
+description = "Doing dirty (but extremely useful) things with equals."
+authors = ["Samuel Colvin <s@muelcolvin.com>"]
+readme = "README.md"
+homepage = "https://github.com/samuelcolvin/dirty-equals"
+repository = "https://github.com/samuelcolvin/dirty-equals"
+license = "MIT"
 classifiers = [
-    'Development Status :: 4 - Beta',
-    'Framework :: Pytest',
-    'Intended Audience :: Developers',
-    'Intended Audience :: Education',
-    'Intended Audience :: Information Technology',
-    'Intended Audience :: Science/Research',
-    'Intended Audience :: System Administrators',
-    'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3 :: Only',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
-    'Topic :: Internet',
-    'Typing :: Typed',
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Internet",
+    "Typing :: Typed",
 ]
 
 [tool.poetry.dependencies]
-python = '^3.7.0'
+python = "^3.7.0"
 
 [tool.poetry.group.dev.dependencies]
-pydantic = '^1.9.0'
+pydantic = "^1.9.0"
 
 [tool.poetry.group.test]
 optional = true
 [tool.poetry.group.test.dependencies]
-coverage = '^6.2'
-pytest = '^6.2.5'
-pytest-mock = '^3.6.1'
-pytest-sugar = '^0.9.4'
+coverage = "^6.2"
+pytest = "^6.2.5"
+pytest-mock = "^3.6.1"
+pytest-sugar = "^0.9.4"
 
 [tool.poetry.group.lint]
 optional = true
 [tool.poetry.group.lint.dependencies]
-black = '^21.12b0'
-flake8 = '^4.0.1'
-flake8-quotes = '^3.3.1'
-isort = {extras = ['colors'], version = '^5.10.1'}
-mypy = '^0.931'
-pycodestyle = '^2.8.0'
-pyflakes = '^2.4.0'
+black = "^21.12b0"
+flake8 = "^4.0.1"
+flake8-quotes = "^3.3.1"
+isort = {extras = ["colors"], version = "^5.10.1"}
+mypy = "^0.931"
+pycodestyle = "^2.8.0"
+pyflakes = "^2.4.0"
 
 [build-system]
-requires = ['poetry-core']
-build-backend = 'poetry.core.masonry.api'
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry-version-plugin]
-source = 'init'
+source = "init"
 
 [tool.pytest.ini_options]
-testpaths = 'tests'
-filterwarnings = 'error'
+testpaths = "tests"
+filterwarnings = "error"
 
 [tool.coverage.run]
-source = ['dirty_equals']
+source = ["dirty_equals"]
 branch = true
 
 [tool.coverage.report]
 precision = 2
 exclude_lines = [
-    'pragma: no cover',
-    'raise NotImplementedError',
-    'raise NotImplemented',
-    'if TYPE_CHECKING:',
-    '@overload',
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "raise NotImplemented",
+    "if TYPE_CHECKING:",
+    "@overload",
 ]
 
 [tool.black]
 color = true
 line-length = 120
-target-version = ['py39']
+target-version = ["py39"]
 skip-string-normalization = true
 
 [tool.isort]
@@ -90,7 +90,7 @@ combine_as_imports = true
 color_output = true
 
 [tool.mypy]
-follow_imports = 'silent'
+follow_imports = "silent"
 strict_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
@@ -107,4 +107,3 @@ disallow_untyped_defs = true
 # remaining arguments from `mypy --strict` which cause errors
 #no_implicit_optional = true
 #warn_return_any = true
-
