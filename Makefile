@@ -20,11 +20,11 @@ lint:
 
 .PHONY: test
 test:
-	poetry run pytest --cov=dirty_equals
+	poetry run coverage run -m pytest
 
 .PHONY: testcov
 testcov: test
-	@echo "building coverage html"
+	@poetry run coverage report --show-missing
 	@poetry run coverage html
 
 .PHONY: mypy

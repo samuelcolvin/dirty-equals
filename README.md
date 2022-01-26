@@ -6,7 +6,7 @@
 [![versions](https://img.shields.io/pypi/pyversions/dirty-equals.svg)](https://github.com/samuelcolvin/dirty-equals)
 [![license](https://img.shields.io/github/license/samuelcolvin/dirty-equals.svg)](https://github.com/samuelcolvin/dirty-equals/blob/master/LICENSE)
 
-Using `__eq__` for dirty, but extremely useful things.
+Doing dirty (but extremely useful) things with equals.
 
 ## Install
 

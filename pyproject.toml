@@ -1,7 +1,7 @@
 [tool.poetry]
 name = 'dirty-equals'
 version = '0'
-description = 'Using __eq__ for dirty, but extremely useful things.'
+description = 'Doing dirty (but extremely useful) things with equals.'
 authors = ['Samuel Colvin <s@muelcolvin.com>']
 readme = 'README.md'
 homepage = 'https://github.com/samuelcolvin/dirty-equals'
@@ -36,11 +36,8 @@ optional = true
 [tool.poetry.group.test.dependencies]
 coverage = '^6.2'
 pytest = '^6.2.5'
-pytest-cov = '^3.0.0'
-pytest-asyncio = '^0.17.2'
 pytest-mock = '^3.6.1'
 pytest-sugar = '^0.9.4'
-pytest-toolbox = '^0.4'
 
 [tool.poetry.group.lint]
 optional = true
@@ -63,10 +60,9 @@ source = 'init'
 [tool.pytest.ini_options]
 testpaths = 'tests'
 filterwarnings = 'error'
-asyncio_mode = 'auto'
 
 [tool.coverage.run]
-source = ['src']
+source = ['dirty_equals']
 branch = true
 
 [tool.coverage.report]

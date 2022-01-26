@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from pytest_toolbox.comparison import AnyInt, CloseToNow, IsUUID, RegexStr
+from dirty_equals import AnyInt, CloseToNow, IsUUID, RegexStr
 
 
 def test_close_to_now_true():
@@ -49,11 +49,25 @@ def test_regex_true():
     assert str(reg) == "'whatever'"
 
 
+def test_regex_bytes_true():
+    assert b'whatever' == RegexStr(b'whatever')
+    assert b'whatever' == RegexStr(b'wh.*er')
+
+
 def test_regex_false():
     reg = RegexStr('wh.*er')
     with pytest.raises(AssertionError):
         assert 'WHATEVER' == reg
     assert str(reg) == "<RegexStr(regex=re.compile('wh.*er', re.DOTALL)>"
+
+
+def test_regex_false_type_error():
+    assert 123 != RegexStr('wh.*er')
+
+    reg = RegexStr(b'wh.*er')
+    with pytest.raises(AssertionError):
+        assert 'whatever' == reg
+    assert str(reg) == "<RegexStr(regex=re.compile(b'wh.*er', re.DOTALL)>"
 
 
 def test_is_uuid_true():
