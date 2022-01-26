@@ -34,7 +34,7 @@ pydantic = "^1.9.0"
 [tool.poetry.group.test]
 optional = true
 [tool.poetry.group.test.dependencies]
-coverage = "^6.2"
+coverage = {extras = ["toml"], version = "^6.2"}
 pytest = "^6.2.5"
 pytest-mock = "^3.6.1"
 pytest-sugar = "^0.9.4"
