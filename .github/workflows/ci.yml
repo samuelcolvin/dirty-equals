@@ -28,17 +28,9 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/cache@v2
-      id: cache
-      with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-test
+    - run: pip install poetry==1.2.0a2
 
-    - if: steps.cache.outputs.cache-hit != 'true'
-      run: pip install poetry==1.2.0a2
-
-    - if: steps.cache.outputs.cache-hit != 'true'
-      run: poetry install --with test
+    - run: poetry install --with test
 
     - run: make test
 
