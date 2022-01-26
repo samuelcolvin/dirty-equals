@@ -46,7 +46,6 @@ jobs:
   deploy:
     needs:
       - test
-      - lint
     if: "success() && startsWith(github.ref, 'refs/tags/')"
     runs-on: ubuntu-latest
 
@@ -58,20 +57,11 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: install
-        run: |
-          pip install -U pip setuptools wheel twine
-          pip install .
-
       - name: set version
         run: VERSION_PATH='dirty_equals/version.py' python <(curl -Ls https://git.io/JT3rm)
 
-      - run: python setup.py sdist bdist_wheel
+      - run: pip install poetry
 
-      - run: twine check dist/*
-
-      - name: upload to pypi
-        run: twine upload dist/*
+      - run: poetry publish --build
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_token }}
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.pypi_token }}
