@@ -81,10 +81,9 @@ jobs:
           python-version: '3.9'
 
       - name: set version
-        run: VERSION_PATH='dirty_equals/version.py' python <(curl -Ls https://git.io/JT3rm)
+        run: VERSION_PATH=dirty_equals python <(curl -Ls https://bit.ly/alter-python-version)
 
-      - run: pip install poetry==1.2.0a2
-      - run: poetry plugin add poetry-version-plugin
+      - run: pip install poetry==1.2.0a2 poetry-version-plugin
 
       - run: poetry publish --build
         env:

@@ -1,3 +1,5 @@
-from .version import VERSION
+from .main import AnyInt, CloseToNow, IsUUID, RegexStr
 
-__version__ = VERSION
+__all__ = 'CloseToNow', 'AnyInt', 'RegexStr', 'IsUUID', '__version__'
+
+__version__ = '0.0.dev0'
