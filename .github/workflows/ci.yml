@@ -28,8 +28,20 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - run: pip install poetry
-    - run: poetry install
+    - uses: actions/cache@v2
+      id: cache
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-python-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}
+
+    - if: steps.cache.outputs.cache-hit != 'true'
+      run: pip install poetry
+
+    - if: steps.cache.outputs.cache-hit != 'true'
+      run: poetry plugin add poetry-version-plugin
+
+    - if: steps.cache.outputs.cache-hit != 'true'
+      run: poetry install
 
     - run: make lint
     - run: make mypy
@@ -61,6 +73,7 @@ jobs:
         run: VERSION_PATH='dirty_equals/version.py' python <(curl -Ls https://git.io/JT3rm)
 
       - run: pip install poetry
+      - run: poetry plugin add poetry-version-plugin
 
       - run: poetry publish --build
         env:

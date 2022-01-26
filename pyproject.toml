@@ -5,7 +5,6 @@ description = 'Using __eq__ for dirty, but extremely useful things.'
 authors = ['Samuel Colvin <s@muelcolvin.com>']
 readme = 'README.md'
 homepage = 'https://github.com/samuelcolvin/dirty-equals'
-documentation = 'https://github.com/samuelcolvin/dirty-equals'
 repository = 'https://github.com/samuelcolvin/dirty-equals'
 license = 'MIT'
 classifiers = [
