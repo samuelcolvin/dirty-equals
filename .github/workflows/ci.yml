@@ -31,6 +31,7 @@ jobs:
     - run: pip install poetry==1.2.0a2
 
     - run: poetry install
+    - run: pip install -r tests/requirements.txt
 
     - run: make test
 
@@ -52,7 +53,8 @@ jobs:
         python-version: '3.9'
 
     - run: pip install poetry==1.2.0a2
-    - run: poetry install --with lint
+    - run: poetry install
+    - run: pip install -r tests/requirements-linting.txt
 
     - run: make lint
     - run: make mypy

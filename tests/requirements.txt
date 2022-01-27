@@ -1,8 +1,5 @@
-coverage==6.2
+coverage[toml]==6.3
 pydantic==1.9.0
 pytest==6.2.5
-pytest-cov==3.0.0
-pytest-asyncio==0.17.2
 pytest-mock==3.6.1
 pytest-sugar==0.9.4
-pytest-toolbox==0.4

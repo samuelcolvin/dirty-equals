@@ -1,11 +1,13 @@
 .DEFAULT_GOAL := all
-isort = poetry run isort dirty_equals tests
-black = poetry run black dirty_equals tests
+isort = isort dirty_equals tests
+black = black dirty_equals tests
 
 .PHONY: install
 install:
 	pip install -U pip poetry==1.2.0a2
-	poetry install --with lint
+	poetry install
+	pip install -r tests/requirements.txt
+	pip install -r tests/requirements-linting.txt
 
 .PHONY: format
 format:
@@ -14,22 +16,22 @@ format:
 
 .PHONY: lint
 lint:
-	poetry run flake8 --max-complexity 10 --max-line-length 120 --ignore E203,W503 dirty_equals tests
+	flake8 --max-complexity 10 --max-line-length 120 --ignore E203,W503 dirty_equals tests
 	$(isort) --check-only --df
 	$(black) --check
 
 .PHONY: test
 test:
-	poetry run coverage run -m pytest
+	coverage run -m pytest
 
 .PHONY: testcov
 testcov: test
-	@poetry run coverage report --show-missing
-	@poetry run coverage html
+	@coverage report --show-missing
+	@coverage html
 
 .PHONY: mypy
 mypy:
-	poetry run mypy dirty_equals
+	mypy dirty_equals
 
 .PHONY: all
 all: lint mypy testcov

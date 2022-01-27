@@ -28,24 +28,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.7.0"
 
-[tool.poetry.group.dev.dependencies]
-pydantic = "^1.9.0"
-coverage = {extras = ["toml"], version = "^6.3"}
-pytest = "^6.2.5"
-pytest-mock = "^3.6.1"
-pytest-sugar = "^0.9.4"
-
-[tool.poetry.group.lint]
-optional = true
-[tool.poetry.group.lint.dependencies]
-black = "^21.12b0"
-flake8 = "^4.0.1"
-flake8-quotes = "^3.3.1"
-isort = {extras = ["colors"], version = "^5.10.1"}
-mypy = "^0.931"
-pycodestyle = "^2.8.0"
-pyflakes = "^2.4.0"
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
