@@ -30,7 +30,7 @@ jobs:
 
     - run: pip install poetry==1.2.0a2
 
-    - run: poetry install --with test
+    - run: poetry install
 
     - run: make test
 

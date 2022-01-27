@@ -5,7 +5,7 @@ black = poetry run black dirty_equals tests
 .PHONY: install
 install:
 	pip install -U pip poetry==1.2.0a2
-	poetry install --with test --with lint
+	poetry install --with lint
 
 .PHONY: format
 format:
