@@ -6,7 +6,6 @@ from ._base import DirtyEquals
 
 __all__ = (
     'IsNumeric',
-    'IsApprox',
     'IsNumber',
     'IsPositive',
     'IsNegative',
@@ -32,7 +31,16 @@ N = TypeVar('N', int, float, complex, Decimal, date, datetime, Union[int, float,
 class IsNumeric(DirtyEquals[N]):
     types: Union[Type[N], Tuple[type, ...]] = int, float, complex, Decimal, date, datetime
 
-    def __init__(self, *, approx: N = None, delta: N = None, gt: N = None, lt: N = None, ge: N = None, le: N = None):
+    def __init__(
+        self,
+        *,
+        approx: Optional[N] = None,
+        delta: Optional[N] = None,
+        gt: Optional[N] = None,
+        lt: Optional[N] = None,
+        ge: Optional[N] = None,
+        le: Optional[N] = None,
+    ):
         self.approx: Optional[N] = approx
         self.delta: Any = delta
         if self.approx is not None and (gt, lt, ge, le) != (None, None, None, None):
@@ -91,7 +99,7 @@ class IsNumeric(DirtyEquals[N]):
 
 
 class IsApprox(IsNumeric[N]):
-    def __init__(self, approx: N = None, *, delta: N = None):
+    def __init__(self, approx: Optional[N] = None, *, delta: Optional[N] = None):
         super().__init__(approx=approx, delta=delta)  # type: ignore
 
 

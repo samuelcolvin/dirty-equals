@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from typing import Any, Union
+from typing import Any, Optional, Union
 
 from ._numeric import IsNumeric
 from ._utils import Omit
@@ -11,16 +11,16 @@ class IsDatetime(IsNumeric[datetime]):
     def __init__(
         self,
         *,
-        approx: datetime = None,
-        delta: Union[timedelta, int] = None,
-        gt: datetime = None,
-        lt: datetime = None,
-        ge: datetime = None,
-        le: datetime = None,
+        approx: Optional[datetime] = None,
+        delta: Optional[Union[timedelta, int]] = None,
+        gt: Optional[datetime] = None,
+        lt: Optional[datetime] = None,
+        ge: Optional[datetime] = None,
+        le: Optional[datetime] = None,
         unix_number: bool = False,
         iso_string: bool = False,
-        format_string: str = None,
-        tz: Union[str, timezone] = None,  # TODO checks
+        format_string: Optional[str] = None,
+        tz: Union[None, str, timezone] = None,  # TODO checks
     ):
         if isinstance(delta, int):
             delta = timedelta(seconds=delta)
@@ -66,8 +66,8 @@ class IsNow(IsDatetime):
         delta: Union[timedelta, int] = 2,
         unix_number: bool = False,
         iso_string: bool = False,
-        format_string: str = None,
-        tz: Union[str, timezone] = None,  # TODO checks
+        format_string: Optional[str] = None,
+        tz: Union[None, str, timezone] = None,  # TODO checks
     ):
         super().__init__(
             approx=datetime.now(),
@@ -77,7 +77,3 @@ class IsNow(IsDatetime):
             format_string=format_string,
             tz=tz,
         )
-
-    # def prepare(self, other: Any) -> datetime:
-    #     other = super().prepare(other)
-    #

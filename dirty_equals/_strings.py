@@ -33,7 +33,7 @@ class IsBytes(IsStrBase[bytes]):
 
 
 class IsAnyStr(DirtyEquals[Union[str, bytes]]):
-    def __init__(self, *, regex: Union[str, bytes] = None, regex_flags: re.RegexFlag = re.S) -> None:
+    def __init__(self, *, regex: Union[None, str, bytes] = None, regex_flags: re.RegexFlag = re.S) -> None:
         if isinstance(regex, str):
             self.regex: Optional[bytes] = regex.encode()
         else:
