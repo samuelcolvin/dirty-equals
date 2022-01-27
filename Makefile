@@ -7,6 +7,7 @@ install:
 	pip install -r tests/requirements.txt
 	pip install -r tests/requirements-linting.txt
 	poetry install
+	pre-commit install
 
 .PHONY: format
 format:

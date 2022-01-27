@@ -2,6 +2,10 @@ name: CI
 
 on:
   push:
+    branches:
+      - master
+    tags:
+      - '**'
   pull_request:
     types: [opened, synchronize]
 
@@ -12,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu, macos]
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.9', '3.10']
 
     runs-on: ${{ matrix.os }}-latest
 
