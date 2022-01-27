@@ -30,4 +30,5 @@ def test_is_now_tz():
     dt = datetime.now().replace(tzinfo=timezone(offset=diff)) + diff
     assert dt == IsNow()
 
+
 # FIXME needs more tests for timezones, I don't trust the current logic
