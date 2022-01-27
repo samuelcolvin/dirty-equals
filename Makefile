@@ -4,10 +4,9 @@ black = black dirty_equals tests
 
 .PHONY: install
 install:
-	pip install -U pip poetry==1.2.0a2
-	poetry install
 	pip install -r tests/requirements.txt
 	pip install -r tests/requirements-linting.txt
+	poetry install
 
 .PHONY: format
 format:

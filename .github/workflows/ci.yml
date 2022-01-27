@@ -28,14 +28,12 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - run: pip install poetry==1.2.0a2
-
-    - run: poetry install
     - run: pip install -r tests/requirements.txt
+    - run: poetry install
 
     - run: make test
 
-    - run: poetry run coverage xml
+    - run: coverage xml
 
     - uses: codecov/codecov-action@v2.1.0
       with:
@@ -52,8 +50,6 @@ jobs:
       with:
         python-version: '3.9'
 
-    - run: pip install poetry==1.2.0a2
-    - run: poetry install
     - run: pip install -r tests/requirements-linting.txt
 
     - run: make lint
