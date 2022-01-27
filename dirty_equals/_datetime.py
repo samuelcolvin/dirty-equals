@@ -55,7 +55,7 @@ class IsDatetime(IsNumeric[datetime]):
         else:
             raise ValueError(f'{type(other)} not valid as datetime')
 
-        if dt.tzinfo:
+        if dt.tzinfo and self.approx is not None:
             self.approx = self.approx.replace(tzinfo=timezone.utc)
         return dt
 

@@ -37,9 +37,9 @@ T = TypeVar('T')
 
 
 class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
-    __slots__ = '_other', '_was_equal'
+    __slots__ = '_other', '_was_equal', '_repr_args', '_repr_kwargs'
 
-    def __init__(self, *repr_args, **repr_kwargs: Any) -> None:
+    def __init__(self, *repr_args: Any, **repr_kwargs: Any) -> None:
         self._other: Any = None
         self._was_equal: Optional[bool] = None
         self._repr_args: Iterable[Any] = repr_args
@@ -117,7 +117,7 @@ ExpectedType = TypeVar('ExpectedType', bound=Union[type, tuple[Union[type, tuple
 
 
 class IsInstanceOfMeta(DirtyEqualsMeta):
-    def __getitem__(self, item: ExpectedType) -> 'IsInstanceOf':
+    def __getitem__(self, item: ExpectedType) -> 'IsInstanceOf[ExpectedType]':
         return IsInstanceOf(item)
 
 

@@ -5,7 +5,7 @@ class PlainRepr:
     def __init__(self, v: str):
         self.v = v
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.v
 
 

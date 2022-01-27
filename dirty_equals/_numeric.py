@@ -26,11 +26,11 @@ __all__ = (
 
 from ._utils import Omit
 
-N = TypeVar('N', int, float, complex, Decimal, date, datetime)
+N = TypeVar('N', int, float, complex, Decimal, date, datetime, Union[int, float, complex, Decimal])
 
 
 class IsNumeric(DirtyEquals[N]):
-    types: Union[Type[N], Tuple[Type[Any], ...]] = int, float, complex, Decimal, date, datetime
+    types: Union[Type[N], Tuple[type, ...]] = int, float, complex, Decimal, date, datetime
 
     def __init__(self, *, approx: N = None, delta: N = None, gt: N = None, lt: N = None, ge: N = None, le: N = None):
         self.approx: Optional[N] = approx
