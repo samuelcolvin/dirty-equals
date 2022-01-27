@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import IsInstanceOf, IsInt, IsNegative, IsPositive, IsStr, IsApprox
+from dirty_equals import IsApprox, IsInstanceOf, IsInt, IsNegative, IsPositive, IsStr
 
 
 def test_or():
@@ -83,13 +83,5 @@ def test_is_instance_of_repr():
 
 def test_dict_compare():
     v = {'foo': 1, 'bar': 2, 'spam': 3}
-    assert v == {
-        'foo': IsInt,
-        'bar': IsPositive,
-        'spam': ~IsStr
-    }
-    assert v == {
-        'foo': IsInt() & IsApprox(1),
-        'bar': IsPositive() | IsNegative(),
-        'spam': ~IsStr()
-    }
+    assert v == {'foo': IsInt, 'bar': IsPositive, 'spam': ~IsStr}
+    assert v == {'foo': IsInt() & IsApprox(1), 'bar': IsPositive() | IsNegative(), 'spam': ~IsStr()}

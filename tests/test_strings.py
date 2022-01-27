@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import IsBytes, IsStr, IsAnyStr
+from dirty_equals import IsAnyStr, IsBytes, IsStr
 
 
 def test_simple():
