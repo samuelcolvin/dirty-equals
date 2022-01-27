@@ -6,7 +6,7 @@ from ._utils import plain_repr
 
 
 class IsUUID(DirtyEquals[UUID]):
-    def __init__(self, version: Literal[None, 1, 2, 3, 4, 5] = None) -> None:
+    def __init__(self, version: Literal[None, 1, 2, 3, 4, 5] = None):
         self.version = version
         super().__init__(version or plain_repr('*'))
 

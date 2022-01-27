@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import IsBytes, IsStr
+from dirty_equals import IsBytes, IsStr, IsAnyStr
 
 
 def test_simple():
@@ -23,7 +23,7 @@ def test_regex_false():
     reg = IsStr(regex='wh.*er')
     with pytest.raises(AssertionError):
         assert 'WHATEVER' == reg
-    assert str(reg) == "IsStr(regex='wh.*er', regex_flags=re.DOTALL)"
+    assert str(reg) == "IsStr(regex='wh.*er')"
 
 
 def test_regex_false_type_error():
@@ -32,4 +32,14 @@ def test_regex_false_type_error():
     reg = IsBytes(regex=b'wh.*er')
     with pytest.raises(AssertionError):
         assert 'whatever' == reg
-    assert str(reg) == "IsBytes(regex=b'wh.*er', regex_flags=re.DOTALL)"
+    assert str(reg) == "IsBytes(regex=b'wh.*er')"
+
+
+def test_is_any_str():
+    assert 'foobar' == IsAnyStr
+    assert b'foobar' == IsAnyStr
+    assert 123 != IsAnyStr
+    assert 'foo' == IsAnyStr(regex='foo')
+    assert 'foo' == IsAnyStr(regex=b'foo')
+    assert b'foo' == IsAnyStr(regex='foo')
+    assert b'foo' == IsAnyStr(regex=b'foo')

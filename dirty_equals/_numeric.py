@@ -25,7 +25,8 @@ __all__ = (
 
 from ._utils import Omit
 
-N = TypeVar('N', int, float, complex, Decimal, date, datetime, Union[int, float, complex, Decimal])
+AnyNumber = Union[int, float, complex, Decimal]
+N = TypeVar('N', int, float, complex, Decimal, date, datetime, AnyNumber)
 
 
 class IsNumeric(DirtyEquals[N]):
@@ -98,13 +99,16 @@ class IsNumeric(DirtyEquals[N]):
             return True
 
 
-class IsApprox(IsNumeric[N]):
-    def __init__(self, approx: Optional[N] = None, *, delta: Optional[N] = None):
-        super().__init__(approx=approx, delta=delta)  # type: ignore
-
-
-class IsNumber(IsNumeric[Union[int, float, complex, Decimal]]):
+class IsNumber(IsNumeric[AnyNumber]):
     types = int, float, complex, Decimal
+
+
+Num = TypeVar('Num', int, float, complex, Decimal)
+
+
+class IsApprox(IsNumber):
+    def __init__(self, approx: Num, *, delta: Optional[Num] = None):
+        super().__init__(approx=approx, delta=delta)
 
 
 class IsPositive(IsNumber):
