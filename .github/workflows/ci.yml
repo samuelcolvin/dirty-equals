@@ -67,7 +67,7 @@ jobs:
       id: cache
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tests/requirements-linting.txt') }}
+        key: ${{ hashFiles('tests/requirements-linting.txt') }}
 
     - run: pip install -r tests/requirements-linting.txt
       if: steps.cache.outputs.cache-hit != 'true'
