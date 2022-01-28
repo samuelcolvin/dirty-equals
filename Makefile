@@ -31,7 +31,7 @@ testcov: test
 
 .PHONY: mypy
 mypy:
-	mypy dirty_equals
+	mypy --show-error-codes dirty_equals
 
 .PHONY: all
 all: lint mypy testcov

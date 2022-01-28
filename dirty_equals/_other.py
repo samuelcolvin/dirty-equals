@@ -1,8 +1,13 @@
-from typing import Any, Literal
+from typing import Any
 from uuid import UUID
 
 from ._base import DirtyEquals
 from ._utils import plain_repr
+
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal  # type: ignore[misc]
 
 
 class IsUUID(DirtyEquals[UUID]):

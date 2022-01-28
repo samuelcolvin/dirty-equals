@@ -1,6 +1,8 @@
 *.py[cod]
 .idea/
 env/
+env37/
+env38/
 .coverage
 .cache/
 htmlcov/

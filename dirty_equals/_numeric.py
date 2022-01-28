@@ -30,7 +30,7 @@ N = TypeVar('N', int, float, complex, Decimal, date, datetime, AnyNumber)
 
 
 class IsNumeric(DirtyEquals[N]):
-    types: Union[Type[N], Tuple[type, ...]] = int, float, complex, Decimal, date, datetime
+    types: Union[Type[N], Tuple[type, ...]] = (int, float, complex, Decimal, date, datetime)
 
     def __init__(
         self,
