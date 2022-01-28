@@ -1,5 +1,10 @@
 from abc import ABCMeta
-from typing import Any, Dict, Generic, Iterable, Optional, TypeVar, Union
+from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
+
+try:
+    from typing import Protocol
+except ImportError:
+    Protocol = object  # type: ignore[assignment]
 
 from ._utils import Omit
 
@@ -14,8 +19,8 @@ class DirtyEqualsMeta(ABCMeta):
             raise TypeError(f'{self.__name__} cannot be used without initialising') from e
 
     def __eq__(self, other: Any) -> bool:
-        # this is required as fancy things happen when creating generics
-        if self is DirtyEquals:
+        # this is required as fancy things happen when creating generics which include equals checks
+        if self is DirtyEquals or other is Generic or other is Protocol:
             return False
         else:
             return self._get_instance() == other
@@ -120,7 +125,7 @@ class DirtyNot(DirtyEquals[Any]):
         return self.subject != other
 
 
-ExpectedType = TypeVar('ExpectedType', bound=Union[type, tuple[Union[type, tuple[Any, ...]], ...]])
+ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
 
 class IsInstanceOfMeta(DirtyEqualsMeta):
