@@ -17,13 +17,7 @@ class IsStrBase(DirtyEquals[T]):
         super().__init__(regex=regex or Omit, regex_flags=Omit if regex_flags == re.S else regex_flags)
 
     def equals(self, other: Any) -> bool:
-        try:
-            expected_type = self.expected_type
-        except AttributeError:
-            # happens somewhere deep in typing while creating the IsStr and IsBytes types, can be ignored
-            return False
-
-        if type(other) != expected_type:
+        if type(other) != self.expected_type:
             return False
         elif self.regex is not None and not re.fullmatch(self.regex, other, flags=self.regex_flags):
             return False

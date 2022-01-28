@@ -4,6 +4,7 @@ from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
 try:
     from typing import Protocol
 except ImportError:
+    # Python 3.7 doesn't have Protocol
     Protocol = object  # type: ignore[assignment]
 
 from ._utils import Omit
