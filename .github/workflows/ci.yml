@@ -63,7 +63,14 @@ jobs:
       with:
         python-version: '3.9'
 
+    - uses: actions/cache@v2
+      id: cache
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tests/requirements-linting.txt') }}
+
     - run: pip install -r tests/requirements-linting.txt
+      if: steps.cache.outputs.cache-hit != 'true'
 
     - run: make lint
     - run: make mypy
