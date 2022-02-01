@@ -26,7 +26,7 @@ class DirtyEqualsMeta(ABCMeta):
         else:
             return self._get_instance() == other
 
-    def __or__(self, other: Any) -> 'DirtyOr':
+    def __or__(self, other: Any) -> 'DirtyOr':  # type: ignore[override]
         return self._get_instance() | other
 
     def __and__(self, other: Any) -> 'DirtyAnd':
