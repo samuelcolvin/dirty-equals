@@ -85,3 +85,12 @@ def test_dict_compare():
     v = {'foo': 1, 'bar': 2, 'spam': 3}
     assert v == {'foo': IsInt, 'bar': IsPositive, 'spam': ~IsStr}
     assert v == {'foo': IsInt() & IsApprox(1), 'bar': IsPositive() | IsNegative(), 'spam': ~IsStr()}
+
+
+def test_not_repr():
+    v = ~IsInt
+
+    with pytest.raises(AssertionError):
+        assert 1 == v
+
+    assert str(v) == '~IsInt()'

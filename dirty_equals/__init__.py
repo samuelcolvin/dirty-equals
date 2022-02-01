@@ -1,5 +1,6 @@
 from ._base import IsInstanceOf
 from ._datetime import IsDatetime, IsNow
+from ._dict import IsDict, IsPartialDict, IsStrictDict
 from ._numeric import (
     IsApprox,
     IsFloat,
@@ -28,6 +29,10 @@ __all__ = (
     # datetime
     'IsDatetime',
     'IsNow',
+    # dict
+    'IsDict',
+    'IsPartialDict',
+    'IsStrictDict',
     # numeric
     'IsNumeric',
     'IsApprox',

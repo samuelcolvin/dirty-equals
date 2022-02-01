@@ -125,6 +125,9 @@ class DirtyNot(DirtyEquals[Any]):
     def equals(self, other: Any) -> bool:
         return self.subject != other
 
+    def _repr_ne(self) -> str:
+        return f'~{self.subject._repr_ne()}'
+
 
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
