@@ -19,7 +19,7 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import IsUUID
+from ._other import FunctionCheck, IsJSON, IsUUID
 from ._strings import IsAnyStr, IsBytes, IsStr
 
 __all__ = (
@@ -47,6 +47,8 @@ __all__ = (
     'IsNonPositiveFloat',
     'IsNonNegativeFloat',
     # other
+    'FunctionCheck',
+    'IsJSON',
     'IsUUID',
     # strings
     'IsStr',
