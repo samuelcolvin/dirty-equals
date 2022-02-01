@@ -1,3 +1,4 @@
+import json
 from typing import Any
 from uuid import UUID
 
@@ -29,5 +30,24 @@ class IsUUID(DirtyEquals[UUID]):
             else:
                 self._other = uuid
                 return True
+        else:
+            return False
+
+
+AnyJSON = object
+
+
+class IsJSON(DirtyEquals[str]):
+    def __init__(self, expected_value: Any = AnyJSON):
+        self.expected_value = expected_value
+        super().__init__(plain_repr('*') if expected_value is AnyJSON else expected_value)
+
+    def equals(self, other: Any) -> bool:
+        if isinstance(other, (str, bytes)):
+            v = json.loads(other)
+            if self.expected_value is AnyJSON:
+                return True
+            else:
+                return v == self.expected_value
         else:
             return False
