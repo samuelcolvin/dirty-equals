@@ -1,21 +1,33 @@
-from typing import Any, Callable, Container, Dict, Optional, Union
+from typing import Any, Callable, Container, Dict, Optional, Union, overload
 
 from dirty_equals._base import DirtyEquals
 
 
 class IsDict(DirtyEquals[Dict[Any, Any]]):
-    def __init__(self, __expected_values: Optional[Dict[Any, Any]] = None, **expected_kwargs: Any) -> None:
+    @overload
+    def __init__(self, expected: Dict[Any, Any]):
+        ...
+
+    @overload
+    def __init__(self, **expected: Any):
+        ...
+
+    def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any) -> None:
         if expected_kwargs:
             self.expected_values = expected_kwargs
-            if __expected_values is not None:
+            if expected_args:
                 raise TypeError('IsDict requires either a single argument or kwargs, not both')
+        elif not expected_args:
+            self.expected_values = {}
+        elif len(expected_args) == 1:
+            self.expected_values = expected_args[0]
         else:
-            self.expected_values = __expected_values or {}
+            raise TypeError(f'IsDict expected at most 1 argument, got {len(expected_args)}')
 
         if not isinstance(self.expected_values, dict):
             raise TypeError(f'expected_values must be a dict, got {type(self.expected_values)}')
 
-        self.strict_order = False
+        self.strict = False
         self.partial = False
         self.ignore_values: Union[Container[Any], Callable[[Any], bool]] = {None}
         self._post_init()
@@ -27,13 +39,14 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
     def settings(
         self,
         *,
-        strict_order: Optional[bool] = None,
+        strict: Optional[bool] = None,
         partial: Optional[bool] = None,
         ignore_values: Union[None, Container[Any], Callable[[Any], bool]] = None,
     ) -> 'IsDict':
-        new_dict = IsDict(**self.expected_values)
-        if strict_order is not None:
-            new_dict.strict_order = strict_order
+        new_dict = IsDict(self.expected_values)
+        new_dict.__dict__ = self.__dict__.copy()
+        if strict is not None:
+            new_dict.strict = strict
         if partial is not None:
             new_dict.partial = partial
         if ignore_values is not None:
@@ -53,7 +66,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         if other != expected:
             return False
 
-        if self.strict_order and list(other.keys()) != list(expected.keys()):
+        if self.strict and list(other.keys()) != list(expected.keys()):
             return False
 
         return True
@@ -72,10 +85,10 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         modifiers = []
         if self.partial != (name == 'IsPartialDict'):
             modifiers += [f'partial={self.partial}']
-        if self.ignore_values != {None} or name != 'IsPartialDict':
+        if self.partial and (self.ignore_values != {None} or name != 'IsPartialDict'):
             modifiers += [f'ignore_values={self.ignore_values!r}']
-        if self.strict_order != (name == 'IsStrictDict'):
-            modifiers += [f'strict_order={self.strict_order}']
+        if self.strict != (name == 'IsStrictDict'):
+            modifiers += [f'strict={self.strict}']
 
         if modifiers:
             mod = f'[{", ".join(modifiers)}]'
@@ -93,4 +106,4 @@ class IsPartialDict(IsDict):
 
 class IsStrictDict(IsDict):
     def _post_init(self) -> None:
-        self.strict_order = True
+        self.strict = True

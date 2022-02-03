@@ -20,6 +20,7 @@ class DirtyEqualsMeta(ABCMeta):
             raise TypeError(f'{self.__name__} cannot be used without initialising') from e
 
     def __eq__(self, other: Any) -> bool:
+        # FIXME remove this, seemed like a good idea but causes too many problems
         # this is required as fancy things happen when creating generics which include equals checks
         if self is DirtyEquals or other is Generic or other is Protocol:
             return False
