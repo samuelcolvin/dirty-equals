@@ -37,18 +37,18 @@ def test_is_dict(input_value, expected):
 
 
 def test_ne_repr_partial_dict():
-    v = ~IsPartialDict({1: 10, 2: 20})
+    v = IsPartialDict({1: 10, 2: 20})
 
     with pytest.raises(AssertionError):
-        assert {1: 10, 2: 20} == v
+        assert 1 == v
 
-    assert str(v) == '~IsPartialDict(1=10, 2=20)'
+    assert str(v) == 'IsPartialDict(1=10, 2=20)'
 
 
 def test_ne_repr_strict_dict():
     v = IsStrictDict({1: 10, 2: 20})
 
     with pytest.raises(AssertionError):
-        assert 4 == v
+        assert 1 == v
 
     assert str(v) == 'IsStrictDict(1=10, 2=20)'

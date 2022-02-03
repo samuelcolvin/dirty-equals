@@ -11,7 +11,7 @@ def test_or():
     v = IsStr | IsInt
     with pytest.raises(AssertionError):
         assert 1.5 == v
-    assert str(v) == 'DirtyOr(IsStr() | IsInt())'
+    assert str(v) == 'DirtyOr(IsStr | IsInt)'
 
 
 def test_and():
@@ -20,7 +20,7 @@ def test_and():
     v = IsStr & IsInt
     with pytest.raises(AssertionError):
         assert 1 == v
-    assert str(v) == 'DirtyAnd(IsStr() & IsInt())'
+    assert str(v) == 'DirtyAnd(IsStr & IsInt)'
 
 
 def test_not():
@@ -77,7 +77,7 @@ def test_is_instance_of_inherit():
 
 
 def test_is_instance_of_repr():
-    assert repr(IsInstanceOf) == 'IsInstanceOf()'
+    assert repr(IsInstanceOf) == 'IsInstanceOf'
     assert repr(IsInstanceOf(Foo)) == "IsInstanceOf(<class 'tests.test_base.Foo'>)"
 
 
@@ -93,4 +93,8 @@ def test_not_repr():
     with pytest.raises(AssertionError):
         assert 1 == v
 
-    assert str(v) == '~IsInt()'
+    assert str(v) == '~IsInt'
+
+
+def test_is_approx_without_init():
+    assert 1 != IsApprox

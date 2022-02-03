@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
+from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeAlias, TypeVar, Union
 
 try:
     from typing import Protocol
@@ -13,31 +13,30 @@ __all__ = 'DirtyEquals', 'IsInstanceOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
-    def _get_instance(self) -> 'DirtyEquals[Any]':
-        try:
-            return self()
-        except TypeError as e:
-            raise TypeError(f'{self.__name__} cannot be used without initialising') from e
-
     def __eq__(self, other: Any) -> bool:
-        # FIXME remove this, seemed like a good idea but causes too many problems
-        # this is required as fancy things happen when creating generics which include equals checks
+        # this is required as fancy things happen when creating generics which include equals checks, without it
+        # we get some recursive errors
         if self is DirtyEquals or other is Generic or other is Protocol:
             return False
         else:
-            return self._get_instance() == other
+            try:
+                return self() == other
+            except TypeError:
+                # we don't want to raise a type error here since somewhere deep in pytest it does something like
+                # type(a) == type(b), if we raised TypeError we would upset the pytest error message
+                return False
 
     def __or__(self, other: Any) -> 'DirtyOr':  # type: ignore[override]
-        return self._get_instance() | other
+        return DirtyOr(self, other)
 
     def __and__(self, other: Any) -> 'DirtyAnd':
-        return self._get_instance() & other
+        return DirtyAnd(self, other)
 
     def __invert__(self) -> 'DirtyNot':
-        return ~self._get_instance()
+        return DirtyNot(self)
 
     def __repr__(self) -> str:
-        return f'{self.__name__}()'
+        return self.__name__
 
 
 T = TypeVar('T')
@@ -94,8 +93,11 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
             return self._repr_ne()
 
 
+InstanceOrType: TypeAlias = 'Union[DirtyEquals[Any], DirtyEqualsMeta]'
+
+
 class DirtyOr(DirtyEquals[Any]):
-    def __init__(self, a: DirtyEquals[Any], b: DirtyEquals[Any], *extra: DirtyEquals[Any]):
+    def __init__(self, a: 'InstanceOrType', b: 'InstanceOrType', *extra: 'InstanceOrType'):
         self.dirties = (a, b) + extra
         super().__init__()
 
@@ -103,11 +105,11 @@ class DirtyOr(DirtyEquals[Any]):
         return any(d == other for d in self.dirties)
 
     def _repr_ne(self) -> str:
-        return f'{self.__class__.__name__}({" | ".join(repr(d) for d in self.dirties)})'
+        return f'{self.__class__.__name__}({" | ".join(_repr_ne(d) for d in self.dirties)})'
 
 
 class DirtyAnd(DirtyEquals[Any]):
-    def __init__(self, a: DirtyEquals[Any], b: DirtyEquals[Any], *extra: DirtyEquals[Any]):
+    def __init__(self, a: InstanceOrType, b: InstanceOrType, *extra: InstanceOrType):
         self.dirties = (a, b) + extra
         super().__init__()
 
@@ -115,11 +117,11 @@ class DirtyAnd(DirtyEquals[Any]):
         return all(d == other for d in self.dirties)
 
     def _repr_ne(self) -> str:
-        return f'{self.__class__.__name__}({" & ".join(repr(d) for d in self.dirties)})'
+        return f'{self.__class__.__name__}({" & ".join(_repr_ne(d) for d in self.dirties)})'
 
 
 class DirtyNot(DirtyEquals[Any]):
-    def __init__(self, subject: DirtyEquals[Any]):
+    def __init__(self, subject: InstanceOrType):
         self.subject = subject
         super().__init__()
 
@@ -127,7 +129,14 @@ class DirtyNot(DirtyEquals[Any]):
         return self.subject != other
 
     def _repr_ne(self) -> str:
-        return f'~{self.subject._repr_ne()}'
+        return f'~{_repr_ne(self.subject)}'
+
+
+def _repr_ne(v: InstanceOrType) -> str:
+    if isinstance(v, DirtyEqualsMeta):
+        return repr(v)
+    else:
+        return v._repr_ne()
 
 
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
