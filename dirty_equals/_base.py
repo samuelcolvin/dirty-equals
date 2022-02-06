@@ -1,11 +1,12 @@
 from abc import ABCMeta
-from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeAlias, TypeVar, Union
+from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
 
 try:
-    from typing import Protocol
+    from typing import Protocol, TypeAlias
 except ImportError:
     # Python 3.7 doesn't have Protocol
     Protocol = object  # type: ignore[assignment]
+    TypeAlias = object  # type: ignore[assignment]
 
 from ._utils import Omit
 
