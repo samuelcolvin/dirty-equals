@@ -12,7 +12,7 @@ from ._utils import Omit
 if TYPE_CHECKING:
     from typing import TypeAlias
 
-__all__ = 'DirtyEquals', 'IsInstanceOf'
+__all__ = 'DirtyEquals', 'IsInstanceOf', 'AnyThing'
 
 
 class DirtyEqualsMeta(ABCMeta):
@@ -161,3 +161,8 @@ class IsInstanceOf(DirtyEquals[ExpectedType], metaclass=IsInstanceOfMeta):
             return type(other) == self.expected_type
         else:
             return isinstance(other, self.expected_type)
+
+
+class AnyThing(DirtyEquals[Any]):
+    def equals(self, other: Any) -> bool:
+        return True
