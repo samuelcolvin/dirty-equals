@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsJSON, IsUUID
+from dirty_equals import FunctionCheck, IsJson, IsUUID
 
 
 def test_is_uuid_true():
@@ -28,15 +28,15 @@ def test_is_uuid4_false():
 
 @pytest.mark.parametrize('json_value', ['null', '"xyz"', '[1, 2, 3]', '{"a": 1}'])
 def test_is_json_any_true(json_value):
-    assert json_value == IsJSON()
-    assert json_value == IsJSON
+    assert json_value == IsJson()
+    assert json_value == IsJson
 
 
 def test_is_json_any_false():
-    is_json = IsJSON()
+    is_json = IsJson()
     with pytest.raises(AssertionError):
         assert 'foobar' == is_json
-    assert str(is_json) == 'IsJSON(*)'
+    assert str(is_json) == 'IsJson(*)'
 
 
 @pytest.mark.parametrize(
@@ -49,14 +49,14 @@ def test_is_json_any_false():
     ],
 )
 def test_is_json_specific_true(json_value, expected_value):
-    assert json_value == IsJSON(expected_value)
+    assert json_value == IsJson(expected_value)
 
 
 def test_is_json_specific_false():
-    is_json = IsJSON([1, 2, 3])
+    is_json = IsJson([1, 2, 3])
     with pytest.raises(AssertionError):
         assert '{"a": 1}' == is_json
-    assert str(is_json) == 'IsJSON([1, 2, 3])'
+    assert str(is_json) == 'IsJson([1, 2, 3])'
 
 
 def test_equals_function():
