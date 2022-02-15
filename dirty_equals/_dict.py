@@ -43,15 +43,15 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         partial: Optional[bool] = None,
         ignore_values: Union[None, Container[Any], Callable[[Any], bool]] = None,
     ) -> 'IsDict':
-        new_dict = IsDict(self.expected_values)
-        new_dict.__dict__ = self.__dict__.copy()
+        new_cls = self.__class__(self.expected_values)
+        new_cls.__dict__ = self.__dict__.copy()
         if strict is not None:
-            new_dict.strict = strict
+            new_cls.strict = strict
         if partial is not None:
-            new_dict.partial = partial
+            new_cls.partial = partial
         if ignore_values is not None:
-            new_dict.ignore_values = ignore_values
-        return new_dict
+            new_cls.ignore_values = ignore_values
+        return new_cls
 
     def equals(self, other: Dict[Any, Any]) -> bool:
         if not isinstance(other, dict):
@@ -86,7 +86,8 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         if self.partial != (name == 'IsPartialDict'):
             modifiers += [f'partial={self.partial}']
         if self.partial and (self.ignore_values != {None} or name != 'IsPartialDict'):
-            modifiers += [f'ignore_values={self.ignore_values!r}']
+            r = self.ignore_values.__name__ if callable(self.ignore_values) else repr(self.ignore_values)
+            modifiers += [f'ignore_values={r}']
         if self.strict != (name == 'IsStrictDict'):
             modifiers += [f'strict={self.strict}']
 
