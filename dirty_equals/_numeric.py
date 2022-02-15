@@ -5,6 +5,7 @@ from typing import Any, Optional, Tuple, Type, TypeVar, Union
 from ._base import DirtyEquals
 
 __all__ = (
+    'IsApprox',
     'IsNumeric',
     'IsNumber',
     'IsPositive',
@@ -14,13 +15,9 @@ __all__ = (
     'IsInt',
     'IsPositiveInt',
     'IsNegativeInt',
-    'IsNonPositiveInt',
-    'IsNonNegativeInt',
     'IsFloat',
     'IsPositiveFloat',
     'IsNegativeFloat',
-    'IsNonPositiveFloat',
-    'IsNonNegativeFloat',
 )
 
 from ._utils import Omit
@@ -154,18 +151,6 @@ class IsNegativeInt(IsInt):
         self._repr_kwargs = {}
 
 
-class IsNonPositiveInt(IsInt):
-    def __init__(self) -> None:
-        super().__init__(le=0)
-        self._repr_kwargs = {}
-
-
-class IsNonNegativeInt(IsInt):
-    def __init__(self) -> None:
-        super().__init__(ge=0)
-        self._repr_kwargs = {}
-
-
 class IsFloat(IsNumeric[float]):
     types = float
 
@@ -179,16 +164,4 @@ class IsPositiveFloat(IsFloat):
 class IsNegativeFloat(IsFloat):
     def __init__(self) -> None:
         super().__init__(lt=0)
-        self._repr_kwargs = {}
-
-
-class IsNonPositiveFloat(IsFloat):
-    def __init__(self) -> None:
-        super().__init__(le=0)
-        self._repr_kwargs = {}
-
-
-class IsNonNegativeFloat(IsFloat):
-    def __init__(self) -> None:
-        super().__init__(ge=0)
         self._repr_kwargs = {}

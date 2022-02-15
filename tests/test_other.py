@@ -5,21 +5,47 @@ import pytest
 from dirty_equals import FunctionCheck, IsJson, IsUUID
 
 
-def test_is_uuid_true():
-    is_uuid = IsUUID()
-    uuid_ = uuid.uuid4()
-    assert uuid_ == is_uuid
-    assert str(is_uuid) == repr(uuid_)
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (uuid.uuid4(), IsUUID()),
+        (uuid.uuid4(), IsUUID),
+        (uuid.uuid4(), IsUUID(4)),
+        ('edf9f29e-45c7-431c-99db-28ea44df9785', IsUUID),
+        ('edf9f29e-45c7-431c-99db-28ea44df9785', IsUUID(4)),
+        ('edf9f29e45c7431c99db28ea44df9785', IsUUID(4)),
+        (uuid.uuid3(uuid.UUID('edf9f29e-45c7-431c-99db-28ea44df9785'), 'abc'), IsUUID),
+        (uuid.uuid3(uuid.UUID('edf9f29e-45c7-431c-99db-28ea44df9785'), 'abc'), IsUUID(3)),
+        (uuid.uuid1(), IsUUID(1)),
+        ('edf9f29e-45c7-431c-99db-28ea44df9785', IsUUID(1)),
+    ],
+)
+def test_is_uuid_true(other, dirty):
+    assert other == dirty
 
 
-def test_is_uuid_false():
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('foobar', IsUUID()),
+        ([1, 2, 3], IsUUID()),
+        ('edf9f29e-45c7-431c-99db-28ea44xdf9785', IsUUID(5)),
+        (uuid.uuid3(uuid.UUID('edf9f29e-45c7-431c-99db-28ea44df9785'), 'abc'), IsUUID(4)),
+        (uuid.uuid1(), IsUUID(4)),
+    ],
+)
+def test_is_uuid_false(other, dirty):
+    assert other != dirty
+
+
+def test_is_uuid_false_repr():
     is_uuid = IsUUID()
     with pytest.raises(AssertionError):
         assert '123' == is_uuid
     assert str(is_uuid) == 'IsUUID(*)'
 
 
-def test_is_uuid4_false():
+def test_is_uuid4_false_repr():
     is_uuid = IsUUID(4)
     with pytest.raises(AssertionError):
         assert '123' == is_uuid

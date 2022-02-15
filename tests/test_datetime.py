@@ -7,7 +7,7 @@ from dirty_equals import IsDatetime, IsNow
 
 
 @pytest.mark.parametrize(
-    'value,is_dt,expect_match',
+    'value,dirty,expect_match',
     [
         pytest.param(datetime(2000, 1, 1), IsDatetime(approx=datetime(2000, 1, 1)), True, id='same'),
         pytest.param(946684800, IsDatetime(approx=datetime(2000, 1, 1), unix_number=True), True, id='unix-int'),
@@ -67,13 +67,17 @@ from dirty_equals import IsDatetime, IsNow
             False,
             id='tz-both-tz-different',
         ),
+        pytest.param(datetime(2000, 1, 1), IsDatetime(ge=datetime(2000, 1, 1)), True, id='ge'),
+        pytest.param(datetime(1999, 1, 1), IsDatetime(ge=datetime(2000, 1, 1)), False, id='ge-not'),
+        pytest.param(datetime(2000, 1, 2), IsDatetime(gt=datetime(2000, 1, 1)), True, id='gt'),
+        pytest.param(datetime(2000, 1, 1), IsDatetime(gt=datetime(2000, 1, 1)), False, id='gt-not'),
     ],
 )
-def test_is_datetime(value, is_dt, expect_match):
+def test_is_datetime(value, dirty, expect_match):
     if expect_match:
-        assert value == is_dt
+        assert value == dirty
     else:
-        assert value != is_dt
+        assert value != dirty
 
 
 def test_is_now_dt():
