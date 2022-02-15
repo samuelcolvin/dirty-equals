@@ -37,7 +37,7 @@ class IsUUID(DirtyEquals[UUID]):
 AnyJson = object
 
 
-class IsJson(DirtyEquals[str]):
+class IsJson(DirtyEquals[Any]):
     def __init__(self, expected_value: Any = AnyJson):
         self.expected_value = expected_value
         super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)

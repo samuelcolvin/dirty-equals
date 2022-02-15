@@ -52,12 +52,12 @@ class IsNumeric(DirtyEquals[N]):
         self.le: Optional[N] = le
         self.has_bounds_checks = not all(f is None for f in (approx, delta, gt, lt, ge, le))
         kwargs = {
-            'approx': approx or Omit,
-            'delta': delta or Omit,
-            'gt': gt or Omit,
-            'lt': lt or Omit,
-            'ge': ge or Omit,
-            'le': le or Omit,
+            'approx': Omit if approx is None else approx,
+            'delta': Omit if delta is None else delta,
+            'gt': Omit if gt is None else gt,
+            'lt': Omit if lt is None else lt,
+            'ge': Omit if ge is None else ge,
+            'le': Omit if le is None else le,
         }
         super().__init__(**kwargs)
 
@@ -86,7 +86,7 @@ class IsNumeric(DirtyEquals[N]):
                     delta = other / 100
             else:
                 delta = self.delta
-            return abs(self.approx - other) <= delta
+            return self.approx_equals(other, delta)
         elif self.gt is not None and other <= self.gt:
             return False
         elif self.lt is not None and other >= self.lt:
@@ -97,6 +97,9 @@ class IsNumeric(DirtyEquals[N]):
             return False
         else:
             return True
+
+    def approx_equals(self, other: Any, delta: Any) -> bool:
+        return abs(self.approx - other) <= delta
 
 
 class IsNumber(IsNumeric[AnyNumber]):
@@ -114,21 +117,25 @@ class IsApprox(IsNumber):
 class IsPositive(IsNumber):
     def __init__(self) -> None:
         super().__init__(gt=0)
+        self._repr_kwargs = {}
 
 
 class IsNegative(IsNumber):
     def __init__(self) -> None:
         super().__init__(lt=0)
+        self._repr_kwargs = {}
 
 
 class IsNonPositive(IsNumber):
     def __init__(self) -> None:
         super().__init__(le=0)
+        self._repr_kwargs = {}
 
 
 class IsNonNegative(IsNumber):
     def __init__(self) -> None:
         super().__init__(ge=0)
+        self._repr_kwargs = {}
 
 
 class IsInt(IsNumeric[int]):
@@ -138,21 +145,25 @@ class IsInt(IsNumeric[int]):
 class IsPositiveInt(IsInt):
     def __init__(self) -> None:
         super().__init__(gt=0)
+        self._repr_kwargs = {}
 
 
 class IsNegativeInt(IsInt):
     def __init__(self) -> None:
         super().__init__(lt=0)
+        self._repr_kwargs = {}
 
 
 class IsNonPositiveInt(IsInt):
     def __init__(self) -> None:
         super().__init__(le=0)
+        self._repr_kwargs = {}
 
 
 class IsNonNegativeInt(IsInt):
     def __init__(self) -> None:
         super().__init__(ge=0)
+        self._repr_kwargs = {}
 
 
 class IsFloat(IsNumeric[float]):
@@ -162,18 +173,22 @@ class IsFloat(IsNumeric[float]):
 class IsPositiveFloat(IsFloat):
     def __init__(self) -> None:
         super().__init__(gt=0)
+        self._repr_kwargs = {}
 
 
 class IsNegativeFloat(IsFloat):
     def __init__(self) -> None:
         super().__init__(lt=0)
+        self._repr_kwargs = {}
 
 
 class IsNonPositiveFloat(IsFloat):
     def __init__(self) -> None:
         super().__init__(le=0)
+        self._repr_kwargs = {}
 
 
 class IsNonNegativeFloat(IsFloat):
     def __init__(self) -> None:
         super().__init__(ge=0)
+        self._repr_kwargs = {}
