@@ -18,26 +18,22 @@ class IsUUID(DirtyEquals[UUID]):
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, UUID):
-            if self.version:
-                return other.version == self.version
-            else:
-                return True
+            uuid = other
         elif isinstance(other, str):
-            try:
-                uuid = UUID(other, version=self.version or 4)
-            except ValueError:
-                return False
-            else:
-                self._other = uuid
-                return True
+            uuid = UUID(other, version=self.version or 4)
         else:
             return False
+
+        if self.version:
+            return uuid.version == self.version
+        else:
+            return True
 
 
 AnyJson = object
 
 
-class IsJson(DirtyEquals[str]):
+class IsJson(DirtyEquals[Any]):
     def __init__(self, expected_value: Any = AnyJson):
         self.expected_value = expected_value
         super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)
