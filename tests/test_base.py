@@ -11,7 +11,7 @@ def test_or():
     v = IsStr | IsInt
     with pytest.raises(AssertionError):
         assert 1.5 == v
-    assert str(v) == 'DirtyOr(IsStr | IsInt)'
+    assert str(v) == 'IsStr | IsInt'
 
 
 def test_and():
@@ -20,7 +20,7 @@ def test_and():
     v = IsStr & IsInt
     with pytest.raises(AssertionError):
         assert 1 == v
-    assert str(v) == 'DirtyAnd(IsStr & IsInt)'
+    assert str(v) == 'IsStr & IsInt'
 
 
 def test_not():
@@ -89,11 +89,41 @@ def test_dict_compare():
 
 def test_not_repr():
     v = ~IsInt
+    assert str(v) == '~IsInt'
 
     with pytest.raises(AssertionError):
         assert 1 == v
 
     assert str(v) == '~IsInt'
+
+
+def test_repr():
+    v = ~IsInt
+    assert str(v) == '~IsInt'
+
+    assert '1' == v
+
+    assert str(v) == "'1'"
+
+
+@pytest.mark.parametrize(
+    'v,v_repr',
+    [
+        (IsInt, 'IsInt'),
+        (~IsInt, '~IsInt'),
+        (IsInt & IsPositive, 'IsInt & IsPositive'),
+        (IsInt | IsPositive, 'IsInt | IsPositive'),
+        (IsInt(), 'IsInt()'),
+        (~IsInt(), '~IsInt()'),
+        (IsInt() & IsPositive(), 'IsInt() & IsPositive()'),
+        (IsInt() | IsPositive(), 'IsInt() | IsPositive()'),
+        (IsInt() & IsPositive, 'IsInt() & IsPositive'),
+        (IsInt() | IsPositive, 'IsInt() | IsPositive'),
+        (IsPositive & IsInt(lt=5), 'IsPositive & IsInt(lt=5)'),
+    ],
+)
+def test_repr_class(v, v_repr):
+    assert repr(v) == v_repr
 
 
 def test_is_approx_without_init():

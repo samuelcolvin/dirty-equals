@@ -108,7 +108,7 @@ class DirtyOr(DirtyEquals[Any]):
         return any(d == other for d in self.dirties)
 
     def _repr_ne(self) -> str:
-        return f'{self.__class__.__name__}({" | ".join(_repr_ne(d) for d in self.dirties)})'
+        return ' | '.join(_repr_ne(d) for d in self.dirties)
 
 
 class DirtyAnd(DirtyEquals[Any]):
@@ -120,7 +120,7 @@ class DirtyAnd(DirtyEquals[Any]):
         return all(d == other for d in self.dirties)
 
     def _repr_ne(self) -> str:
-        return f'{self.__class__.__name__}({" & ".join(_repr_ne(d) for d in self.dirties)})'
+        return ' & '.join(_repr_ne(d) for d in self.dirties)
 
 
 class DirtyNot(DirtyEquals[Any]):
