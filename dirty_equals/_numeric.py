@@ -22,12 +22,12 @@ __all__ = (
 
 from ._utils import Omit
 
-AnyNumber = Union[int, float, complex, Decimal]
-N = TypeVar('N', int, float, complex, Decimal, date, datetime, AnyNumber)
+AnyNumber = Union[int, float, Decimal]
+N = TypeVar('N', int, float, Decimal, date, datetime, AnyNumber)
 
 
 class IsNumeric(DirtyEquals[N]):
-    types: Union[Type[N], Tuple[type, ...]] = (int, float, complex, Decimal, date, datetime)
+    types: Union[Type[N], Tuple[type, ...]] = (int, float, Decimal, date, datetime)
 
     def __init__(
         self,
@@ -40,7 +40,7 @@ class IsNumeric(DirtyEquals[N]):
         le: Optional[N] = None,
     ):
         self.approx: Optional[N] = approx
-        self.delta: Any = delta
+        self.delta: Optional[N] = delta
         if self.approx is not None and (gt, lt, ge, le) != (None, None, None, None):
             raise TypeError('"approx" cannot be combined with "gt", "lt", "ge", or "le"')
         self.gt: Optional[N] = gt
@@ -74,11 +74,11 @@ class IsNumeric(DirtyEquals[N]):
         else:
             return True
 
-    def bounds_checks(self, other: Any) -> bool:
+    def bounds_checks(self, other: N) -> bool:
         if self.approx is not None:
             if self.delta is None:
-                if isinstance(other, datetime):
-                    delta = timedelta(seconds=1)
+                if isinstance(other, date):
+                    delta: Any = timedelta(seconds=1)
                 else:
                     delta = other / 100
             else:
@@ -100,10 +100,10 @@ class IsNumeric(DirtyEquals[N]):
 
 
 class IsNumber(IsNumeric[AnyNumber]):
-    types = int, float, complex, Decimal
+    types = int, float, Decimal
 
 
-Num = TypeVar('Num', int, float, complex, Decimal)
+Num = TypeVar('Num', int, float, Decimal)
 
 
 class IsApprox(IsNumber):
