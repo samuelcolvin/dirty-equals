@@ -1,19 +1,18 @@
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type, TypeVar, Union, overload
 
 from ._base import DirtyEquals
-from ._utils import Omit
+from ._utils import Omit, plain_repr
 
 if TYPE_CHECKING:
     from typing import TypeAlias
 
 __all__ = 'IsListOrTuple', 'IsList', 'IsTuple'
 T = TypeVar('T', List[Any], Tuple[Any, ...])
-# "Any" here as a hack because there's no type for Ellipsis
 ExpectedLengthType: 'TypeAlias' = 'Union[None, int, Union[int, Union[int, Any]]]'
 
 
 class IsListOrTuple(DirtyEquals[T]):
-    expected_type: Union[Type[Any], Tuple[Type[Any], Type[Any]]] = (list, tuple)
+    expected_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
 
     @overload
     def __init__(self, *items: Any, check_order: bool = True, length: 'ExpectedLengthType' = None):
@@ -30,22 +29,35 @@ class IsListOrTuple(DirtyEquals[T]):
         check_order: bool = True,
         length: 'ExpectedLengthType' = None,
     ) -> None:
-        length_repr = Omit if length is None else length
         if positions is not None:
             self.positions: Optional[Dict[int, Any]] = positions
             if items:
                 raise TypeError(f'{self.__class__.__name__} requires either args or positions, not both')
             if not check_order:
                 raise TypeError('check_order=False is not compatible with positions')
-            super().__init__(positions=positions, length=length_repr)
         else:
             self.positions = None
             self.items = items
-            super().__init__(*items, length=length_repr)
-        self.length = length
         self.check_order = check_order
 
-    def equals(self, other: Any) -> bool:
+        if isinstance(length, int) or length is None:
+            self.length: 'ExpectedLengthType' = length
+            length_repr = Omit if length is None else length
+        else:
+            if not len(length) == 2:
+                raise TypeError(f'length must be a tuple of length 2, not {len(length)}')
+            self.length = tuple(length)
+            max_value = self.length[1] if isinstance(self.length[1], int) else '∞'
+            length_repr = plain_repr(f'{self.length[0]}:{max_value}')
+
+        super().__init__(
+            *items,
+            positions=Omit if positions is None else positions,
+            length=length_repr,
+            check_order=self.check_order and Omit,
+        )
+
+    def equals(self, other: Any) -> bool:  # noqa: C901
         if not isinstance(other, self.expected_type):
             return False
 
@@ -57,12 +69,15 @@ class IsListOrTuple(DirtyEquals[T]):
             if other_len < self.length[0]:
                 return False
             max_len = self.length[1]
-            if max_len is not Ellipsis and other_len > max_len:
+            if isinstance(max_len, int) and other_len > max_len:
                 return False
 
         if self.check_order:
             if self.positions is None:
-                return list(self.items) == list(other[: len(self.items)])
+                if self.length is None:
+                    return list(self.items) == list(other)
+                else:
+                    return list(self.items) == list(other[: len(self.items)])
             else:
                 return all(v == other[k] for k, v in self.positions.items())
         else:
@@ -71,7 +86,13 @@ class IsListOrTuple(DirtyEquals[T]):
             if self.length is None and len(other) != len(self.items):
                 return False
 
-            return all(item in other for item in self.items)
+            other_copy = list(other)
+            for item in self.items:
+                try:
+                    other_copy.remove(item)
+                except ValueError:
+                    return False
+            return True
 
 
 class IsList(IsListOrTuple[List[Any]]):

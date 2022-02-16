@@ -1,4 +1,4 @@
-from ._base import AnyThing, IsInstanceOf
+from ._base import AnyThing, IsInstance
 from ._datetime import IsDatetime, IsNow
 from ._dict import IsDict, IsPartialDict, IsStrictDict
 from ._list_tuple import IsList, IsListOrTuple, IsTuple
@@ -23,7 +23,7 @@ from ._strings import IsAnyStr, IsBytes, IsStr
 __all__ = (
     # base
     'AnyThing',
-    'IsInstanceOf',
+    'IsInstance',
     # datetime
     'IsDatetime',
     'IsNow',
