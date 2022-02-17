@@ -7,7 +7,7 @@ from ._utils import Omit
 T = TypeVar('T', str, bytes)
 
 
-class IsStrBase(DirtyEquals[T]):
+class IsStrBytesBase(DirtyEquals[T]):
     expected_type: Type[T]
 
     # TODO min_length, max_length, upper, lower, digits
@@ -25,11 +25,11 @@ class IsStrBase(DirtyEquals[T]):
             return True
 
 
-class IsStr(IsStrBase[str]):
+class IsStr(IsStrBytesBase[str]):
     expected_type = str
 
 
-class IsBytes(IsStrBase[bytes]):
+class IsBytes(IsStrBytesBase[bytes]):
     expected_type = bytes
 
 

@@ -3,12 +3,7 @@ from typing import Any, Callable
 from uuid import UUID
 
 from ._base import DirtyEquals
-from ._utils import plain_repr
-
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal  # type: ignore[misc]
+from ._utils import Literal, plain_repr
 
 
 class IsUUID(DirtyEquals[UUID]):

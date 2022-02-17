@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import IsApprox, IsInstanceOf, IsInt, IsNegative, IsPositive, IsStr
+from dirty_equals import IsApprox, IsInstance, IsInt, IsNegative, IsPositive, IsStr
 
 
 def test_or():
@@ -57,9 +57,9 @@ class Foo:
 
 
 def test_is_instance_of():
-    assert Foo() == IsInstanceOf(Foo)
-    assert Foo() == IsInstanceOf[Foo]
-    assert 1 != IsInstanceOf[Foo]
+    assert Foo() == IsInstance(Foo)
+    assert Foo() == IsInstance[Foo]
+    assert 1 != IsInstance[Foo]
 
 
 class Bar(Foo):
@@ -67,18 +67,18 @@ class Bar(Foo):
 
 
 def test_is_instance_of_inherit():
-    assert Bar() == IsInstanceOf(Foo)
-    assert Foo() == IsInstanceOf(Foo, only_direct_instance=True)
-    assert Bar() != IsInstanceOf(Foo, only_direct_instance=True)
+    assert Bar() == IsInstance(Foo)
+    assert Foo() == IsInstance(Foo, only_direct_instance=True)
+    assert Bar() != IsInstance(Foo, only_direct_instance=True)
 
-    assert Foo != IsInstanceOf(Foo)
-    assert Bar != IsInstanceOf(Foo)
-    assert type != IsInstanceOf(Foo)
+    assert Foo != IsInstance(Foo)
+    assert Bar != IsInstance(Foo)
+    assert type != IsInstance(Foo)
 
 
 def test_is_instance_of_repr():
-    assert repr(IsInstanceOf) == 'IsInstanceOf'
-    assert repr(IsInstanceOf(Foo)) == "IsInstanceOf(<class 'tests.test_base.Foo'>)"
+    assert repr(IsInstance) == 'IsInstance'
+    assert repr(IsInstance(Foo)) == "IsInstance(<class 'tests.test_base.Foo'>)"
 
 
 def test_dict_compare():
@@ -128,3 +128,12 @@ def test_repr_class(v, v_repr):
 
 def test_is_approx_without_init():
     assert 1 != IsApprox
+
+
+def test_ne_repr():
+    v = IsInt
+    assert repr(v) == 'IsInt'
+
+    assert 'x' != v
+
+    assert repr(v) == 'IsInt'

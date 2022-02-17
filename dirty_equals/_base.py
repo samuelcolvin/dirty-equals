@@ -12,7 +12,7 @@ from ._utils import Omit
 if TYPE_CHECKING:
     from typing import TypeAlias
 
-__all__ = 'DirtyEquals', 'IsInstanceOf'
+__all__ = 'DirtyEquals', 'IsInstance', 'AnyThing'
 
 
 class DirtyEqualsMeta(ABCMeta):
@@ -72,6 +72,16 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
             self._was_equal = False
 
         return self._was_equal
+
+    def __ne__(self, other: Any) -> bool:
+        """
+        We don't set _was_equal to avoid strange errors in pytest
+        """
+        self._other = other
+        try:
+            return not self.equals(other)
+        except (TypeError, ValueError):
+            return True
 
     def __or__(self, other: Any) -> 'DirtyOr':
         return DirtyOr(self, other)
@@ -145,12 +155,12 @@ def _repr_ne(v: InstanceOrType) -> str:
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
 
-class IsInstanceOfMeta(DirtyEqualsMeta):
-    def __getitem__(self, item: ExpectedType) -> 'IsInstanceOf[ExpectedType]':
-        return IsInstanceOf(item)
+class IsInstanceMeta(DirtyEqualsMeta):
+    def __getitem__(self, item: ExpectedType) -> 'IsInstance[ExpectedType]':
+        return IsInstance(item)
 
 
-class IsInstanceOf(DirtyEquals[ExpectedType], metaclass=IsInstanceOfMeta):
+class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
     def __init__(self, expected_type: ExpectedType, only_direct_instance: bool = False):
         self.expected_type = expected_type
         self.only_direct_instance = only_direct_instance
@@ -161,3 +171,8 @@ class IsInstanceOf(DirtyEquals[ExpectedType], metaclass=IsInstanceOfMeta):
             return type(other) == self.expected_type
         else:
             return isinstance(other, self.expected_type)
+
+
+class AnyThing(DirtyEquals[Any]):
+    def equals(self, other: Any) -> bool:
+        return True

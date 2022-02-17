@@ -1,6 +1,7 @@
-from ._base import IsInstanceOf
+from ._base import AnyThing, IsInstance
 from ._datetime import IsDatetime, IsNow
 from ._dict import IsDict, IsPartialDict, IsStrictDict
+from ._list_tuple import HasLen, IsList, IsListOrTuple, IsTuple
 from ._numeric import (
     IsApprox,
     IsFloat,
@@ -21,7 +22,8 @@ from ._strings import IsAnyStr, IsBytes, IsStr
 
 __all__ = (
     # base
-    'IsInstanceOf',
+    'AnyThing',
+    'IsInstance',
     # datetime
     'IsDatetime',
     'IsNow',
@@ -29,6 +31,11 @@ __all__ = (
     'IsDict',
     'IsPartialDict',
     'IsStrictDict',
+    # list or tuple
+    'HasLen',
+    'IsList',
+    'IsTuple',
+    'IsListOrTuple',
     # numeric
     'IsNumeric',
     'IsApprox',
