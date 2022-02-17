@@ -128,3 +128,12 @@ def test_repr_class(v, v_repr):
 
 def test_is_approx_without_init():
     assert 1 != IsApprox
+
+
+def test_ne_repr():
+    v = IsInt
+    assert repr(v) == 'IsInt'
+
+    assert 'x' != v
+
+    assert repr(v) == 'IsInt'

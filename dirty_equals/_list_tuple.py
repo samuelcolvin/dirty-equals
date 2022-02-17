@@ -17,15 +17,16 @@ class HasLen(DirtyEquals[Sized]):
         ...
 
     @overload
-    def __init__(self, length: int, max_length: Union[int, Any]):
+    def __init__(self, min_length: int, max_length: Union[int, Any]):
         ...
 
-    def __init__(self, length: int, max_length: Union[None, int, Any] = None):
+    def __init__(self, min_length: int, max_length: Union[None, int, Any] = None):  # type: ignore[misc]
         if max_length is None:
-            self.length: 'LengthType' = length
+            self.length: 'LengthType' = min_length
+            super().__init__(self.length)
         else:
-            self.length = (length, max_length)
-        super().__init__(length=_length_repr(self.length))
+            self.length = (min_length, max_length)
+            super().__init__(*_length_repr(self.length))
 
     def equals(self, other: Any) -> bool:
         return _length_correct(self.length, other)
@@ -117,8 +118,8 @@ def _length_repr(length: 'LengthType') -> Any:
     else:
         if len(length) != 2:
             raise TypeError(f'length must be a tuple of length 2, not {len(length)}')
-        max_value = length[1] if isinstance(length[1], int) else '∞'
-        return plain_repr(f'{length[0]}:{max_value}')
+        max_value = length[1] if isinstance(length[1], int) else plain_repr('...')
+        return length[0], max_value
 
 
 def _length_correct(length: 'LengthType', other: 'Sized') -> bool:

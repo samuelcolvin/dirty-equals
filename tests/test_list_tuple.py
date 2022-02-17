@@ -95,10 +95,12 @@ def test_wrong_length_length():
         (IsTuple(1, 2, 3), 'IsTuple(1, 2, 3)'),
         (IsList(positions={1: 10, 2: 20}), 'IsList(positions={1: 10, 2: 20})'),
         (IsTuple(1, 2, 3, length=4), 'IsTuple(1, 2, 3, length=4)'),
-        (IsTuple(1, 2, 3, length=(6, ...)), 'IsTuple(1, 2, 3, length=6:∞)'),
-        (IsTuple(1, 2, 3, length=(6, 'x')), 'IsTuple(1, 2, 3, length=6:∞)'),
-        (IsTuple(1, 2, 3, length=(6, 10)), 'IsTuple(1, 2, 3, length=6:10)'),
+        (IsTuple(1, 2, 3, length=(6, ...)), 'IsTuple(1, 2, 3, length=(6, ...))'),
+        (IsTuple(1, 2, 3, length=(6, 'x')), 'IsTuple(1, 2, 3, length=(6, ...))'),
+        (IsTuple(1, 2, 3, length=(6, 10)), 'IsTuple(1, 2, 3, length=(6, 10))'),
         (IsTuple(1, 2, 3, check_order=False), 'IsTuple(1, 2, 3, check_order=False)'),
+        (HasLen(42), 'HasLen(42)'),
+        (HasLen(0, ...), 'HasLen(0, ...)'),
     ],
 )
 def test_repr(dirty, repr_str):
