@@ -13,18 +13,18 @@ LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]]]'
 
 class HasLen(DirtyEquals[Sized]):
     @overload
-    def __init__(self, length: int, /):
+    def __init__(self, length: int):
         ...
 
     @overload
-    def __init__(self, min_length: int, max_length: Union[int, Any]):
+    def __init__(self, length: int, max_length: Union[int, Any]):
         ...
 
-    def __init__(self, min_length: int, max_length: Union[None, int, Any] = None):
+    def __init__(self, length: int, max_length: Union[None, int, Any] = None):
         if max_length is None:
-            self.length: 'LengthType' = min_length
+            self.length: 'LengthType' = length
         else:
-            self.length = (min_length, max_length)
+            self.length = (length, max_length)
         super().__init__(length=_length_repr(self.length))
 
     def equals(self, other: Any) -> bool:
