@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Type, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
 
 from ._base import DirtyEquals
 from ._utils import Omit, plain_repr
@@ -6,20 +6,40 @@ from ._utils import Omit, plain_repr
 if TYPE_CHECKING:
     from typing import TypeAlias
 
-__all__ = 'IsListOrTuple', 'IsList', 'IsTuple'
+__all__ = 'HasLen', 'IsListOrTuple', 'IsList', 'IsTuple'
 T = TypeVar('T', List[Any], Tuple[Any, ...])
-ExpectedLengthType: 'TypeAlias' = 'Union[None, int, Union[int, Union[int, Any]]]'
+LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]]]'
+
+
+class HasLen(DirtyEquals[Sized]):
+    @overload
+    def __init__(self, length: int, /):
+        ...
+
+    @overload
+    def __init__(self, min_length: int, max_length: Union[int, Any]):
+        ...
+
+    def __init__(self, min_length: int, max_length: Union[None, int, Any] = None):
+        if max_length is None:
+            self.length: 'LengthType' = min_length
+        else:
+            self.length = (min_length, max_length)
+        super().__init__(length=_length_repr(self.length))
+
+    def equals(self, other: Any) -> bool:
+        return _length_correct(self.length, other)
 
 
 class IsListOrTuple(DirtyEquals[T]):
     expected_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
 
     @overload
-    def __init__(self, *items: Any, check_order: bool = True, length: 'ExpectedLengthType' = None):
+    def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None):
         ...
 
     @overload
-    def __init__(self, positions: Dict[int, Any], length: 'ExpectedLengthType' = None):
+    def __init__(self, positions: Dict[int, Any], length: 'LengthType' = None):
         ...
 
     def __init__(
@@ -27,7 +47,7 @@ class IsListOrTuple(DirtyEquals[T]):
         *items: Any,
         positions: Optional[Dict[int, Any]] = None,
         check_order: bool = True,
-        length: 'ExpectedLengthType' = None,
+        length: 'LengthType' = None,
     ) -> None:
         if positions is not None:
             self.positions: Optional[Dict[int, Any]] = positions
@@ -40,20 +60,14 @@ class IsListOrTuple(DirtyEquals[T]):
             self.items = items
         self.check_order = check_order
 
-        if isinstance(length, int) or length is None:
-            self.length: 'ExpectedLengthType' = length
-            length_repr = Omit if length is None else length
-        else:
-            if not len(length) == 2:
-                raise TypeError(f'length must be a tuple of length 2, not {len(length)}')
-            self.length = tuple(length)
-            max_value = self.length[1] if isinstance(self.length[1], int) else '∞'
-            length_repr = plain_repr(f'{self.length[0]}:{max_value}')
+        self.length = length
+        if self.length is not None and not isinstance(self.length, int):
+            self.length = tuple(self.length)  # type: ignore[assignment]
 
         super().__init__(
             *items,
             positions=Omit if positions is None else positions,
-            length=length_repr,
+            length=_length_repr(self.length),
             check_order=self.check_order and Omit,
         )
 
@@ -61,16 +75,8 @@ class IsListOrTuple(DirtyEquals[T]):
         if not isinstance(other, self.expected_type):
             return False
 
-        if isinstance(self.length, int):
-            if len(other) != self.length:
-                return False
-        elif isinstance(self.length, tuple):
-            other_len = len(other)
-            if other_len < self.length[0]:
-                return False
-            max_len = self.length[1]
-            if isinstance(max_len, int) and other_len > max_len:
-                return False
+        if not _length_correct(self.length, other):
+            return False
 
         if self.check_order:
             if self.positions is None:
@@ -101,3 +107,29 @@ class IsList(IsListOrTuple[List[Any]]):
 
 class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
     expected_type = tuple
+
+
+def _length_repr(length: 'LengthType') -> Any:
+    if length is None:
+        return Omit
+    elif isinstance(length, int):
+        return length
+    else:
+        if len(length) != 2:
+            raise TypeError(f'length must be a tuple of length 2, not {len(length)}')
+        max_value = length[1] if isinstance(length[1], int) else '∞'
+        return plain_repr(f'{length[0]}:{max_value}')
+
+
+def _length_correct(length: 'LengthType', other: 'Sized') -> bool:
+    if isinstance(length, int):
+        if len(other) != length:
+            return False
+    elif isinstance(length, tuple):
+        other_len = len(other)
+        min_length, max_length = length
+        if other_len < min_length:
+            return False
+        if isinstance(max_length, int) and other_len > max_length:
+            return False
+    return True

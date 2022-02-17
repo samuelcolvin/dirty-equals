@@ -3,7 +3,7 @@ try:
 except ImportError:
     from typing_extensions import Literal  # type: ignore[misc]
 
-__all__ = 'plain_repr', 'Omit', 'Literal'
+__all__ = 'plain_repr', 'PlainRepr', 'Omit', 'Literal'
 
 
 class PlainRepr:
