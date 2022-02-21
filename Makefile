@@ -6,6 +6,7 @@ black = black dirty_equals tests
 install:
 	pip install -r tests/requirements.txt
 	pip install -r tests/requirements-linting.txt
+	pip install -r docs/requirements.txt
 	poetry install
 	pre-commit install
 
