@@ -88,14 +88,14 @@ jobs:
     - name: install
       run: pip install -r docs/requirements.txt
 
-    - name: build site
-      run: make docs
-
     - name: install mkdocs-material-insiders
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
       run: pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
       env:
         GH_TOKEN: ${{ secrets.gh_token }}
+
+    - name: build site
+      run: mkdocs build
 
     - name: Store docs site
       uses: actions/upload-artifact@v2
@@ -107,6 +107,7 @@ jobs:
     needs:
       - test
       - lint
+      - docs
     if: "success() && startsWith(github.ref, 'refs/tags/')"
     runs-on: ubuntu-latest
 
