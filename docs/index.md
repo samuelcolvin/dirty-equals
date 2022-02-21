@@ -52,17 +52,20 @@ from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
 # user_data is a dict returned from a database or API which we want to test
 assert user_data == {
     'id': IsPositiveInt, #(1)!
-    'avatar_file': IsStr(regex=r'/[a-z0-9\-]{10}/example\.png'), #(2)!
-    'settings_json': IsJson({'theme': 'dark', 'language': 'en'}), #(3)!
-    'created_ts': IsNow(delta=3), #(4)!
+    'username': 'samuelcolvin', #(2)!
+    'avatar_file': IsStr(regex=r'/[a-z0-9\-]{10}/example\.png'), #(3)!
+    'settings_json': IsJson({'theme': 'dark', 'language': 'en'}), #(4)!
+    'created_ts': IsNow(delta=3), #(5)!
 }
 ```
 
-1. We don't actually care what the `id` is, just that it's present, it's an `int` and it's a positive.
-2. `avatar_file` is a string, but we don't know all of it, just the format (regex) it should match.
-3. `settings_json` is a `JSON` string, but it's simpler and more robust to confirm it represents a particular python
+1. We don't actually care what the `id` is, just that it's present, it's an `int` and it's positive.
+2. We can use a normal key and value here since we know exactly what value `username` should have before we test it.
+3. `avatar_file` is a string, but we don't know all of the string before the `assert`, 
+   just the format (regex) it should match.
+4. `settings_json` is a `JSON` string, but it's simpler and more robust to confirm it represents a particular python
    object rather than compare strings.
-4. `created_at` is a `datetime`, although we don't know (or care) about its exact value;
+5. `created_at` is a `datetime`, although we don't know (or care) about its exact value;
    since the user was just created we know it must be close to now. `delta` is optional, it defaults to 2 seconds.
 
 
