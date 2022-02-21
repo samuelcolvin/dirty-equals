@@ -35,7 +35,7 @@ Here's a trivial example of what *dirty-equals* can do:
 from dirty_equals import IsPositive
 
 assert 1 == IsPositive #(1)!
-assert -2 == IsPositive  #(2)!
+assert -2 == IsPositive  # this will fail! (2)
 ```
 
 1. This `assert` will pass since `1` is indeed positive, so the result of `1 == IsPositive` is `True`.
