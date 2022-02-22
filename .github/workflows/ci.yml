@@ -95,7 +95,7 @@ jobs:
         GH_TOKEN: ${{ secrets.gh_token }}
 
     - name: build site
-      run: mkdocs build
+      run: mkdocs build --strict
 
     - name: store docs site
       uses: actions/upload-artifact@v2

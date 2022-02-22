@@ -84,13 +84,13 @@ class IsNumeric(DirtyEquals[N]):
             else:
                 delta = self.delta
             return self.approx_equals(other, delta)
-        elif self.gt is not None and other <= self.gt:
+        elif self.gt is not None and not other > self.gt:
             return False
-        elif self.lt is not None and other >= self.lt:
+        elif self.lt is not None and not other < self.lt:
             return False
-        elif self.ge is not None and other < self.ge:
+        elif self.ge is not None and not other >= self.ge:
             return False
-        elif self.le is not None and other > self.le:
+        elif self.le is not None and not other <= self.le:
             return False
         else:
             return True
