@@ -28,7 +28,7 @@
 more declarative and therefore easier to read and write.
 
 *dirty-equals* can be used in whatever context you like, but it comes into its own when writing unit tests for
-applications where you're commonly asserting the response to API calls and content of database rows/objects.
+applications where you're commonly checking the response to API calls and the contents of a database.
 
 ## Usage
 

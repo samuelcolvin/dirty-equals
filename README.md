@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="https://dirty-equals.helpmanual.io/img/logo-text.svg" alt="dirty-equals">
+  <a href="https://dirty-equals.helpmanual.io">
+    <img src="https://dirty-equals.helpmanual.io/img/logo-text.svg" alt="dirty-equals">
+  </a>
 </p>
 <p align="center">
   <em>Doing dirty (but extremely useful) things with equals.</em>
@@ -24,11 +26,17 @@
 
 ---
 
+**Documentation**: [dirty-equals.helpmanual.io](httpss://dirty-equals.helpmanual.io)
+
+**Source Code**: [github.com/samuelcolvin/dirty-equals](https://github.com/samuelcolvin/dirty-equals)
+
+---
+
 **dirty-equals** is a python library that (mis)uses the `__eq__` method to make python code (generally unit tests)
 more declarative and therefore easier to read and write.
 
-**docs**: [dirty-equals.helpmanual.io](httpss://dirty-equals.helpmanual.io)
-**code**: [github.com/samuelcolvin/dirty-equals](https://github.com/samuelcolvin/dirty-equals)
+*dirty-equals* can be used in whatever context you like, but it comes into its own when writing unit tests for
+applications where you're commonly checking the response to API calls and the contents of a database.
 
 ## Usage
 
