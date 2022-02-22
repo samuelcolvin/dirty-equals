@@ -97,7 +97,7 @@ jobs:
     - name: build site
       run: mkdocs build
 
-    - name: Store docs site
+    - name: store docs site
       uses: actions/upload-artifact@v2
       with:
         name: docs
@@ -119,6 +119,12 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: get docs
+        uses: actions/download-artifact@v2
+        with:
+          name: docs
+          path: site
+
       - name: set version
         run: VERSION_PATH=dirty_equals python <(curl -Ls https://bit.ly/set__version__)
 
@@ -127,3 +133,9 @@ jobs:
       - run: poetry publish --build
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.pypi_token }}
+
+      - name: publish docs
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        with:
+          branch: gh-pages
+          folder: site
