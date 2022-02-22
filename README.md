@@ -26,7 +26,7 @@
 
 ---
 
-**Documentation**: [https://dirty-equals.helpmanual.io](httpss://dirty-equals.helpmanual.io)
+**Documentation**: [https://dirty-equals.helpmanual.io](https://dirty-equals.helpmanual.io) (Currently a work in progress!)
 
 **Source Code**: [https://github.com/samuelcolvin/dirty-equals](https://github.com/samuelcolvin/dirty-equals)
 
