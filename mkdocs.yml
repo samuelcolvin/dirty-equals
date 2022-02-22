@@ -32,8 +32,8 @@ repo_url: https://github.com/samuelcolvin/dirty-equals
 edit_uri: ''
 nav:
   - Introduction: index.md
+  - Usage: usage.md
   - Types: types.md
-  - Boolean Logic: boolean-logic.md
 
 markdown_extensions:
   - toc:
@@ -49,9 +49,9 @@ markdown_extensions:
   - md_in_html
 
 extra:
-#  analytics:
-#    provider: google
-#    property: ...
+  analytics:
+    provider: google
+    property: G-FLP20728CW
   social:
   - icon: fontawesome/brands/github-alt
     link: https://github.com/samuelcolvin/dirty-equals
