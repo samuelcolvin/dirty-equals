@@ -32,29 +32,26 @@ repo_url: https://github.com/samuelcolvin/dirty-equals
 edit_uri: ''
 nav:
   - Introduction: index.md
-  - types.md
+  - Usage: usage.md
+  - Types: types.md
 
 markdown_extensions:
-#  - toc:
-#      permalink: true
-#  - markdown.extensions.codehilite:
-#      guess_lang: false
+  - toc:
+      permalink: true
   - admonition
-#  - codehilite
-#  - extra
+  - pymdownx.details
+  - pymdownx.superfences
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
   - attr_list
   - md_in_html
-  - pymdownx.superfences
 
 extra:
-#  analytics:
-#    provider: google
-#    property: ...
+  analytics:
+    provider: google
+    property: G-FLP20728CW
   social:
   - icon: fontawesome/brands/github-alt
     link: https://github.com/samuelcolvin/dirty-equals
