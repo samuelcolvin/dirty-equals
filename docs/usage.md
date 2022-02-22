@@ -1,4 +1,5 @@
 To do:
+
 * initialised comparison vs. bare class comparison
 * accessing `.value`
 * boolean logic
