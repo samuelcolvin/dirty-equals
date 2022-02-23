@@ -1,9 +1,4 @@
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal  # type: ignore[misc]
-
-__all__ = 'plain_repr', 'PlainRepr', 'Omit', 'Literal'
+__all__ = 'plain_repr', 'PlainRepr', 'Omit'
 
 
 class PlainRepr:
