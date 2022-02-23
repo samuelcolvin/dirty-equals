@@ -1,9 +1,18 @@
+from __future__ import annotations
+
 from typing import Any, Callable, Container, Dict, Optional, Union, overload
 
 from dirty_equals._base import DirtyEquals
 
 
 class IsDict(DirtyEquals[Dict[Any, Any]]):
+    """
+    Base class for comparing dictionaries. By default, `IsDict` isn't particularly useful on its own
+    (it behaves pretty much like a normal `dict`), but it can be subclassed
+    (see [`IsPartialDict`][dirty_equals.IsPartialDict] and [`IsStrictDict`][dirty_equals.IsStrictDict]) or modified
+    with `.settings(...)` to powerful things.
+    """
+
     @overload
     def __init__(self, expected: Dict[Any, Any]):
         ...
@@ -12,7 +21,17 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
     def __init__(self, **expected: Any):
         ...
 
-    def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any) -> None:
+    def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any):
+        """
+        Can be created from either key word arguments or an existing dictionary (same as `dict()`).
+
+        ```py title="IsDict"
+        from dirty_equals import IsDict
+
+        assert {'a': 1, 'b': 2} == IsDict(a=1, b=2)
+        assert {1: 2, 3: 4} == IsDict({1: 2, 3: 4})
+        ```
+        """
         if expected_kwargs:
             self.expected_values = expected_kwargs
             if expected_args:
@@ -42,7 +61,34 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         strict: Optional[bool] = None,
         partial: Optional[bool] = None,
         ignore_values: Union[None, Container[Any], Callable[[Any], bool]] = None,
-    ) -> 'IsDict':
+    ) -> IsDict:
+        """
+        Allows you to customise the behaviour of `IsDict`, technically a new `IsDict` is required to allow chaining.
+
+        Args:
+            strict: If `True`, the order of key/value pairs must match.
+            partial: If `True`, values are ignored if they match `ignore_values`.
+            ignore_values: Values to ignore in comparison if `partial` is `True`, defaults to `{None}`. Can be either
+                a set of values to ignore, or a function that takes a value and should return `True` if the value should
+                be ignored.
+
+        ```py title="IsDict.settings(...)"
+        from dirty_equals import IsDict
+
+        assert {'a': 1, 'b': 2, 'c': None} != IsDict(a=1, b=2)
+        assert {'a': 1, 'b': 2, 'c': None} == IsDict(a=1, b=2).settings(partial=True) # (1)!
+
+        assert {'b': 2, 'a': 1} == IsDict(a=1, b=2)
+        assert {'b': 2, 'a': 1} != IsDict(a=1, b=2).settings(strict=True) # (2)!
+
+        # combining partial and strict
+        assert {'a': 1, 'b': 2, 'c': 3} == IsDict(a=1, c=3).settings(strict=True, partial=True)
+        assert {'b': 2, 'c': 3, 'a': 1} != IsDict(a=1, c=3).settings(strict=True, partial=True)
+        ```
+
+        1. This is the same as [`IsPartialDict(a=1, b=2)`][dirty_equals.IsPartialDict]
+        2. This is the same as [`IsStrictDict(a=1, b=2)`][dirty_equals.IsStrictDict]
+        """
         new_cls = self.__class__(self.expected_values)
         new_cls.__dict__ = self.__dict__.copy()
         if strict is not None:
@@ -101,10 +147,55 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
 
 
 class IsPartialDict(IsDict):
+    """
+    Partial dictionary comparison, this is the same as
+    [`IsDict(...).settings(partial=True)`][dirty_equals.IsDict.settings].
+
+    Again, `.settings(...)` can be used to customise the behaviour of `IsPartialDict`.
+
+    ```py title="IsPartialDict"
+    from dirty_equals import IsPartialDict
+
+    assert {'a': 1, 'b': 2, 'c': None} == IsPartialDict(a=1, b=2)
+    assert {'a': 1, 'b': 2, 'c': None, 'c': 'ignore'} == (
+        IsPartialDict(a=1, b=2).settings(ignore_values={None, 'ignore'})
+    )
+
+
+    def custom_ignore(v: Any) -> bool:
+        return v % 2 == 0
+
+    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} != (
+        IsPartialDict(a=1, c=3).settings(ignore_values=custom_ignore)
+    )
+
+    # combining partial and strict
+    assert {'a': 1, 'b': 2, 'c': 3} == IsPartialDict(a=1, c=3).settings(strict=True)
+    assert {'b': 2, 'c': 3, 'a': 1} != IsPartialDict(a=1, c=3).settings(strict=True)
+    ```
+    """
+
     def _post_init(self) -> None:
         self.partial = True
 
 
 class IsStrictDict(IsDict):
+    """
+    Dictionary comparison with order enforced, this is the same as
+    [`IsDict(...).settings(strict=True)`][dirty_equals.IsDict.settings].
+
+    ```py title="IsDict.settings(...)"
+    from dirty_equals import IsDict
+
+    assert {'a': 1, 'b': 2} == IsStrictDict(a=1, b=2)
+    assert {'a': 1, 'b': 2, 'c': 3} != IsStrictDict(a=1, b=2)
+    assert {'b': 2, 'a': 1} != IsStrictDict(a=1, b=2)
+
+    # combining partial and strict
+    assert {'a': 1, 'b': 2, 'c': 3} == IsStrictDict(a=1, c=3).settings(partial=True)
+    assert {'b': 2, 'c': 3, 'a': 1} != IsStrictDict(a=1, c=3).settings(partial=True)
+    ```
+    """
+
     def _post_init(self) -> None:
         self.strict = True

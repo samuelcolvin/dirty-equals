@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, tzinfo
+from datetime import datetime, timedelta, timezone, tzinfo
 from typing import Any, Optional, Union
 
 from ._numeric import IsNumeric
@@ -6,7 +6,11 @@ from ._utils import Omit
 
 
 class IsDatetime(IsNumeric[datetime]):
-    types = datetime
+    """
+    Check if the value is a datetime, and matches the given conditions.
+    """
+
+    allowed_types = datetime
 
     def __init__(
         self,
@@ -22,6 +26,37 @@ class IsDatetime(IsNumeric[datetime]):
         format_string: Optional[str] = None,
         enforce_tz: bool = True,
     ):
+        """
+        Args:
+            approx: A value to approximately compare to.
+            delta: The allowable different when comparing to the value to `approx`, if omitted 2 seconds is used,
+                ints and floats are assumed to represent seconds and converted to `timedelta`s.
+            gt: Value which the compared value should be greater than (after).
+            lt: Value which the compared value should be less than (before).
+            ge: Value which the compared value should be greater than (after) or equal to.
+            le: Value which the compared value should be less than (before) or equal to.
+            unix_number: whether to allow unix timestamp numbers in comparison
+            iso_string: whether to allow iso formatted strings in comparison
+            format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
+            enforce_tz: whether timezone should be enforced in comparison, see below for more details
+
+        Examples of basic usage:
+
+        ```py title="IsDatetime"
+        from dirty_equals import IsDatetime
+        from datetime import datetime
+
+        y2k = datetime(2000, 1, 1)
+        assert datetime(2000, 1, 1) == IsDatetime(approx=y2k)
+        # Note: this requires the system timezone to be UTC
+        assert 946684800.123 == IsDatetime(approx=y2k, unix_number=True)
+        assert datetime(2000, 1, 1, 0, 0, 9) == IsDatetime(approx=y2k, delta=10)
+        assert '2000-01-01T00:00' == IsDatetime(approx=y2k, iso_string=True)
+
+        assert datetime(2000, 1, 2) == IsDatetime(gt=y2k)
+        assert datetime(1999, 1, 2) != IsDatetime(gt=y2k)
+        ```
+        """
         if isinstance(delta, (int, float)):
             delta = timedelta(seconds=delta)
 
@@ -82,8 +117,14 @@ class IsDatetime(IsNumeric[datetime]):
 
 
 class IsNow(IsDatetime):
+    """
+    Check if a datetime is close to now, this is similar to `IsDatetime(approx=datetime.now())`,
+    but slightly more powerful.
+    """
+
     def __init__(
         self,
+        *,
         delta: Union[timedelta, int, float] = 2,
         unix_number: bool = False,
         iso_string: bool = False,
@@ -91,13 +132,39 @@ class IsNow(IsDatetime):
         enforce_tz: bool = True,
         tz: Union[None, str, tzinfo] = None,
     ):
+        """
+        Args:
+            delta: The allowable different when comparing to the value to now, if omitted 2 seconds is used,
+                ints and floats are assumed to represent seconds and converted to `timedelta`s.
+            unix_number: whether to allow unix timestamp numbers in comparison
+            iso_string: whether to allow iso formatted strings in comparison
+            format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
+            enforce_tz: whether timezone should be enforced in comparison, see below for more details
+            tz: either a `pytz.timezone`, a `datetime.timezone` or a string which will be passed to `pytz.timezone`,
+                if provided now will be converted to this timezone.
+
+        ```py title="IsNow"
+        from dirty_equals import IsNow
+        from datetime import datetime, timezone
+
+        now = datetime.now()
+        assert now == IsNow
+        assert now.timestamp() == IsNow(unix_number=True)
+        assert now.timestamp() != IsNow
+        assert now.isoformat() == IsNow(iso_string=True)
+        assert now.isoformat() != IsNow
+
+        utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+        assert utc_now == IsNow(tz=timezone.utc)
+        ```
+        """
         if isinstance(tz, str):
             import pytz
 
             tz = pytz.timezone(tz)
 
         if tz is not None:
-            now = datetime.utcnow().astimezone(tz)
+            now = datetime.utcnow().replace(tzinfo=timezone.utc).astimezone(tz)
         else:
             now = datetime.now()
 

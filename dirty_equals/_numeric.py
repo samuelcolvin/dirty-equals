@@ -49,8 +49,8 @@ class IsNumeric(DirtyEquals[N]):
     ):
         """
         Args:
-            approx: The approximate value to compare to.
-            delta: The delta to use when comparing to the approximate value,
+            approx: A value to approximately compare to.
+            delta: The allowable different when comparing to the value to `approx`,
                 if omitted `value / 100` is used except for datetimes where 2 seconds is used.
             gt: Value which the compared value should be greater than.
             lt: Value which the compared value should be less than.
@@ -114,7 +114,7 @@ class IsNumeric(DirtyEquals[N]):
                 if isinstance(other, date):
                     delta: Any = timedelta(seconds=2)
                 else:
-                    delta = other / 100
+                    delta = abs(other / 100)
             else:
                 delta = self.delta
             return self.approx_equals(other, delta)
@@ -157,8 +157,8 @@ class IsApprox(IsNumber):
     def __init__(self, approx: Num, *, delta: Optional[Num] = None):
         """
         Args:
-            approx: The approximate value to compare to.
-            delta: The delta to use when comparing to the approximate value, f omitted `value / 100` is used.
+            approx: A value to approximately compare to.
+            delta: The allowable different when comparing to the value to `approx`, if omitted `value / 100` is used.
 
         ```py title="IsApprox"
         from dirty_equals import IsApprox

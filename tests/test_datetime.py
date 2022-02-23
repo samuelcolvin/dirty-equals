@@ -10,7 +10,9 @@ from dirty_equals import IsDatetime, IsNow
     'value,dirty,expect_match',
     [
         pytest.param(datetime(2000, 1, 1), IsDatetime(approx=datetime(2000, 1, 1)), True, id='same'),
+        # Note: this requires the system timezone to be UTC
         pytest.param(946684800, IsDatetime(approx=datetime(2000, 1, 1), unix_number=True), True, id='unix-int'),
+        # Note: this requires the system timezone to be UTC
         pytest.param(946684800.123, IsDatetime(approx=datetime(2000, 1, 1), unix_number=True), True, id='unix-float'),
         pytest.param(946684800, IsDatetime(approx=datetime(2000, 1, 1)), False, id='unix-different'),
         pytest.param(
@@ -101,8 +103,34 @@ def test_is_now_tz():
     assert now_ny == IsNow(tz='America/New_York')
     assert now_ny == IsNow(tz=timezone(timedelta(hours=-5)))
 
+    now = datetime.now()
+    assert now == IsNow
+    assert now.timestamp() == IsNow(unix_number=True)
+    assert now.timestamp() != IsNow
+    assert now.isoformat() == IsNow(iso_string=True)
+    assert now.isoformat() != IsNow
+
+    utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+    assert utc_now == IsNow(tz=timezone.utc)
+
 
 def test_delta():
     assert IsNow(delta=timedelta(hours=2)).delta == timedelta(seconds=7200)
     assert IsNow(delta=3600).delta == timedelta(seconds=3600)
     assert IsNow(delta=3600.1).delta == timedelta(seconds=3600, microseconds=100000)
+
+
+def test_tz():
+    new_year_london = pytz.timezone('Europe/London').localize(datetime(2000, 1, 1))
+
+    new_year_eve_nyc = pytz.timezone('America/New_York').localize(datetime(1999, 12, 31, 19, 0, 0))
+
+    assert new_year_eve_nyc == IsDatetime(approx=new_year_london, enforce_tz=False)
+    assert new_year_eve_nyc != IsDatetime(approx=new_year_london, enforce_tz=True)
+
+    new_year_naive = datetime(2000, 1, 1)
+
+    assert new_year_naive != IsDatetime(approx=new_year_london, enforce_tz=False)
+    assert new_year_naive != IsDatetime(approx=new_year_eve_nyc, enforce_tz=False)
+    assert new_year_london == IsDatetime(approx=new_year_naive, enforce_tz=False)
+    assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)

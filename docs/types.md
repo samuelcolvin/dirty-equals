@@ -1,79 +1,137 @@
 ## Numeric Types
 
 ::: dirty_equals.IsInt
+    rendering:
+      merge_init_into_class: false
+      separate_signature: false
 
 ::: dirty_equals.IsFloat
+    rendering:
+      merge_init_into_class: false
+      separate_signature: false
 
 ::: dirty_equals.IsPositive
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsNegative
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsNonNegative
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsNonPositive
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsPositiveInt
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsNegativeInt
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsPositiveFloat
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsNegativeFloat
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsApprox
-    rendering:
-      merge_init_into_class: true
-      show_signature_annotations: true
-      separate_signature: true
 
 ::: dirty_equals.IsNumber
+    rendering:
+      merge_init_into_class: false
 
 ::: dirty_equals.IsNumeric
-    rendering:
-      merge_init_into_class: true
-      show_signature_annotations: true
-      separate_signature: true
 
 ## Date and Time Types
 
-### `IsDatetime`
+::: dirty_equals.IsDatetime
 
-### `IsNow`
+#### Timezones
+
+Timezones are hard, anyone who claims otherwise is either a genius, a liar, or an idiot.
+
+`IsDatetime` and its subtypes (e.g. [`IsNow`][dirty_equals.IsNow]) can be used in two modes,
+based on the `enforce_tz` parameter:
+
+* `enforce_tz=True` (the default):
+    * if the datetime wrapped by `IsDatetime` is timezone naive, the compared value must also be timezone naive.
+    * if the datetime wrapped by `IsDatetime` has a timezone, the compared value must have a 
+      timezone with the same offset.
+* `enforce_tz=False`:
+    * if the datetime wrapped by `IsDatetime` is timezone naive, the compared value can either be naive or have a 
+      timezone all that matters is the datetime values match.
+    * if the datetime wrapped by `IsDatetime` has a timezone, the compared value needs to represent the same point in 
+      time - either way it must have a timezone.
+
+Example
+
+```py title="IsDatetime & timezones"
+from datetime import datetime, timezone
+
+from dirty_equals import IsDatetime
+import pytz
+
+tz_london = pytz.timezone('Europe/London')
+new_year_london = .localize(datetime(2000, 1, 1))
+
+tz_nyc = pytz.timezone('America/New_York')
+new_year_eve_nyc = tz_nyc.localize(datetime(1999, 12, 31, 19, 0, 0))
+
+assert new_year_eve_nyc == IsDatetime(approx=new_year_london, enforce_tz=False)
+assert new_year_eve_nyc != IsDatetime(approx=new_year_london, enforce_tz=True)
+
+new_year_naive = datetime(2000, 1, 1)
+
+assert new_year_naive != IsDatetime(approx=new_year_london, enforce_tz=False)
+assert new_year_naive != IsDatetime(approx=new_year_eve_nyc, enforce_tz=False)
+assert new_year_london == IsDatetime(approx=new_year_naive, enforce_tz=False)
+assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
+```
+
+::: dirty_equals.IsNow
 
 # Dictionary Types
 
-### `IsDict`
+::: dirty_equals.IsDict
 
-### `IsPartialDict`
+::: dirty_equals.IsPartialDict
 
-### `IsStrictDict`
+::: dirty_equals.IsStrictDict
 
 ## List and Tuples Types
 
-### `HasLen`
+::: dirty_equals.HasLen
 
-### `IsList`
+::: dirty_equals.IsList
 
-### `IsTuple`
+::: dirty_equals.IsTuple
 
-### `IsListOrTuple`
+::: dirty_equals.IsListOrTuple
 
 ## String Types
 
-### `IsStr`
+::: dirty_equals.IsStr
 
-### `IsBytes`
+::: dirty_equals.IsBytes
 
-### `IsAnyStr`
+::: dirty_equals.IsAnyStr
 
 ## Other Types
 
-### `FunctionCheck`
+::: dirty_equals.FunctionCheck
 
-### `IsInstance`
+::: dirty_equals.IsInstance
 
-### `IsJson`
+::: dirty_equals.IsJson
 
-### `IsUUID`
+::: dirty_equals.IsUUID
 
-### `AnyThing`
+::: dirty_equals.AnyThing
