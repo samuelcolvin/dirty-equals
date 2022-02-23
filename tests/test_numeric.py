@@ -36,6 +36,7 @@ from dirty_equals import (
         (1, IsApprox(1)),
         (1, IsApprox(2, delta=1)),
         (100, IsApprox(99)),
+        (-100, IsApprox(-99)),
         (0, IsNonNegative),
         (1, IsNonNegative),
         (0.0, IsNonNegative),

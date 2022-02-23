@@ -3,10 +3,19 @@ from typing import Any, Callable
 from uuid import UUID
 
 from ._base import DirtyEquals
-from ._utils import Literal, plain_repr
+from ._utils import plain_repr
+
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal  # type: ignore[misc]
 
 
 class IsUUID(DirtyEquals[UUID]):
+    """
+    A class that checks if a value is a UUID. TODO.
+    """
+
     def __init__(self, version: Literal[None, 1, 2, 3, 4, 5] = None):
         self.version = version
         super().__init__(version or plain_repr('*'))
@@ -29,6 +38,10 @@ AnyJson = object
 
 
 class IsJson(DirtyEquals[Any]):
+    """
+    A class that checks if a value is a JSON object. TODO.
+    """
+
     def __init__(self, expected_value: Any = AnyJson):
         self.expected_value = expected_value
         super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)

@@ -1,6 +1,7 @@
 site_name: dirty-equals
 site_description: Doing dirty (but extremely useful) things with equals.
 site_url: https://dirty-equals.helpmanual.io
+
 theme:
   name: material
   palette:
@@ -38,6 +39,7 @@ nav:
 markdown_extensions:
   - toc:
       permalink: true
+      toc_depth: 3
   - admonition
   - pymdownx.details
   - pymdownx.superfences
@@ -60,3 +62,17 @@ extra:
     link: https://github.com/samuelcolvin/dirty-equals
   - icon: fontawesome/brands/twitter
     link: https://twitter.com/samuel_colvin
+
+plugins:
+  - mkdocstrings:
+      watch: [dirty_equals]
+      handlers:
+        python:
+          rendering:
+            show_root_heading: true
+            show_root_full_path: false
+            show_source: false
+            heading_level: 3
+            merge_init_into_class: true
+            show_signature_annotations: true
+            separate_signature: true

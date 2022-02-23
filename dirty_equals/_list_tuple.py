@@ -12,6 +12,10 @@ LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]]]'
 
 
 class HasLen(DirtyEquals[Sized]):
+    """
+    Check that some has a given length, or length in a given range.
+    """
+
     @overload
     def __init__(self, length: int):
         ...
@@ -21,6 +25,25 @@ class HasLen(DirtyEquals[Sized]):
         ...
 
     def __init__(self, min_length: int, max_length: Union[None, int, Any] = None):  # type: ignore[misc]
+        """
+        Args:
+            min_length: Expected length if `max_length` is not given, else minimum length.
+            max_length: Expected maximum length, use an ellipsis `...` to indicate that there's no maximum.
+
+        ```py title="HasLen"
+        from dirty_equals import HasLen
+
+        assert [1, 2, 3] == HasLen(3) # (1)!
+        assert '123' == HasLen(3, ...) # (2)!
+        assert (1, 2, 3) == HasLen(3, 5) # (3)!
+        assert (1, 2, 3) == HasLen(0, ...) # (4)!
+        ```
+
+        1. Length must be 3.
+        2. Length must be 3 or higher.
+        3. Length must be between 3 and 5 inclusive.
+        4. Length is required but can take any value.
+        """
         if max_length is None:
             self.length: 'LengthType' = min_length
             super().__init__(self.length)
@@ -33,7 +56,11 @@ class HasLen(DirtyEquals[Sized]):
 
 
 class IsListOrTuple(DirtyEquals[T]):
-    expected_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
+    """
+    Check that some object is a list or tuple and optionally its values match some constraints.
+    """
+
+    allowed_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
 
     @overload
     def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None):
@@ -49,7 +76,56 @@ class IsListOrTuple(DirtyEquals[T]):
         positions: Optional[Dict[int, Any]] = None,
         check_order: bool = True,
         length: 'LengthType' = None,
-    ) -> None:
+    ):
+        """
+        `IsListOrTuple` and its subclasses can be initialised in two ways:
+
+        Args:
+            *items: Positional members of an object to check. These must start from the zeroth position, but
+                (depending on the value of `length`) may not include all values of the list/tuple being checked.
+            check_order: Whether to enforce the order of the items.
+            length (Union[int, Tuple[int, Union[int, Any]]]): length constraints, int or tuple matching the arguments
+                of [`HasLen`][dirty_equals.HasLen].
+
+        or,
+
+        Args:
+            positions (Dict[int, Any]): Instead of `*items`, a dictionary of positions and
+                values to check and be provided.
+            length (Union[int, Tuple[int, Union[int, Any]]]): length constraints, int or tuple matching the arguments
+                of [`HasLen`][dirty_equals.HasLen].
+
+        ```py title="IsListOrTuple"
+        from dirty_equals import IsListOrTuple
+
+        assert [1, 2, 3] == IsListOrTuple(1, 2, 3)
+        assert (1, 3, 2) == IsListOrTuple(1, 2, 3, check_order=False)
+        assert [{'a': 1}, {'a': 2}] == (
+            IsListOrTuple({'a': 2}, {'a': 1}, check_order=False) # (1)!
+        )
+        assert [1, 2, 3, 3] == IsListOrTuple(1, 2, 3, check_order=False) # (2)!
+
+        assert [1, 2, 3, 4, 5] == IsListOrTuple(1, 2, 3, length=...) # (3)!
+        assert [1, 2, 3, 4, 5] != IsListOrTuple(1, 2, 3, length=(8, 10)) # (4)!
+
+        assert ['a', 'b', 'c', 'd'] == (
+            IsListOrTuple(positions={2: 'c', 3: 'd'}) # (5)!
+        )
+        assert ['a', 'b', 'c', 'd'] == (
+            IsListOrTuple(positions={2: 'c', 3: 'd'}, length=4) # (6)!
+        )
+
+        assert [1, 2, 3, 4] == IsListOrTuple(3, check_order=False, length=(0, ...)) # (7)!
+        ```
+
+        1. Unlike using sets for comparison, we can do order-insensitive comparisons on objects that are not hashable.
+        2. And we won't get caught out be duplicate values
+        3. Here we're just checking the first 3 items, the compared list or tuple can be of any length
+        4. Compared list is not long enough
+        5. Compare using `positions`, here no length if enforced
+        6. Compare using `positions` but with a length constraint
+        7. Here we're just confirming that the value `3` is in the list.
+        """
         if positions is not None:
             self.positions: Optional[Dict[int, Any]] = positions
             if items:
@@ -73,7 +149,7 @@ class IsListOrTuple(DirtyEquals[T]):
         )
 
     def equals(self, other: Any) -> bool:  # noqa: C901
-        if not isinstance(other, self.expected_type):
+        if not isinstance(other, self.allowed_type):
             return False
 
         if not _length_correct(self.length, other):
@@ -103,11 +179,39 @@ class IsListOrTuple(DirtyEquals[T]):
 
 
 class IsList(IsListOrTuple[List[Any]]):
-    expected_type = list
+    """
+    All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a list.
+
+    ```py title="IsList"
+    from dirty_equals import IsList
+
+    assert [1, 2, 3] == IsList(1, 2, 3)
+    assert [1, 2, 3] == IsList(positions={2: 3})
+    assert [1, 2, 3] == IsList(1, 2, 3, check_order=False)
+
+    assert (1, 2, 3) != IsList(1, 2, 3)
+    ```
+    """
+
+    allowed_type = list
 
 
 class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
-    expected_type = tuple
+    """
+    All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a tuple.
+
+    ```py title="IsTuple"
+    from dirty_equals import IsTuple
+
+    assert (1, 2, 3) == IsTuple(1, 2, 3)
+    assert (1, 2, 3) == IsTuple(positions={2: 3})
+    assert (1, 2, 3) == IsTupleOrTuple(1, 2, 3, check_order=False)
+
+    assert [1, 2, 3] != IsTuple(1, 2, 3)
+    ```
+    """
+
+    allowed_type = tuple
 
 
 def _length_repr(length: 'LengthType') -> Any:
