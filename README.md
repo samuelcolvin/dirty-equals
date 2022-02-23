@@ -26,9 +26,9 @@
 
 ---
 
-**Documentation**: [https://dirty-equals.helpmanual.io](https://dirty-equals.helpmanual.io) (Currently a work in progress!)
+**Documentation**: [dirty-equals.helpmanual.io](https://dirty-equals.helpmanual.io) (Currently a work in progress!)
 
-**Source Code**: [https://github.com/samuelcolvin/dirty-equals](https://github.com/samuelcolvin/dirty-equals)
+**Source Code**: [github.com/samuelcolvin/dirty-equals](https://github.com/samuelcolvin/dirty-equals)
 
 ---
 
@@ -49,7 +49,7 @@ assert 1 == IsPositive
 assert -2 == IsPositive  # this will fail!
 ```
 
-**That doesn't look very useful yet!**, but consider the following unit test code using **dirty-equals**:
+**That doesn't look very useful yet!**, but consider the following unit test code using *dirty-equals*:
 
 ```py title="More Powerful Usage"
 from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
@@ -69,16 +69,21 @@ assert user_data == {
 }
 ```
 
-Without **dirty-equals**, you'd have to compare individual fields and/or modify some fields before comparison -
+Without *dirty-equals*, you'd have to compare individual fields and/or modify some fields before comparison -
 the test would not be declarative or as clear.
 
-**dirty-equals** can do so much more than that, for example:
+*dirty-equals* can do so much more than that, for example:
 
-* `PartialDict` let's you compare a subset of a dictionary
-* `IsStrictDict` let's you confirm order in a dictionary
-* `IsList` and `IsTuple` lets you compare partial lists and tuples, with or without order constraints
+* [`IsPartialDict`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsPartialDict) 
+  let's you compare a subset of a dictionary
+* [`IsStrictDict`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsStrictDict) 
+  let's you confirm order in a dictionary
+* [`IsList`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsList) and 
+  [`IsTuple`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsTuple)
+  lets you compare partial lists and tuples, with or without order constraints
 * nesting any of these types inside any others
-* `IsInstance` lets you simply confirm the type of an object
+* [`IsInstance`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsInstance) 
+  lets you simply confirm the type of an object
 * You can even use boolean operators `|` and `&` to combine multiple conditions
 * and much more...
 
