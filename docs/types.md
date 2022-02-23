@@ -98,7 +98,7 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 
 ::: dirty_equals.IsNow
 
-# Dictionary Types
+## Dictionary Types
 
 ::: dirty_equals.IsDict
 
@@ -110,11 +110,11 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 
 ::: dirty_equals.HasLen
 
+::: dirty_equals.IsListOrTuple
+
 ::: dirty_equals.IsList
 
 ::: dirty_equals.IsTuple
-
-::: dirty_equals.IsListOrTuple
 
 ## String Types
 
@@ -135,3 +135,5 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 ::: dirty_equals.IsUUID
 
 ::: dirty_equals.AnyThing
+
+::: dirty_equals._base.DirtyEquals

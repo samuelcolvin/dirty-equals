@@ -26,14 +26,26 @@ class IsStrBytesBase(DirtyEquals[T]):
 
 
 class IsStr(IsStrBytesBase[str]):
+    """
+    Checks if the value is a string. TODO.
+    """
+
     expected_type = str
 
 
 class IsBytes(IsStrBytesBase[bytes]):
+    """
+    Checks if the value is a bytes object. TODO.
+    """
+
     expected_type = bytes
 
 
 class IsAnyStr(DirtyEquals[Union[str, bytes]]):
+    """
+    Checks if the value is a string or bytes object. TODO.
+    """
+
     def __init__(self, *, regex: Union[None, str, bytes] = None, regex_flags: re.RegexFlag = re.S):
         if isinstance(regex, str):
             self.regex: Optional[bytes] = regex.encode()

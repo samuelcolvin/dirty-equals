@@ -49,6 +49,10 @@ T = TypeVar('T')
 
 
 class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
+    """
+    Base type for all dirty-equals types.
+    """
+
     __slots__ = '_other', '_was_equal', '_repr_args', '_repr_kwargs'
 
     def __init__(self, *repr_args: Any, **repr_kwargs: Any):
@@ -58,10 +62,16 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         self._repr_kwargs: Dict[str, Any] = repr_kwargs
 
     def equals(self, other: Any) -> bool:
+        """
+        Abstract method, must be implemented by subclasses.
+        """
         raise NotImplementedError()
 
     @property
     def value(self) -> T:
+        """
+        Returns the value last successfully compared to this type.
+        """
         if self._was_equal:
             return self._other
         else:
@@ -77,9 +87,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         return self._was_equal
 
     def __ne__(self, other: Any) -> bool:
-        """
-        We don't set _was_equal to avoid strange errors in pytest
-        """
+        # We don't set _was_equal to avoid strange errors in pytest
         self._other = other
         try:
             return not self.equals(other)
@@ -164,6 +172,10 @@ class IsInstanceMeta(DirtyEqualsMeta):
 
 
 class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
+    """
+    A type which checks that the value is an instance of the expected type. TODO.
+    """
+
     def __init__(self, expected_type: ExpectedType, only_direct_instance: bool = False):
         self.expected_type = expected_type
         self.only_direct_instance = only_direct_instance
@@ -177,5 +189,9 @@ class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
 
 
 class AnyThing(DirtyEquals[Any]):
+    """
+    A type which matches any value. TODO.
+    """
+
     def equals(self, other: Any) -> bool:
         return True
