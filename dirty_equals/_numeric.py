@@ -27,7 +27,15 @@ N = TypeVar('N', int, float, Decimal, date, datetime, AnyNumber)
 
 
 class IsNumeric(DirtyEquals[N]):
-    types: Union[Type[N], Tuple[type, ...]] = (int, float, Decimal, date, datetime)
+    """
+    Base class for all numeric types, `IsNumeric` implements approximate and inequality comparisons,
+    as well as the type checks.
+
+    This class can be used directly or via any of its subclasses.
+    """
+
+    allowed_types: Union[Type[N], Tuple[type, ...]] = (int, float, Decimal, date, datetime)
+    """It allows any of the types supported in its subclasses."""
 
     def __init__(
         self,
@@ -39,6 +47,32 @@ class IsNumeric(DirtyEquals[N]):
         ge: Optional[N] = None,
         le: Optional[N] = None,
     ):
+        """
+        Args:
+            approx: The approximate value to compare to.
+            delta: The delta to use when comparing to the approximate value,
+                if omitted `value / 100` is used except for datetimes where 2 seconds is used.
+            gt: Value which the compared value should be greater than.
+            lt: Value which the compared value should be less than.
+            ge: Value which the compared value should be greater than or equal to.
+            le: Value which the compared value should be less than or equal to.
+
+        If not values are provided, only the type is checked.
+
+        If `approx` is provided as well a `gt`, `lt`, `ge`, or `le`, a `TypeError` is raised.
+
+        Example of direct usage:
+
+        ```py title="IsNumeric"
+        from dirty_equals import IsNumeric
+        from datetime import datetime
+
+        assert 1.0 == IsNumeric
+        assert 4 == IsNumeric(gt=3)
+        d = datetime(2020, 1, 1, 12, 0, 0)
+        assert d == IsNumeric(approx=datetime(2020, 1, 1, 12, 0, 1))
+        ```
+        """
         self.approx: Optional[N] = approx
         self.delta: Optional[N] = delta
         if self.approx is not None and (gt, lt, ge, le) != (None, None, None, None):
@@ -61,8 +95,8 @@ class IsNumeric(DirtyEquals[N]):
     def prepare(self, other: Any) -> N:
         if other is True or other is False:
             raise TypeError('booleans are not numbers')
-        elif not isinstance(other, self.types):
-            raise TypeError(f'not a {self.types}')
+        elif not isinstance(other, self.allowed_types):
+            raise TypeError(f'not a {self.allowed_types}')
         else:
             return other
 
@@ -78,7 +112,7 @@ class IsNumeric(DirtyEquals[N]):
         if self.approx is not None:
             if self.delta is None:
                 if isinstance(other, date):
-                    delta: Any = timedelta(seconds=1)
+                    delta: Any = timedelta(seconds=2)
                 else:
                     delta = other / 100
             else:
@@ -100,68 +134,258 @@ class IsNumeric(DirtyEquals[N]):
 
 
 class IsNumber(IsNumeric[AnyNumber]):
-    types = int, float, Decimal
+    """
+    Base class for all types that can be used with all number types, e.g. numeric but not `date` or `datetime`.
+
+    Inherits from [`IsNumeric`][dirty_equals.IsNumeric] and can therefore be initialised with any of its arguments.
+    """
+
+    allowed_types = int, float, Decimal
+    """
+    It allows any of the number types.
+    """
 
 
 Num = TypeVar('Num', int, float, Decimal)
 
 
 class IsApprox(IsNumber):
+    """
+    Simplified subclass of [`IsNumber`][dirty_equals.IsNumber] that only allows approximate comparisons.
+    """
+
     def __init__(self, approx: Num, *, delta: Optional[Num] = None):
+        """
+        Args:
+            approx: The approximate value to compare to.
+            delta: The delta to use when comparing to the approximate value, f omitted `value / 100` is used.
+
+        ```py title="IsApprox"
+        from dirty_equals import IsApprox
+
+        assert 1.0 == IsApprox(1)
+        assert 123 == IsApprox(120, delta=4)
+        assert 201 == IsApprox(200)
+        assert 201 == IsApprox(200, delta=0.1)
+        ```
+        """
         super().__init__(approx=approx, delta=delta)
 
 
 class IsPositive(IsNumber):
+    """
+    Check that a value is positive (`> 0`), can be an `int`, a `float` or a `Decimal`
+    (or indeed any value which implements `__gt__` for `0`).
+
+    ```py title="IsPositive"
+    from decimal import Decimal
+    from dirty_equals import IsPositive
+
+    assert 1.0 == IsPositive
+    assert 1 == IsPositive
+    assert Decimal('3.14') == IsPositive
+    assert 0 != IsPositive
+    assert -1 != IsPositive
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(gt=0)
         self._repr_kwargs = {}
 
 
 class IsNegative(IsNumber):
+    """
+    Check that a value is negative (`< 0`), can be an `int`, a `float` or a `Decimal`
+    (or indeed any value which implements `__lt__` for `0`).
+
+    ```py title="IsNegative"
+    from decimal import Decimal
+    from dirty_equals import IsNegative
+
+    assert -1.0 == IsNegative
+    assert -1 == IsNegative
+    assert Decimal('-3.14') == IsNegative
+    assert 0 != IsNegative
+    assert 1 != IsNegative
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(lt=0)
         self._repr_kwargs = {}
 
 
-class IsNonPositive(IsNumber):
-    def __init__(self) -> None:
-        super().__init__(le=0)
-        self._repr_kwargs = {}
-
-
 class IsNonNegative(IsNumber):
+    """
+    Check that a value is positive or zero (`>= 0`), can be an `int`, a `float` or a `Decimal`
+    (or indeed any value which implements `__ge__` for `0`).
+
+    ```py title="IsNonNegative"
+    from decimal import Decimal
+    from dirty_equals import IsNonNegative
+
+    assert 1.0 == IsNonNegative
+    assert 1 == IsNonNegative
+    assert Decimal('3.14') == IsNonNegative
+    assert 0 == IsNonNegative
+    assert -1 != IsNonNegative
+    assert Decimal('0') == IsNonPositive
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(ge=0)
         self._repr_kwargs = {}
 
 
+class IsNonPositive(IsNumber):
+    """
+    Check that a value is negative or zero (`<=0`), can be an `int`, a `float` or a `Decimal`
+    (or indeed any value which implements `__le__` for `0`).
+
+    ```py title="IsNonPositive"
+    from decimal import Decimal
+    from dirty_equals import IsNonPositive
+
+    assert -1.0 == IsNonPositive
+    assert -1 == IsNonPositive
+    assert Decimal('-3.14') == IsNonPositive
+    assert 0 == IsNonPositive
+    assert 1 != IsNonPositive
+    assert Decimal('-0') == IsNonPositive
+    assert Decimal('0') == IsNonPositive
+    ```
+    """
+
+    def __init__(self) -> None:
+        super().__init__(le=0)
+        self._repr_kwargs = {}
+
+
 class IsInt(IsNumeric[int]):
-    types = int
+    """
+    Checks that a value is an integer.
+
+    Inherits from [`IsNumeric`][dirty_equals.IsNumeric] and can therefore be initialised with any of its arguments.
+
+    ```py title="IsInt"
+    from dirty_equals import IsInt
+
+    assert 1 == IsInt
+    assert -2 == IsInt
+    assert 1.0 != IsInt
+    assert 'foobar' != IsInt
+    assert True != IsInt
+    ```
+    """
+
+    allowed_types = int
+    """
+    As the name suggests, only integers are allowed, booleans (`True` are `False`) are explicitly excluded although
+    technically they are sub-types of `int`.
+    """
 
 
 class IsPositiveInt(IsInt):
+    """
+    Like [`IsPositive`][dirty_equals.IsPositive] but only for `int`s.
+
+    ```py title="IsPositiveInt"
+    from decimal import Decimal
+    from dirty_equals import IsPositiveInt
+
+    assert 1 == IsPositiveInt
+    assert 1.0 != IsPositiveInt
+    assert Decimal('3.14') != IsPositiveInt
+    assert 0 != IsPositiveInt
+    assert -1 != IsPositiveInt
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(gt=0)
         self._repr_kwargs = {}
 
 
 class IsNegativeInt(IsInt):
+    """
+    Like [`IsNegative`][dirty_equals.IsNegative] but only for `int`s.
+
+    ```py title="IsNegativeInt"
+    from decimal import Decimal
+    from dirty_equals import IsNegativeInt
+
+    assert -1 == IsNegativeInt
+    assert -1.0 != IsNegativeInt
+    assert Decimal('-3.14') != IsNegativeInt
+    assert 0 != IsNegativeInt
+    assert 1 != IsNegativeInt
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(lt=0)
         self._repr_kwargs = {}
 
 
 class IsFloat(IsNumeric[float]):
-    types = float
+    """
+    Checks that a value is a float.
+
+    Inherits from [`IsNumeric`][dirty_equals.IsNumeric] and can therefore be initialised with any of its arguments.
+
+    ```py title="IsFloat"
+    from dirty_equals import IsFloat
+
+    assert 1.0 == IsFloat
+    assert 1 != IsFloat
+    ```
+    """
+
+    allowed_types = float
+    """
+    As the name suggests, only floats are allowed.
+    """
 
 
 class IsPositiveFloat(IsFloat):
+    """
+    Like [`IsPositive`][dirty_equals.IsPositive] but only for `float`s.
+
+    ```py title="IsPositiveFloat"
+    from decimal import Decimal
+    from dirty_equals import IsPositiveFloat
+
+    assert 1.0 == IsPositiveFloat
+    assert 1 != IsPositiveFloat
+    assert Decimal('3.14') != IsPositiveFloat
+    assert 0.0 != IsPositiveFloat
+    assert -1.0 != IsPositiveFloat
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(gt=0)
         self._repr_kwargs = {}
 
 
 class IsNegativeFloat(IsFloat):
+    """
+    Like [`IsNegative`](#isnegative) but only for `float`s.
+
+    ```py title="IsNegativeFloat"
+    from decimal import Decimal
+    from dirty_equals import IsNegativeFloat
+
+    assert -1.0 == IsNegativeFloat
+    assert -1 != IsNegativeFloat
+    assert Decimal('-3.14') != IsNegativeFloat
+    assert 0.0 != IsNegativeFloat
+    assert 1.0 != IsNegativeFloat
+    ```
+    """
+
     def __init__(self) -> None:
         super().__init__(lt=0)
         self._repr_kwargs = {}

@@ -38,6 +38,9 @@ class DirtyEqualsMeta(ABCMeta):
     def __invert__(self) -> 'DirtyNot':
         return DirtyNot(self)
 
+    def __hash__(self) -> int:
+        return hash(self.__name__)
+
     def __repr__(self) -> str:
         return self.__name__
 
