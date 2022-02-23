@@ -87,11 +87,12 @@ Without **dirty-equals**, you'd have to compare individual fields and/or modify 
 
 **dirty-equals** can do so much more than that, for example:
 
-* `PartialDict` let's you compare a subset of a dictionary
-* `IsStrictDict` let's you confirm order in a dictionary
-* `IsList` and `IsTuple` lets you compare partial lists and tuples, with or without order constraints
+* [`IsPartialDict`][dirty_equals.IsPartialDict] let's you compare a subset of a dictionary
+* [`IsStrictDict`][dirty_equals.IsStrictDict] let's you confirm order in a dictionary
+* [`IsList`][dirty_equals.IsList] and [`IsTuple`][dirty_equals.IsTuple] lets you compare partial lists and tuples, 
+  with or without order constraints
 * nesting any of these types inside any others
-* `IsInstance` lets you simply confirm the type of an object
+* [`IsInstance`][dirty_equals.IsInstance] lets you simply confirm the type of an object
 * You can even use boolean operators `|` and `&` to combine multiple conditions
 * and much more...
 
