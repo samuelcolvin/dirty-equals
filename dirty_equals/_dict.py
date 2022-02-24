@@ -161,12 +161,11 @@ class IsPartialDict(IsDict):
         IsPartialDict(a=1, b=2).settings(ignore_values={None, 'ignore'})
     )
 
-
-    def custom_ignore(v: int) -> bool:
+    def is_even(v: int) -> bool:
         return v % 2 == 0
 
     assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == (
-        IsPartialDict(a=1, c=3).settings(ignore_values=custom_ignore)
+        IsPartialDict(a=1, c=3).settings(ignore_values=is_even)
     )
 
     # combining partial and strict

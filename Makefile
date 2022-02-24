@@ -34,8 +34,12 @@ testcov: test
 mypy:
 	mypy --show-error-codes dirty_equals
 
+.PHONY: docs
+docs:
+	mkdocs build --strict
+
 .PHONY: all
-all: lint mypy testcov
+all: lint mypy testcov docs
 
 .PHONY: clean
 clean:

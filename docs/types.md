@@ -137,3 +137,5 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 ::: dirty_equals.AnyThing
 
 ::: dirty_equals._base.DirtyEquals
+    rendering:
+      merge_init_into_class: false

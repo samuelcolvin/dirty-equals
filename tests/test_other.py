@@ -17,7 +17,8 @@ from dirty_equals import FunctionCheck, IsJson, IsUUID
         (uuid.uuid3(uuid.UUID('edf9f29e-45c7-431c-99db-28ea44df9785'), 'abc'), IsUUID),
         (uuid.uuid3(uuid.UUID('edf9f29e-45c7-431c-99db-28ea44df9785'), 'abc'), IsUUID(3)),
         (uuid.uuid1(), IsUUID(1)),
-        ('edf9f29e-45c7-431c-99db-28ea44df9785', IsUUID(1)),
+        (str(uuid.uuid1()), IsUUID(1)),
+        ('ea9e828d-fd18-3898-99f3-5a46dbcee036', IsUUID(3)),
     ],
 )
 def test_is_uuid_true(other, dirty):
@@ -29,9 +30,11 @@ def test_is_uuid_true(other, dirty):
     [
         ('foobar', IsUUID()),
         ([1, 2, 3], IsUUID()),
-        ('edf9f29e-45c7-431c-99db-28ea44xdf9785', IsUUID(5)),
+        ('edf9f29e-45c7-431c-99db-28ea44df9785', IsUUID(5)),
         (uuid.uuid3(uuid.UUID('edf9f29e-45c7-431c-99db-28ea44df9785'), 'abc'), IsUUID(4)),
         (uuid.uuid1(), IsUUID(4)),
+        ('edf9f29e-45c7-431c-99db-28ea44df9785', IsUUID(1)),
+        ('ea9e828d-fd18-3898-99f3-5a46dbcee036', IsUUID(4)),
     ],
 )
 def test_is_uuid_false(other, dirty):

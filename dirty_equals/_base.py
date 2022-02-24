@@ -50,12 +50,17 @@ T = TypeVar('T')
 
 class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
     """
-    Base type for all dirty-equals types.
+    Base type for all *dirty-equals* types.
     """
 
     __slots__ = '_other', '_was_equal', '_repr_args', '_repr_kwargs'
 
     def __init__(self, *repr_args: Any, **repr_kwargs: Any):
+        """
+        Args:
+            *repr_args: unnamed args to be used in `__repr__`
+            **repr_kwargs: named args to be used in `__repr__`
+        """
         self._other: Any = None
         self._was_equal: Optional[bool] = None
         self._repr_args: Iterable[Any] = repr_args
@@ -64,13 +69,29 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
     def equals(self, other: Any) -> bool:
         """
         Abstract method, must be implemented by subclasses.
+
+        `TypeError` and `ValueError` are caught in `__eq__` and indicate `other` is not equals to this type.
         """
         raise NotImplementedError()
 
     @property
     def value(self) -> T:
         """
-        Returns the value last successfully compared to this type.
+        Property to get the value last successfully compared to this object.
+
+        This is seldom very useful, put it's provided for completeness.
+
+        Example of usage:
+
+        ```py title=".values"
+        from dirty_equals import IsStr
+
+        token_is_str = IsStr(regex=r't-.+')
+        assert 't-123' == token_is_str
+
+        print(token_is_str.value)
+        #> 't-123'
+        ```
         """
         if self._was_equal:
             return self._other
@@ -173,10 +194,40 @@ class IsInstanceMeta(DirtyEqualsMeta):
 
 class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
     """
-    A type which checks that the value is an instance of the expected type. TODO.
+    A type which checks that the value is an instance of the expected type.
     """
 
-    def __init__(self, expected_type: ExpectedType, only_direct_instance: bool = False):
+    def __init__(self, expected_type: ExpectedType, *, only_direct_instance: bool = False):
+        """
+        Args:
+            expected_type: The type to check against.
+            only_direct_instance: whether instances of subclasses of `expected_type` should be considered equal.
+
+        !!! note
+            `IsInstance` can be parameterized or initialised with a type -
+            `IsInstance[Foo]` is exactly equivalent to `IsInstance(Foo)`.
+
+            This allowed to be analogous to type hints. If you don't like it, don't use it.
+
+        Example:
+        ```py title="IsInstance"
+        from dirty_equals import IsInstance
+
+        class Foo:
+            pass
+
+        class Bar(Foo):
+            pass
+
+        assert Foo() == IsInstance[Foo]
+        assert Foo() == IsInstance(Foo)
+        assert Foo != IsInstance[Bar]
+
+        assert Bar() == IsInstance[Foo]
+        assert Foo() == IsInstance(Foo, only_direct_instance=True)
+        assert Bar() != IsInstance(Foo, only_direct_instance=True)
+        ```
+        """
         self.expected_type = expected_type
         self.only_direct_instance = only_direct_instance
         super().__init__(expected_type)
@@ -190,7 +241,20 @@ class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
 
 class AnyThing(DirtyEquals[Any]):
     """
-    A type which matches any value. TODO.
+    A type which matches any value. `AnyThing` isn't generally very useful on its own, but can be used within
+    other comparisons.
+
+    ```py title="AnyThing"
+    from dirty_equals import AnyThing, IsList, IsStrictDict
+
+    assert 1 == AnyThing
+    assert 'foobar' == AnyThing
+    assert [1, 2, 3] == AnyThing
+
+    assert [1, 2, 3] == IsList(AnyThing, 2, 3)
+
+    assert {'a': 1, 'b': 2, 'c': 3} == IsStrictDict(a=1, b=AnyThing, c=3)
+    ```
     """
 
     def equals(self, other: Any) -> bool:

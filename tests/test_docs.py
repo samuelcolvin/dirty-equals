@@ -60,4 +60,4 @@ def pytest_generate_tests(metafunc):
 
 
 def test_docs_examples(module_name, source_code, import_execute):
-    import_execute(module_name, source_code)
+    import_execute(module_name, source_code, True)

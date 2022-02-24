@@ -96,7 +96,7 @@ class IsListOrTuple(DirtyEquals[T]):
                 of [`HasLen`][dirty_equals.HasLen].
 
         ```py title="IsListOrTuple"
-        from dirty_equals import IsListOrTuple
+        from dirty_equals import IsListOrTuple, AnyThing
 
         assert [1, 2, 3] == IsListOrTuple(1, 2, 3)
         assert (1, 3, 2) == IsListOrTuple(1, 2, 3, check_order=False)
@@ -116,6 +116,8 @@ class IsListOrTuple(DirtyEquals[T]):
         )
 
         assert [1, 2, 3, 4] == IsListOrTuple(3, check_order=False, length=(0, ...)) #(7)!
+
+        assert [1, 2, 3] == IsListOrTuple(AnyThing, AnyThing, 3) #(8)!
         ```
 
         1. Unlike using sets for comparison, we can do order-insensitive comparisons on objects that are not hashable.
@@ -124,7 +126,9 @@ class IsListOrTuple(DirtyEquals[T]):
         4. Compared list is not long enough
         5. Compare using `positions`, here no length if enforced
         6. Compare using `positions` but with a length constraint
-        7. Here we're just confirming that the value `3` is in the list.
+        7. Here we're just confirming that the value `3` is in the list
+        8. If you don't care about the first few values of a list or tuple,
+            you can use [`AnyThing`][dirty_equals.AnyThing] in your arguments.
         """
         if positions is not None:
             self.positions: Optional[Dict[int, Any]] = positions
@@ -191,6 +195,9 @@ class IsList(IsListOrTuple[List[Any]]):
     assert [1, 2, 3] == IsList(1, 2, 3)
     assert [1, 2, 3] == IsList(positions={2: 3})
     assert [1, 2, 3] == IsList(1, 2, 3, check_order=False)
+    assert [1, 2, 3, 4] == IsList(1, 2, 3, length=4)
+    assert [1, 2, 3, 4] == IsList(1, 2, 3, length=(4, 5))
+    assert [1, 2, 3, 4] == IsList(1, 2, 3, length=...)
 
     assert (1, 2, 3) != IsList(1, 2, 3)
     ```
@@ -209,6 +216,9 @@ class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
     assert (1, 2, 3) == IsTuple(1, 2, 3)
     assert (1, 2, 3) == IsTuple(positions={2: 3})
     assert (1, 2, 3) == IsTuple(1, 2, 3, check_order=False)
+    assert (1, 2, 3, 4) == IsTuple(1, 2, 3, length=4)
+    assert (1, 2, 3, 4) == IsTuple(1, 2, 3, length=(4, 5))
+    assert (1, 2, 3, 4) == IsTuple(1, 2, 3, length=...)
 
     assert [1, 2, 3] != IsTuple(1, 2, 3)
     ```
