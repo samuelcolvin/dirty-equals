@@ -103,7 +103,7 @@ class IsListOrTuple(DirtyEquals[T]):
         assert [{'a': 1}, {'a': 2}] == (
             IsListOrTuple({'a': 2}, {'a': 1}, check_order=False) # (1)!
         )
-        assert [1, 2, 3, 3] == IsListOrTuple(1, 2, 3, check_order=False) # (2)!
+        assert [1, 2, 3, 3] != IsListOrTuple(1, 2, 3, check_order=False) # (2)!
 
         assert [1, 2, 3, 4, 5] == IsListOrTuple(1, 2, 3, length=...) # (3)!
         assert [1, 2, 3, 4, 5] != IsListOrTuple(1, 2, 3, length=(8, 10)) # (4)!
@@ -119,7 +119,7 @@ class IsListOrTuple(DirtyEquals[T]):
         ```
 
         1. Unlike using sets for comparison, we can do order-insensitive comparisons on objects that are not hashable.
-        2. And we won't get caught out be duplicate values
+        2. And we won't get caught out by duplicate values
         3. Here we're just checking the first 3 items, the compared list or tuple can be of any length
         4. Compared list is not long enough
         5. Compare using `positions`, here no length if enforced
@@ -137,9 +137,12 @@ class IsListOrTuple(DirtyEquals[T]):
             self.items = items
         self.check_order = check_order
 
-        self.length = length
+        self.length: Any = length
         if self.length is not None and not isinstance(self.length, int):
-            self.length = tuple(self.length)  # type: ignore[assignment]
+            if self.length == Ellipsis:
+                self.length = 0, ...
+            else:
+                self.length = tuple(self.length)
 
         super().__init__(
             *items,
@@ -205,7 +208,7 @@ class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
 
     assert (1, 2, 3) == IsTuple(1, 2, 3)
     assert (1, 2, 3) == IsTuple(positions={2: 3})
-    assert (1, 2, 3) == IsTupleOrTuple(1, 2, 3, check_order=False)
+    assert (1, 2, 3) == IsTuple(1, 2, 3, check_order=False)
 
     assert [1, 2, 3] != IsTuple(1, 2, 3)
     ```

@@ -80,7 +80,7 @@ from dirty_equals import IsDatetime
 import pytz
 
 tz_london = pytz.timezone('Europe/London')
-new_year_london = .localize(datetime(2000, 1, 1))
+new_year_london = tz_london.localize(datetime(2000, 1, 1))
 
 tz_nyc = pytz.timezone('America/New_York')
 new_year_eve_nyc = tz_nyc.localize(datetime(1999, 12, 31, 19, 0, 0))

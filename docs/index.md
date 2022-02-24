@@ -44,7 +44,7 @@ applications where you're commonly checking the response to API calls and the co
 
 Here's a trivial example of what *dirty-equals* can do:
 
-```py title="Trival Usage"
+```{.py title="Trival Usage" test="false"}
 from dirty_equals import IsPositive
 
 assert 1 == IsPositive #(1)!
@@ -60,7 +60,7 @@ assert -2 == IsPositive  # this will fail! (2)
 ```py title="More Powerful Usage"
 from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
 
-def test_user_endpoint(client: HttpClient, db_conn: Database): 
+def test_user_endpoint(client: 'HttpClient', db_conn: 'Database'): 
    client.pust('/users/create/', data=...)
 
    user_data = db_conn.fetchrow('select * from users')

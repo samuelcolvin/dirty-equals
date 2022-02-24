@@ -82,8 +82,8 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         assert {'b': 2, 'a': 1} != IsDict(a=1, b=2).settings(strict=True) # (2)!
 
         # combining partial and strict
-        assert {'a': 1, 'b': 2, 'c': 3} == IsDict(a=1, c=3).settings(strict=True, partial=True)
-        assert {'b': 2, 'c': 3, 'a': 1} != IsDict(a=1, c=3).settings(strict=True, partial=True)
+        assert {'a': 1, 'b': None, 'c': 3} == IsDict(a=1, c=3).settings(strict=True, partial=True)
+        assert {'b': None, 'c': 3, 'a': 1} != IsDict(a=1, c=3).settings(strict=True, partial=True)
         ```
 
         1. This is the same as [`IsPartialDict(a=1, b=2)`][dirty_equals.IsPartialDict]
@@ -162,16 +162,16 @@ class IsPartialDict(IsDict):
     )
 
 
-    def custom_ignore(v: Any) -> bool:
+    def custom_ignore(v: int) -> bool:
         return v % 2 == 0
 
-    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} != (
+    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == (
         IsPartialDict(a=1, c=3).settings(ignore_values=custom_ignore)
     )
 
     # combining partial and strict
-    assert {'a': 1, 'b': 2, 'c': 3} == IsPartialDict(a=1, c=3).settings(strict=True)
-    assert {'b': 2, 'c': 3, 'a': 1} != IsPartialDict(a=1, c=3).settings(strict=True)
+    assert {'a': 1, 'b': None, 'c': 3} == IsPartialDict(a=1, c=3).settings(strict=True)
+    assert {'b': None, 'c': 3, 'a': 1} != IsPartialDict(a=1, c=3).settings(strict=True)
     ```
     """
 
@@ -185,15 +185,15 @@ class IsStrictDict(IsDict):
     [`IsDict(...).settings(strict=True)`][dirty_equals.IsDict.settings].
 
     ```py title="IsDict.settings(...)"
-    from dirty_equals import IsDict
+    from dirty_equals import IsStrictDict
 
     assert {'a': 1, 'b': 2} == IsStrictDict(a=1, b=2)
     assert {'a': 1, 'b': 2, 'c': 3} != IsStrictDict(a=1, b=2)
     assert {'b': 2, 'a': 1} != IsStrictDict(a=1, b=2)
 
     # combining partial and strict
-    assert {'a': 1, 'b': 2, 'c': 3} == IsStrictDict(a=1, c=3).settings(partial=True)
-    assert {'b': 2, 'c': 3, 'a': 1} != IsStrictDict(a=1, c=3).settings(partial=True)
+    assert {'a': 1, 'b': None, 'c': 3} == IsStrictDict(a=1, c=3).settings(partial=True)
+    assert {'b': None, 'c': 3, 'a': 1} != IsStrictDict(a=1, c=3).settings(partial=True)
     ```
     """
 

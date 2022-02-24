@@ -100,3 +100,10 @@ def test_callable_ignore():
 )
 def test_not_equals_repr(d, expected_repr):
     assert repr(d) == expected_repr
+
+
+def test_ignore_values():
+    def custom_ignore(v: int) -> bool:
+        return v % 2 == 0
+
+    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == IsPartialDict(a=1, c=3).settings(ignore_values=custom_ignore)
