@@ -109,15 +109,15 @@ def test_ignore_values():
     assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == IsPartialDict(a=1, c=3).settings(ignore_values=custom_ignore)
 
 
-@pytest.mark.xfail(reason='TODO: fix this test')
 def test_partial_with_is_str():
     api_data = {'id': 123, 'token': 't-abc123', 'dob': None, 'street_address': None}
 
     token_is_str = IsStr(regex=r't\-.+')
-    assert api_data == IsPartialDict(
-        id=IsPositiveInt,
-        token=token_is_str,
-        dob=None,
-        street_address=None,
-    )
+    assert api_data == IsPartialDict(id=IsPositiveInt, token=token_is_str)
     assert token_is_str.value == 't-abc123'
+
+
+def test_unhashable_value():
+    a = {'a': 1}
+    api_data = {'b': a, 'c': None}
+    assert api_data == IsPartialDict(b=a)

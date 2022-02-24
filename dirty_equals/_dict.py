@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Callable, Container, Dict, Optional, Union, overload
 
-from dirty_equals._base import DirtyEquals
+from dirty_equals._base import DirtyEquals, DirtyEqualsMeta
 
 
 class IsDict(DirtyEquals[Dict[Any, Any]]):
@@ -121,10 +121,16 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         return {k: v for k, v in d.items() if not self._ignore_value(v)}
 
     def _ignore_value(self, v: Any) -> bool:
-        if callable(self.ignore_values):
+        if isinstance(v, (DirtyEquals, DirtyEqualsMeta)):
+            return False
+        elif callable(self.ignore_values):
             return self.ignore_values(v)
         else:
-            return v in self.ignore_values
+            try:
+                return v in self.ignore_values
+            except TypeError:
+                # happens for unhashable types
+                return False
 
     def _repr_ne(self) -> str:
         name = self.__class__.__name__

@@ -12,7 +12,7 @@ from ._utils import Omit
 if TYPE_CHECKING:
     from typing import TypeAlias
 
-__all__ = 'DirtyEquals', 'IsInstance', 'AnyThing'
+__all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'IsInstance', 'AnyThing'
 
 
 class DirtyEqualsMeta(ABCMeta):
