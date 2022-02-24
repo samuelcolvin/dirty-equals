@@ -166,7 +166,7 @@ class IsApprox(IsNumber):
         assert 1.0 == IsApprox(1)
         assert 123 == IsApprox(120, delta=4)
         assert 201 == IsApprox(200)
-        assert 201 == IsApprox(200, delta=0.1)
+        assert 201 != IsApprox(200, delta=0.1)
         ```
         """
         super().__init__(approx=approx, delta=delta)
@@ -230,7 +230,7 @@ class IsNonNegative(IsNumber):
     assert Decimal('3.14') == IsNonNegative
     assert 0 == IsNonNegative
     assert -1 != IsNonNegative
-    assert Decimal('0') == IsNonPositive
+    assert Decimal('0') == IsNonNegative
     ```
     """
 
