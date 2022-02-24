@@ -33,10 +33,10 @@ class HasLen(DirtyEquals[Sized]):
         ```py title="HasLen"
         from dirty_equals import HasLen
 
-        assert [1, 2, 3] == HasLen(3) # (1)!
-        assert '123' == HasLen(3, ...) # (2)!
-        assert (1, 2, 3) == HasLen(3, 5) # (3)!
-        assert (1, 2, 3) == HasLen(0, ...) # (4)!
+        assert [1, 2, 3] == HasLen(3) #(1)!
+        assert '123' == HasLen(3, ...) #(2)!
+        assert (1, 2, 3) == HasLen(3, 5) #(3)!
+        assert (1, 2, 3) == HasLen(0, ...) #(4)!
         ```
 
         1. Length must be 3.
@@ -101,21 +101,21 @@ class IsListOrTuple(DirtyEquals[T]):
         assert [1, 2, 3] == IsListOrTuple(1, 2, 3)
         assert (1, 3, 2) == IsListOrTuple(1, 2, 3, check_order=False)
         assert [{'a': 1}, {'a': 2}] == (
-            IsListOrTuple({'a': 2}, {'a': 1}, check_order=False) # (1)!
+            IsListOrTuple({'a': 2}, {'a': 1}, check_order=False) #(1)!
         )
-        assert [1, 2, 3, 3] != IsListOrTuple(1, 2, 3, check_order=False) # (2)!
+        assert [1, 2, 3, 3] != IsListOrTuple(1, 2, 3, check_order=False) #(2)!
 
-        assert [1, 2, 3, 4, 5] == IsListOrTuple(1, 2, 3, length=...) # (3)!
-        assert [1, 2, 3, 4, 5] != IsListOrTuple(1, 2, 3, length=(8, 10)) # (4)!
+        assert [1, 2, 3, 4, 5] == IsListOrTuple(1, 2, 3, length=...) #(3)!
+        assert [1, 2, 3, 4, 5] != IsListOrTuple(1, 2, 3, length=(8, 10)) #(4)!
 
         assert ['a', 'b', 'c', 'd'] == (
-            IsListOrTuple(positions={2: 'c', 3: 'd'}) # (5)!
+            IsListOrTuple(positions={2: 'c', 3: 'd'}) #(5)!
         )
         assert ['a', 'b', 'c', 'd'] == (
-            IsListOrTuple(positions={2: 'c', 3: 'd'}, length=4) # (6)!
+            IsListOrTuple(positions={2: 'c', 3: 'd'}, length=4) #(6)!
         )
 
-        assert [1, 2, 3, 4] == IsListOrTuple(3, check_order=False, length=(0, ...)) # (7)!
+        assert [1, 2, 3, 4] == IsListOrTuple(3, check_order=False, length=(0, ...)) #(7)!
         ```
 
         1. Unlike using sets for comparison, we can do order-insensitive comparisons on objects that are not hashable.

@@ -118,11 +118,11 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 
 ## String Types
 
+::: dirty_equals.IsAnyStr
+
 ::: dirty_equals.IsStr
 
 ::: dirty_equals.IsBytes
-
-::: dirty_equals.IsAnyStr
 
 ## Other Types
 
