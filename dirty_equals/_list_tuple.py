@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Container, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
 
 from ._base import DirtyEquals
 from ._utils import Omit, plain_repr
@@ -6,7 +6,7 @@ from ._utils import Omit, plain_repr
 if TYPE_CHECKING:
     from typing import TypeAlias
 
-__all__ = 'HasLen', 'IsListOrTuple', 'IsList', 'IsTuple'
+__all__ = 'HasLen', 'Contains', 'IsListOrTuple', 'IsList', 'IsTuple'
 T = TypeVar('T', List[Any], Tuple[Any, ...])
 LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]]]'
 
@@ -53,6 +53,37 @@ class HasLen(DirtyEquals[Sized]):
 
     def equals(self, other: Any) -> bool:
         return _length_correct(self.length, other)
+
+
+class Contains(DirtyEquals[Container[Any]]):
+    """
+    Check that an object contains one or more values.
+    """
+
+    def __init__(self, *contained_values: Any):
+        """
+        Args:
+            *contained_values: One or more values that must be contained in the compared object.
+
+        ```py title="Contains"
+        from dirty_equals import Contains
+
+        assert [1, 2, 3] == Contains(1)
+        assert [1, 2, 3] == Contains(1, 2)
+        assert (1, 2, 3) == Contains(1)
+        assert 'abc' == Contains('b')
+        assert {'a': 1, 'b': 2} == Contains('a')
+        assert [1, 2, 3] != Contains(10)
+        ```
+        """
+        if not contained_values:
+            raise ValueError('Contains requires at least one value')
+
+        self.contained_values: Tuple[Any, ...] = contained_values
+        super().__init__(*contained_values)
+
+    def equals(self, other: Any) -> bool:
+        return all(v in other for v in self.contained_values)
 
 
 class IsListOrTuple(DirtyEquals[T]):

@@ -108,13 +108,15 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 
 ## List and Tuples Types
 
-::: dirty_equals.HasLen
-
 ::: dirty_equals.IsListOrTuple
 
 ::: dirty_equals.IsList
 
 ::: dirty_equals.IsTuple
+
+::: dirty_equals.HasLen
+
+::: dirty_equals.Contains
 
 ## String Types
 

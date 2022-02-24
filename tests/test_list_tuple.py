@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import AnyThing, HasLen, IsInt, IsList, IsListOrTuple, IsNegative, IsTuple
+from dirty_equals import AnyThing, Contains, HasLen, IsInt, IsList, IsListOrTuple, IsNegative, IsTuple
 
 
 @pytest.mark.parametrize(
@@ -35,6 +35,13 @@ from dirty_equals import AnyThing, HasLen, IsInt, IsList, IsListOrTuple, IsNegat
         ([1, 2], HasLen(2, 3)),
         ([1, 2, 3], HasLen(2, ...)),
         ([1, 2, 3], HasLen(0, ...)),
+        ([1, 2, 3], Contains(1)),
+        ([1, 2, 3], Contains(1, 2)),
+        ((1, 2, 3), Contains(1)),
+        ({1, 2, 3}, Contains(1)),
+        ('abc', Contains('b')),
+        ({'a': 1, 'b': 2}, Contains('a')),
+        ([{'a': 1}, {'b': 2}], Contains({'a': 1})),
     ],
 )
 def test_dirty_equals(other, dirty):
@@ -67,6 +74,11 @@ def test_dirty_equals(other, dirty):
         ([1], HasLen(2, 3)),
         ([1], HasLen(2, ...)),
         (123, HasLen(0, ...)),
+        ([1, 2, 3], Contains(10)),
+        ([1, 2, 3], Contains(1, 'a')),
+        ([1, 2, 3], Contains(1, 'a')),
+        ([{'a': 1}, {'b': 2}], Contains({'a': 2})),
+        ({1, 2, 3}, Contains({1: 2})),
     ],
 )
 def test_dirty_not_equals(other, dirty):
