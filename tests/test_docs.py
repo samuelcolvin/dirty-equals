@@ -46,7 +46,7 @@ def generate_code_chunks(*directories: str):
         for path in (ROOT_DIR / d).glob('**/*'):
             if path.suffix == '.py':
                 code = path.read_text()
-                for m_docstring in re.finditer(r'(^\s*"""$)(.*?)\1', code, flags=re.M | re.S):
+                for m_docstring in re.finditer(r'(^\s*)r?"""$(.*?)\1"""', code, flags=re.M | re.S):
                     start_line = code[: m_docstring.start()].count('\n')
                     docstring = dedent(m_docstring.group(2))
                     yield from extract_code_chunks(path, docstring, start_line)
@@ -55,6 +55,9 @@ def generate_code_chunks(*directories: str):
                 yield from extract_code_chunks(path, code, 0)
 
 
-@pytest.mark.parametrize('module_name,source_code', generate_code_chunks('dirty_equals', 'docs'))
+def pytest_generate_tests(metafunc):
+    metafunc.parametrize('module_name,source_code', generate_code_chunks('dirty_equals', 'docs'))
+
+
 def test_docs_examples(module_name, source_code, import_execute):
     import_execute(module_name, source_code)
