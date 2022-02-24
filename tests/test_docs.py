@@ -28,34 +28,33 @@ def import_execute(request, tmp_path: Path):
 
 
 def extract_code_chunks(path: Path, text: str, offset: int):
-    for m_code in re.finditer(r'^```([^\n]+)\n(.*?)^```', text, flags=re.M | re.S):
+    rel_path = path.relative_to(ROOT_DIR)
+    for m_code in re.finditer(r'^```(.*?)$\n(.*?)^```', text, flags=re.M | re.S):
         prefix = m_code.group(1).lower()
         if not prefix.startswith(('py', '{.py')) or 'test="false"' in prefix:
             continue
 
-        line_no = offset + text[: m_code.start()].count('\n') + 2
-        source = '\n' * line_no + m_code.group(2)
-        yield pytest.param(f'{path.stem}_{line_no}', source, id=f'{path.name}:{line_no}')
+        start_line = offset + text[: m_code.start()].count('\n') + 1
+        code = m_code.group(2)
+        end_line = start_line + code.count('\n') + 1
+        source = '\n' * start_line + code
+        yield pytest.param(f'{path.stem}_{start_line}_{end_line}', source, id=f'{rel_path}:{start_line}-{end_line}')
 
 
-def generate_code_chunks(directory: Path):
-    for path in directory.glob('**/*'):
-        if path.suffix == '.py':
-            code = path.read_text()
-            for m_docstring in re.finditer(r'^(\s*"""\n)(.*?)\n\1', code, flags=re.M | re.S):
-                start_line = code[: m_docstring.start()].count('\n') + 1
-                docstring = dedent(m_docstring.group(2))
-                yield from extract_code_chunks(path, docstring, start_line)
-        elif path.suffix == '.md':
-            code = path.read_text()
-            yield from extract_code_chunks(path, code, 0)
+def generate_code_chunks(*directories: str):
+    for d in directories:
+        for path in (ROOT_DIR / d).glob('**/*'):
+            if path.suffix == '.py':
+                code = path.read_text()
+                for m_docstring in re.finditer(r'(^\s*"""$)(.*?)\1', code, flags=re.M | re.S):
+                    start_line = code[: m_docstring.start()].count('\n')
+                    docstring = dedent(m_docstring.group(2))
+                    yield from extract_code_chunks(path, docstring, start_line)
+            elif path.suffix == '.md':
+                code = path.read_text()
+                yield from extract_code_chunks(path, code, 0)
 
 
-@pytest.mark.parametrize('module_name,source_code', generate_code_chunks(ROOT_DIR / 'dirty_equals'))
-def test_docstring_examples(module_name, source_code, import_execute):
-    import_execute(module_name, source_code)
-
-
-@pytest.mark.parametrize('module_name,source_code', generate_code_chunks(ROOT_DIR / 'docs'))
+@pytest.mark.parametrize('module_name,source_code', generate_code_chunks('dirty_equals', 'docs'))
 def test_docs_examples(module_name, source_code, import_execute):
     import_execute(module_name, source_code)
