@@ -111,3 +111,8 @@ def test_equals_function_fail():
         assert 4 == c
 
     assert str(c) == 'FunctionCheck(foobar)'
+
+
+def test_json_both():
+    with pytest.raises(TypeError, match='IsJson requires either an argument or kwargs, not both'):
+        IsJson(1, a=2)

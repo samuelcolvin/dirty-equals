@@ -117,3 +117,8 @@ def test_wrong_length_length():
 )
 def test_repr(dirty, repr_str):
     assert repr(dirty) == repr_str
+
+
+def test_no_contains_value():
+    with pytest.raises(TypeError):
+        Contains()

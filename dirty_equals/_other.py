@@ -91,7 +91,7 @@ class IsJson(DirtyEquals[Any]):
         """
         if expected_kwargs:
             if expected_value is not AnyJson:
-                raise TypeError('an argument cannot be combined with kwargs')
+                raise TypeError('IsJson requires either an argument or kwargs, not both')
             self.expected_value: Any = expected_kwargs
         else:
             self.expected_value = expected_value

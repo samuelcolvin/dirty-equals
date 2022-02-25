@@ -60,7 +60,7 @@ class Contains(DirtyEquals[Container[Any]]):
     Check that an object contains one or more values.
     """
 
-    def __init__(self, *contained_values: Any):
+    def __init__(self, contained_value: Any, *more_contained_values: Any):
         """
         Args:
             *contained_values: One or more values that must be contained in the compared object.
@@ -76,11 +76,8 @@ class Contains(DirtyEquals[Container[Any]]):
         assert [1, 2, 3] != Contains(10)
         ```
         """
-        if not contained_values:
-            raise ValueError('Contains requires at least one value')
-
-        self.contained_values: Tuple[Any, ...] = contained_values
-        super().__init__(*contained_values)
+        self.contained_values: Tuple[Any, ...] = (contained_value,) + more_contained_values
+        super().__init__(*self.contained_values)
 
     def equals(self, other: Any) -> bool:
         return all(v in other for v in self.contained_values)
