@@ -70,6 +70,7 @@ extra:
     link: https://twitter.com/samuel_colvin
 
 plugins:
+  - search
   - mkdocstrings:
       watch: [dirty_equals]
       handlers:
