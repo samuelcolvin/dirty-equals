@@ -7,7 +7,8 @@
 Types can also be inverted using the `~` operator, this is equivalent to using `!=` instead of `==`.
 
 Example:
-```py title="Boolean Combination of Types"
+```py
+title="Boolean Combination of Types"
 from dirty_equals import HasLen, Contains
 
 assert ['a', 'b', 'c'] == HasLen(3) & Contains('a') #(1)!

@@ -2,6 +2,8 @@ import logging
 import os
 import re
 
+from mkdocs.config import Config
+from mkdocs.structure.files import Files
 from mkdocs.structure.pages import Page
 
 try:
@@ -25,7 +27,12 @@ def test_examples(config):
             logger.warning('examples tests failed')
 
 
-def add_version(markdown: str, page: Page, config, files) -> str:
+def on_page_markdown(markdown: str, page: Page, config: Config, files: Files) -> str:
+    markdown = reinstate_code_title(markdown)
+    return add_version(markdown, page)
+
+
+def add_version(markdown: str, page: Page) -> str:
     if page.abs_url == '/':
         version_ref = os.getenv('GITHUB_REF')
         if version_ref:
@@ -35,3 +42,10 @@ def add_version(markdown: str, page: Page, config, files) -> str:
             version_str = 'Documentation for development version'
         markdown = re.sub(r'{{ *version *}}', version_str, markdown)
     return markdown
+
+
+def reinstate_code_title(markdown: str) -> str:
+    """
+    Fix titles in code blocks, see https://youtrack.jetbrains.com/issue/PY-53246.
+    """
+    return re.sub(r'^(```py)\s*\ntitle=', r'\1 title=', markdown, flags=re.M)

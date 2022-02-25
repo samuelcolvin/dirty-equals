@@ -59,7 +59,8 @@ assert -2 == IsPositive  # this will fail! (2)
 
 **Not that interesting yet!**, but consider the following unit test code using **dirty-equals**:
 
-```py title="More Powerful Usage"
+```py
+title="More Powerful Usage"
 from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
 
 def test_user_endpoint(client: 'HttpClient', db_conn: 'Database'): 

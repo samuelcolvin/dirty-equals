@@ -73,8 +73,9 @@ based on the `enforce_tz` parameter:
 
 Example
 
-```py title="IsDatetime & timezones"
-from datetime import datetime, timezone
+```py
+title="IsDatetime & timezones"
+from datetime import datetime
 
 from dirty_equals import IsDatetime
 import pytz
