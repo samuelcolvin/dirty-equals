@@ -4,12 +4,17 @@
 (and, all checks must be `True` for the combined check to be `True`) or `|` 
 (or, any check can be `True` for the combined check to be `True`).
 
+Types can also be inverted using the `~` operator, this is equivalent to using `!=` instead of `==`.
+
 Example:
 ```py title="Boolean Combination of Types"
 from dirty_equals import HasLen, Contains
 
 assert ['a', 'b', 'c'] == HasLen(3) & Contains('a') #(1)!
 assert ['a', 'b', 'c'] == HasLen(3) | Contains('z') #(2)!
+
+assert ['a', 'b', 'c'] != Contains('z')
+assert ['a', 'b', 'c'] == ~Contains('z')
 ```
 
 1. The object on the left has to both have length 3 **and** contain `"a"`
