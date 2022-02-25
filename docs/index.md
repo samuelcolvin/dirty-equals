@@ -80,8 +80,8 @@ Without **dirty-equals**, you'd have to compare individual fields and/or modify 
 
 **dirty-equals** can do so much more than that, for example:
 
-* [`IsPartialDict`][dirty_equals.IsPartialDict] let's you compare a subset of a dictionary
-* [`IsStrictDict`][dirty_equals.IsStrictDict] let's you confirm order in a dictionary
+* [`IsPartialDict`][dirty_equals.IsPartialDict] lets you compare a subset of a dictionary
+* [`IsStrictDict`][dirty_equals.IsStrictDict] lets you confirm order in a dictionary
 * [`IsList`][dirty_equals.IsList] and [`IsTuple`][dirty_equals.IsTuple] lets you compare partial lists and tuples, 
   with or without order constraints
 * nesting any of these types inside any others
