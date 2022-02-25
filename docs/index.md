@@ -24,6 +24,8 @@
 
 ---
 
+{{ version }}
+
 !!! warning ":man_construction_worker: Work in Progress"
 
     This documentation site is currently incomplete, I'll try and finish the basic docs over the next few weeks.

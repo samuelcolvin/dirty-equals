@@ -1,4 +1,8 @@
 import logging
+import os
+import re
+
+from mkdocs.structure.pages import Page
 
 try:
     import pytest
@@ -19,3 +23,15 @@ def test_examples(config):
         return_code = pytest.main(['-q', '-p', 'no:sugar', 'tests/test_docs.py'])
         if return_code != 0:
             logger.warning('examples tests failed')
+
+
+def add_version(markdown: str, page: Page, config, files) -> str:
+    if page.abs_url == '/':
+        version_ref = os.getenv('GITHUB_REF')
+        if version_ref:
+            version = re.sub('^refs/tags/', '', version_ref.lower())
+            version_str = f'Documentation for version: **{version}**'
+        else:
+            version_str = 'Documentation for development version'
+        markdown = re.sub(r'{{ *version *}}', version_str, markdown)
+    return markdown
