@@ -1,5 +1,5 @@
 import json
-from typing import Any, Callable, overload
+from typing import Any, Callable, TypeVar, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
@@ -52,22 +52,23 @@ class IsUUID(DirtyEquals[UUID]):
 
 
 AnyJson = object
+JsonType = TypeVar('JsonType', AnyJson, Any)
 
 
-class IsJson(DirtyEquals[Any]):
+class IsJson(DirtyEquals[JsonType]):
     """
     A class that checks if a value is a JSON object, and check the contents of the JSON.
     """
 
     @overload
-    def __init__(self, expected_value: Any = AnyJson):
+    def __init__(self, expected_value: JsonType = AnyJson):
         ...
 
     @overload
     def __init__(self, **expected_kwargs: Any):
         ...
 
-    def __init__(self, expected_value: Any = AnyJson, **expected_kwargs: Any):
+    def __init__(self, expected_value: JsonType = AnyJson, **expected_kwargs: Any):
         """
         Args:
             expected_value: Value to compare the JSON to, if omitted, any JSON is accepted.
@@ -76,17 +77,25 @@ class IsJson(DirtyEquals[Any]):
 
         As with any `dirty_equals` type, types can be nested to provide more complex checks.
 
+        !!! note
+            Like [`IsInstance`][dirty_equals.IsInstance], `IsJson` can be parameterized or initialised with a value -
+            `IsJson[xyz]` is exactly equivalent to `IsJson(xyz)`.
+
+            This allows usage to be analogous to type hints.
+
+
         ```py title="IsJson"
         from dirty_equals import IsJson, IsStrictDict, IsPositiveInt
 
-        assert '{"a": 1}' == IsJson
-        assert '{"a": 1}' == IsJson(a=1)
+        assert '{"a": 1, "b": 2}' == IsJson
+        assert '{"a": 1, "b": 2}' == IsJson(a=1, b=2)
         assert '{"a": 1}' != IsJson(a=2)
+        assert 'invalid json' != IsJson
         assert '{"a": 1}' == IsJson(a=IsPositiveInt)
         assert '"just a quoted string"' == IsJson('just a quoted string')
 
-        assert '{"a": 1, "b": 2}' == IsJson(IsStrictDict(a=1, b=2))
-        assert '{"b": 2, "a": 1}' != IsJson(IsStrictDict(a=1, b=2))
+        assert '{"a": 1, "b": 2}' == IsJson[IsStrictDict(a=1, b=2)]
+        assert '{"b": 2, "a": 1}' != IsJson[IsStrictDict(a=1, b=2)]
         ```
         """
         if expected_kwargs:
@@ -96,6 +105,9 @@ class IsJson(DirtyEquals[Any]):
         else:
             self.expected_value = expected_value
         super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)
+
+    def __class_getitem__(cls, expected_type: JsonType) -> 'IsJson[JsonType]':
+        return cls(expected_type)
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, (str, bytes)):

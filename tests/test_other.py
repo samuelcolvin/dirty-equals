@@ -79,6 +79,18 @@ def test_is_json_any_false():
 )
 def test_is_json_specific_true(json_value, expected_value):
     assert json_value == IsJson(expected_value)
+    assert json_value == IsJson[expected_value]
+
+
+def test_is_json_invalid():
+    assert 'invalid json' != IsJson
+    assert 123 != IsJson
+    assert [1, 2] != IsJson
+
+
+def test_is_json_kwargs():
+    assert '{"a": 1, "b": 2}' == IsJson(a=1, b=2)
+    assert '{"a": 1, "b": 3}' != IsJson(a=1, b=2)
 
 
 def test_is_json_specific_false():

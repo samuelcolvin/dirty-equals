@@ -187,12 +187,7 @@ def _repr_ne(v: InstanceOrType) -> str:
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
 
-class IsInstanceMeta(DirtyEqualsMeta):
-    def __getitem__(self, item: ExpectedType) -> 'IsInstance[ExpectedType]':
-        return IsInstance(item)
-
-
-class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
+class IsInstance(DirtyEquals[ExpectedType]):
     """
     A type which checks that the value is an instance of the expected type.
     """
@@ -207,7 +202,7 @@ class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
             `IsInstance` can be parameterized or initialised with a type -
             `IsInstance[Foo]` is exactly equivalent to `IsInstance(Foo)`.
 
-            This allowed to be analogous to type hints. If you don't like it, don't use it.
+            This allows usage to be analogous to type hints.
 
         Example:
         ```py title="IsInstance"
@@ -231,6 +226,9 @@ class IsInstance(DirtyEquals[ExpectedType], metaclass=IsInstanceMeta):
         self.expected_type = expected_type
         self.only_direct_instance = only_direct_instance
         super().__init__(expected_type)
+
+    def __class_getitem__(cls, expected_type: ExpectedType) -> 'IsInstance[ExpectedType]':
+        return cls(expected_type)
 
     def equals(self, other: Any) -> bool:
         if self.only_direct_instance:
