@@ -26,16 +26,6 @@
 
 {{ version }}
 
-!!! warning ":man_construction_worker: Work in Progress"
-
-    This documentation site is currently incomplete, I'll try and finish the basic docs over the next few weeks.
-
-    If you need help using as-yet undocumented types, please review the 
-    [code](https://github.com/samuelcolvin/dirty-equals/tree/main/dirty_equals) and 
-    [unit tests](https://github.com/samuelcolvin/dirty-equals/tree/main/tests).
-
-    Or, if you're a real saint, submit a pull request to add the missing documentation. :man_bowing:
-
 **dirty-equals** is a python library that (mis)uses the `__eq__` method to make python code (generally unit tests)
 more declarative and therefore easier to read and write.
 
