@@ -63,7 +63,8 @@ class Contains(DirtyEquals[Container[Any]]):
     def __init__(self, contained_value: Any, *more_contained_values: Any):
         """
         Args:
-            *contained_values: One or more values that must be contained in the compared object.
+            contained_value: value that must be contained in the compared object.
+            *more_contained_values: more values that must be contained in the compared object.
 
         ```py title="Contains"
         from dirty_equals import Contains
