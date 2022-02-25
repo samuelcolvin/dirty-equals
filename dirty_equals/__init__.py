@@ -1,6 +1,6 @@
 from ._base import AnyThing, IsInstance
 from ._datetime import IsDatetime, IsNow
-from ._dict import IsDict, IsPartialDict, IsStrictDict
+from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
 from ._list_tuple import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._numeric import (
     IsApprox,
@@ -30,6 +30,7 @@ __all__ = (
     # dict
     'IsDict',
     'IsPartialDict',
+    'IsIgnoreDict',
     'IsStrictDict',
     # list or tuple
     'Contains',
