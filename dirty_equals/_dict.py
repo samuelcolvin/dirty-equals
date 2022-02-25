@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import Any, Callable, Container, Dict, Optional, Union, overload
 
 from ._base import DirtyEquals, DirtyEqualsMeta
-from ._utils import NotGiven, NotGivenType
+
+NotGiven = object()
 
 
 class IsDict(DirtyEquals[Dict[Any, Any]]):
@@ -27,7 +28,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         Can be created from either key word arguments or an existing dictionary (same as `dict()`).
 
         `IsDict` is not particularly useful on its own, but it can be subclassed or modified with
-        [`.settings(...)`][dirty_equals.IsDict.settings].
+        [`.settings(...)`][dirty_equals.IsDict.settings] to facilitate powerful comparison of dictionaries.
 
         ```py title="IsDict"
         from dirty_equals import IsDict
@@ -64,15 +65,15 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         *,
         strict: Optional[bool] = None,
         partial: Optional[bool] = None,
-        ignore: Union[NotGivenType, None, Container[Any], Callable[[Any], bool]] = NotGiven,
+        ignore: Union[None, Container[Any], Callable[[Any], bool]] = NotGiven,  # type: ignore[assignment]
     ) -> IsDict:
         """
         Allows you to customise the behaviour of `IsDict`, technically a new `IsDict` is required to allow chaining.
 
         Args:
-            strict: If `True`, the order of key/value pairs must match.
-            partial: If `True`, only keys include in the wrapped dict are checked.
-            ignore (`Union[None, Container[Any], Callable[[Any], bool]]`): Values to omit from comparison.
+            strict (bool): If `True`, the order of key/value pairs must match.
+            partial (bool): If `True`, only keys include in the wrapped dict are checked.
+            ignore (Union[None, Container[Any], Callable[[Any], bool]]): Values to omit from comparison.
                 Can be either a `Container` (e.g. `set` or `list`) of values to ignore, or a function that takes a
                 value and should return `True` if the value should be ignored.
 
@@ -99,8 +100,12 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
             new_cls.strict = strict
         if partial is not None:
             new_cls.partial = partial
-        if not isinstance(ignore, NotGivenType):
+        if ignore is not NotGiven:
             new_cls.ignore = ignore
+
+        if new_cls.partial and new_cls.ignore:
+            raise TypeError('partial and ignore cannot be used together')
+
         return new_cls
 
     def equals(self, other: Dict[Any, Any]) -> bool:
@@ -143,7 +148,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         modifiers = []
         if self.partial != (name == 'IsPartialDict'):
             modifiers += [f'partial={self.partial}']
-        if bool(self.ignore) != (name == 'IsIgnoreDict'):
+        if (self.ignore == {None}) != (name == 'IsIgnoreDict') or self.ignore not in (None, {None}):
             r = self.ignore.__name__ if callable(self.ignore) else repr(self.ignore)
             modifiers += [f'ignore={r}']
         if self.strict != (name == 'IsStrictDict'):
@@ -162,8 +167,6 @@ class IsPartialDict(IsDict):
     """
     Partial dictionary comparison, this is the same as
     [`IsDict(...).settings(partial=True)`][dirty_equals.IsDict.settings].
-
-    Again, `.settings(...)` can be used to customise the behaviour of `IsPartialDict`.
 
     ```py title="IsPartialDict"
     from dirty_equals import IsPartialDict
@@ -188,7 +191,8 @@ class IsIgnoreDict(IsDict):
     Dictionary comparison with `None` values ignored, this is the same as
     [`IsDict(...).settings(ignore={None})`][dirty_equals.IsDict.settings].
 
-    Again, `.settings(...)` can be used to customise the behaviour of `IsIgnoreDict`.
+    `.settings(...)` can be used to customise the behaviour of `IsIgnoreDict`, in particular changing which
+    values are ignored.
 
     ```py title="IsIgnoreDict"
     from dirty_equals import IsIgnoreDict

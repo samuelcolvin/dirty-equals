@@ -1,4 +1,4 @@
-__all__ = 'plain_repr', 'PlainRepr', 'Omit', 'NotGivenType', 'NotGiven'
+__all__ = 'plain_repr', 'PlainRepr', 'Omit'
 
 
 class PlainRepr:
@@ -19,12 +19,3 @@ def plain_repr(v: str) -> PlainRepr:
 
 # used to omit arguments from repr
 Omit = object()
-
-
-class NotGivenType:
-    """
-    General type to represent omitted arguments while keeping mypy happy
-    """
-
-
-NotGiven = NotGivenType()

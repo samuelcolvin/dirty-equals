@@ -36,6 +36,11 @@ from dirty_equals import IsDict, IsIgnoreDict, IsPartialDict, IsPositiveInt, IsS
         ({1: 10, 2: 20}, IsStrictDict({1: 10, 2: 20})),
         ({1: 10, 2: 20}, ~IsStrictDict({2: 20, 1: 10})),
         ({1: 10, 2: 20}, ~IsDict({2: 20, 1: 10}).settings(strict=True)),
+        # combining types
+        ({'a': 1, 'b': 2, 'c': 3}, IsStrictDict(a=1, c=3).settings(partial=True)),
+        ({'a': 1, 'b': 2, 'c': 3}, IsStrictDict(a=1, b=2).settings(partial=True)),
+        ({'a': 1, 'b': 2, 'c': 3}, IsStrictDict(b=2, c=3).settings(partial=True)),
+        ({'a': 1, 'c': 3, 'b': 2}, ~IsStrictDict(b=2, c=3).settings(partial=True)),
     ],
 )
 def test_is_dict(input_value, expected):
@@ -75,6 +80,12 @@ def test_arg_not_dict():
         IsDict(1)
 
 
+def test_combine_partial_ignore():
+    d = IsPartialDict(a=2, b=2, c=3)
+    with pytest.raises(TypeError, match='partial and ignore cannot be used together'):
+        d.settings(ignore={1})
+
+
 def ignore_42(value):
     return value == 42
 
@@ -93,9 +104,13 @@ def test_callable_ignore():
         (IsPartialDict, 'IsPartialDict'),
         (IsPartialDict(), 'IsPartialDict()'),
         (IsDict().settings(partial=True), 'IsDict[partial=True]()'),
-        (IsPartialDict().settings(ignore={7}), 'IsPartialDict[ignore={7}]()'),
-        (IsPartialDict().settings(ignore=ignore_42), 'IsPartialDict[ignore=ignore_42]()'),
+        (IsIgnoreDict(), 'IsIgnoreDict()'),
+        (IsIgnoreDict().settings(ignore={7}), 'IsIgnoreDict[ignore={7}]()'),
+        (IsIgnoreDict().settings(ignore={None}), 'IsIgnoreDict()'),
+        (IsIgnoreDict().settings(ignore=None), 'IsIgnoreDict[ignore=None]()'),
+        (IsDict().settings(ignore=ignore_42), 'IsDict[ignore=ignore_42]()'),
         (IsDict().settings(ignore={7}), 'IsDict[ignore={7}]()'),
+        (IsDict().settings(ignore={None}), 'IsDict[ignore={None}]()'),
         (IsPartialDict().settings(partial=False), 'IsPartialDict[partial=False]()'),
         (IsStrictDict, 'IsStrictDict'),
         (IsStrictDict(), 'IsStrictDict()'),
@@ -111,7 +126,7 @@ def test_ignore():
     def custom_ignore(v: int) -> bool:
         return v % 2 == 0
 
-    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == IsPartialDict(a=1, c=3).settings(ignore=custom_ignore)
+    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == IsDict(a=1, c=3).settings(ignore=custom_ignore)
 
 
 def test_ignore_with_is_str():
