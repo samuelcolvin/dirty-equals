@@ -29,13 +29,18 @@ This saves users adding `()` in lots of places.
 
 Example:
 
-```py title="Initialised vs. Uninitialised"
+```py
+title="Initialised vs. Uninitialised"
 from dirty_equals import IsInt
 
 # these two cases are the same
 assert 1 == IsInt
 assert 1 == IsInt()
 ```
+
+!!! Note
+    Types that require at least on argument when being initialised (like [`IsApprox`][dirty_equals.IsApprox])
+    cannot be used like this, comparisons will just return `False`.
 
 ## `__repr__` and pytest compatibility
 

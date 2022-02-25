@@ -1,60 +1,8 @@
-## Numeric Types
-
-::: dirty_equals.IsInt
-    rendering:
-      merge_init_into_class: false
-      separate_signature: false
-
-::: dirty_equals.IsFloat
-    rendering:
-      merge_init_into_class: false
-      separate_signature: false
-
-::: dirty_equals.IsPositive
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsNegative
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsNonNegative
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsNonPositive
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsPositiveInt
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsNegativeInt
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsPositiveFloat
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsNegativeFloat
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsApprox
-
-::: dirty_equals.IsNumber
-    rendering:
-      merge_init_into_class: false
-
-::: dirty_equals.IsNumeric
-
-## Date and Time Types
+# Date and Time Types
 
 ::: dirty_equals.IsDatetime
 
-#### Timezones
+### Timezones
 
 Timezones are hard, anyone who claims otherwise is either a genius, a liar, or an idiot.
 
@@ -98,49 +46,3 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 ```
 
 ::: dirty_equals.IsNow
-
-## Dictionary Types
-
-::: dirty_equals.IsDict
-
-::: dirty_equals.IsPartialDict
-
-::: dirty_equals.IsIgnoreDict
-
-::: dirty_equals.IsStrictDict
-
-## List and Tuples Types
-
-::: dirty_equals.IsListOrTuple
-
-::: dirty_equals.IsList
-
-::: dirty_equals.IsTuple
-
-::: dirty_equals.HasLen
-
-::: dirty_equals.Contains
-
-## String Types
-
-::: dirty_equals.IsAnyStr
-
-::: dirty_equals.IsStr
-
-::: dirty_equals.IsBytes
-
-## Other Types
-
-::: dirty_equals.FunctionCheck
-
-::: dirty_equals.IsInstance
-
-::: dirty_equals.IsJson
-
-::: dirty_equals.IsUUID
-
-::: dirty_equals.AnyThing
-
-::: dirty_equals._base.DirtyEquals
-    rendering:
-      merge_init_into_class: false

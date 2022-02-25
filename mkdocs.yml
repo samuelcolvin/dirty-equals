@@ -34,12 +34,18 @@ edit_uri: ''
 nav:
   - Introduction: index.md
   - Usage: usage.md
-  - Types: types.md
+  - Types:
+      - types/numeric.md
+      - types/datetime.md
+      - types/dict.md
+      - types/sequence.md
+      - types/string.md
+      - types/other.md
+      - types/custom.md
 
 markdown_extensions:
   - toc:
       permalink: true
-      toc_depth: 3
   - admonition
   - pymdownx.details
   - pymdownx.superfences
@@ -72,7 +78,7 @@ plugins:
             show_root_heading: true
             show_root_full_path: false
             show_source: false
-            heading_level: 3
+            heading_level: 2
             merge_init_into_class: true
             show_signature_annotations: true
             separate_signature: true

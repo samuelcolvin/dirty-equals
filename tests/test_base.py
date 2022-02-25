@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import IsApprox, IsInstance, IsInt, IsNegative, IsPositive, IsStr
+from dirty_equals import Contains, IsApprox, IsInstance, IsInt, IsNegative, IsOneOf, IsPositive, IsStr
 
 
 def test_or():
@@ -120,6 +120,7 @@ def test_repr():
         (IsInt() & IsPositive, 'IsInt() & IsPositive'),
         (IsInt() | IsPositive, 'IsInt() | IsPositive'),
         (IsPositive & IsInt(lt=5), 'IsPositive & IsInt(lt=5)'),
+        (IsOneOf(1, 2, 3), 'IsOneOf(1, 2, 3)'),
     ],
 )
 def test_repr_class(v, v_repr):
@@ -137,3 +138,17 @@ def test_ne_repr():
     assert 'x' != v
 
     assert repr(v) == 'IsInt'
+
+
+@pytest.mark.parametrize(
+    'value,dirty',
+    [
+        (1, IsOneOf(1, 2, 3)),
+        (4, ~IsOneOf(1, 2, 3)),
+        ([1, 2, 3], Contains(1) | IsOneOf([])),
+        ([], Contains(1) | IsOneOf([])),
+        ([2], ~(Contains(1) | IsOneOf([]))),
+    ],
+)
+def test_is_one_of(value, dirty):
+    assert value == dirty

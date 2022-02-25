@@ -1,7 +1,6 @@
-from ._base import AnyThing, IsInstance
+from ._base import AnyThing, DirtyEquals, IsInstance, IsOneOf
 from ._datetime import IsDatetime, IsNow
 from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
-from ._list_tuple import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._numeric import (
     IsApprox,
     IsFloat,
@@ -18,12 +17,15 @@ from ._numeric import (
     IsPositiveInt,
 )
 from ._other import FunctionCheck, IsJson, IsUUID
+from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
 
 __all__ = (
     # base
+    'DirtyEquals',
     'AnyThing',
     'IsInstance',
+    'IsOneOf',
     # datetime
     'IsDatetime',
     'IsNow',
@@ -32,7 +34,7 @@ __all__ = (
     'IsPartialDict',
     'IsIgnoreDict',
     'IsStrictDict',
-    # list or tuple
+    # sequence
     'Contains',
     'HasLen',
     'IsList',

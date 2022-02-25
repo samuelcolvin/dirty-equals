@@ -12,7 +12,7 @@ from ._utils import Omit
 if TYPE_CHECKING:
     from typing import TypeAlias
 
-__all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'IsInstance', 'AnyThing'
+__all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'IsInstance', 'AnyThing', 'IsOneOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
@@ -257,3 +257,31 @@ class AnyThing(DirtyEquals[Any]):
 
     def equals(self, other: Any) -> bool:
         return True
+
+
+class IsOneOf(DirtyEquals[Any]):
+    """
+    A type which checks that the value is equal to one of the given values.
+
+    Can be useful with boolean operators.
+    """
+
+    def __init__(self, expected_value: Any, *more_expected_values: Any):
+        """
+        Args:
+            expected_value: Expected value for equals to return true.
+            *more_expected_values: More expected values for equals to return true.
+
+        ```py title="IsOneOf"
+        from dirty_equals import IsOneOf, Contains
+
+        assert 1 == IsOneOf(1, 2, 3)
+        assert 4 != IsOneOf(1, 2, 3)
+        assert [1, 2, 3] == Contains(1) | IsOneOf([])
+        assert [] == Contains(1) | IsOneOf([])
+        """
+        self.expected_values: Tuple[Any, ...] = (expected_value,) + more_expected_values
+        super().__init__(*self.expected_values)
+
+    def equals(self, other: Any) -> bool:
+        return any(other == e for e in self.expected_values)
