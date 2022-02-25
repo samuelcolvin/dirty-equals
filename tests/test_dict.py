@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import IsDict, IsPartialDict, IsPositiveInt, IsStr, IsStrictDict
+from dirty_equals import IsDict, IsIgnoreDict, IsPartialDict, IsPositiveInt, IsStr, IsStrictDict
 
 
 @pytest.mark.parametrize(
@@ -15,14 +15,20 @@ from dirty_equals import IsDict, IsPartialDict, IsPositiveInt, IsStr, IsStrictDi
         ({'a': 1, 'b': None}, IsDict(a=1, b=None)),
         ({'a': 1, 'b': 3}, ~IsDict(a=1, b=2)),
         # partial dict
-        ({}, IsPartialDict()),
-        ({'a': 1, 'b': 2}, IsPartialDict(a=1, b=2)),
-        ({'a': 1, 'b': None}, IsPartialDict(a=1)),
-        ({1: 10, 2: None}, IsPartialDict({1: 10})),
-        ({'a': 1, 'b': 2}, ~IsPartialDict(a=1)),
-        ({1: 10, 2: None}, IsDict({1: 10}).settings(partial=True)),
-        ({1: 10, 2: False}, ~IsPartialDict({1: 10})),
-        ({1: 10, 2: False}, IsPartialDict({1: 10}).settings(ignore_values={False})),
+        ({1: 10, 2: 20}, IsPartialDict({1: 10})),
+        ({1: 10}, IsPartialDict({1: 10})),
+        ({1: 10, 2: 20}, IsPartialDict({1: 10})),
+        ({1: 10, 2: 20}, IsDict({1: 10}).settings(partial=True)),
+        ({1: 10}, ~IsPartialDict({1: 10, 2: 20})),
+        ({1: 10, 2: None}, ~IsPartialDict({1: 10, 2: 20})),
+        # ignore dict
+        ({}, IsIgnoreDict()),
+        ({'a': 1, 'b': 2}, IsIgnoreDict(a=1, b=2)),
+        ({'a': 1, 'b': None}, IsIgnoreDict(a=1)),
+        ({1: 10, 2: None}, IsIgnoreDict({1: 10})),
+        ({'a': 1, 'b': 2}, ~IsIgnoreDict(a=1)),
+        ({1: 10, 2: False}, ~IsIgnoreDict({1: 10})),
+        ({1: 10, 2: False}, IsIgnoreDict({1: 10}).settings(ignore={False})),
         # strict dict
         ({}, IsStrictDict()),
         ({'a': 1, 'b': 2}, IsStrictDict(a=1, b=2)),
@@ -74,10 +80,9 @@ def ignore_42(value):
 
 
 def test_callable_ignore():
-
-    assert {'a': 1} == IsPartialDict(a=1).settings(ignore_values=ignore_42)
-    assert {'a': 1, 'b': 42} == IsPartialDict(a=1).settings(ignore_values=ignore_42)
-    assert {'a': 1, 'b': 43} != IsPartialDict(a=1).settings(ignore_values=ignore_42)
+    assert {'a': 1} == IsDict(a=1).settings(ignore=ignore_42)
+    assert {'a': 1, 'b': 42} == IsDict(a=1).settings(ignore=ignore_42)
+    assert {'a': 1, 'b': 43} != IsDict(a=1).settings(ignore=ignore_42)
 
 
 @pytest.mark.parametrize(
@@ -87,10 +92,10 @@ def test_callable_ignore():
         (IsDict(), 'IsDict()'),
         (IsPartialDict, 'IsPartialDict'),
         (IsPartialDict(), 'IsPartialDict()'),
-        (IsDict().settings(partial=True), 'IsDict[partial=True, ignore_values={None}]()'),
-        (IsPartialDict().settings(ignore_values={7}), 'IsPartialDict[ignore_values={7}]()'),
-        (IsPartialDict().settings(ignore_values=ignore_42), 'IsPartialDict[ignore_values=ignore_42]()'),
-        (IsDict().settings(ignore_values={7}), 'IsDict()'),
+        (IsDict().settings(partial=True), 'IsDict[partial=True]()'),
+        (IsPartialDict().settings(ignore={7}), 'IsPartialDict[ignore={7}]()'),
+        (IsPartialDict().settings(ignore=ignore_42), 'IsPartialDict[ignore=ignore_42]()'),
+        (IsDict().settings(ignore={7}), 'IsDict[ignore={7}]()'),
         (IsPartialDict().settings(partial=False), 'IsPartialDict[partial=False]()'),
         (IsStrictDict, 'IsStrictDict'),
         (IsStrictDict(), 'IsStrictDict()'),
@@ -102,22 +107,22 @@ def test_not_equals_repr(d, expected_repr):
     assert repr(d) == expected_repr
 
 
-def test_ignore_values():
+def test_ignore():
     def custom_ignore(v: int) -> bool:
         return v % 2 == 0
 
-    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == IsPartialDict(a=1, c=3).settings(ignore_values=custom_ignore)
+    assert {'a': 1, 'b': 2, 'c': 3, 'd': 4} == IsPartialDict(a=1, c=3).settings(ignore=custom_ignore)
 
 
-def test_partial_with_is_str():
+def test_ignore_with_is_str():
     api_data = {'id': 123, 'token': 't-abc123', 'dob': None, 'street_address': None}
 
     token_is_str = IsStr(regex=r't\-.+')
-    assert api_data == IsPartialDict(id=IsPositiveInt, token=token_is_str)
+    assert api_data == IsIgnoreDict(id=IsPositiveInt, token=token_is_str)
     assert token_is_str.value == 't-abc123'
 
 
 def test_unhashable_value():
     a = {'a': 1}
     api_data = {'b': a, 'c': None}
-    assert api_data == IsPartialDict(b=a)
+    assert api_data == IsIgnoreDict(b=a)

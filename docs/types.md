@@ -104,6 +104,8 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 
 ::: dirty_equals.IsPartialDict
 
+::: dirty_equals.IsIgnoreDict
+
 ::: dirty_equals.IsStrictDict
 
 ## List and Tuples Types
