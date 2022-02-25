@@ -75,9 +75,9 @@ the test would not be declarative or as clear.
 *dirty-equals* can do so much more than that, for example:
 
 * [`IsPartialDict`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsPartialDict) 
-  let's you compare a subset of a dictionary
+  lets you compare a subset of a dictionary
 * [`IsStrictDict`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsStrictDict) 
-  let's you confirm order in a dictionary
+  lets you confirm order in a dictionary
 * [`IsList`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsList) and 
   [`IsTuple`](https://dirty-equals.helpmanual.io/types/#dirty_equals.IsTuple)
   lets you compare partial lists and tuples, with or without order constraints
