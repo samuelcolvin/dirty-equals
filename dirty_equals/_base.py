@@ -1,16 +1,8 @@
 from abc import ABCMeta
-from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
+from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
 
-try:
-    from typing import Protocol
-except ImportError:
-    # Python 3.7 doesn't have Protocol
-    Protocol = object  # type: ignore[assignment]
-
+from ._compat import Protocol, TypeAlias
 from ._utils import Omit
-
-if TYPE_CHECKING:
-    from typing import TypeAlias
 
 __all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'IsInstance', 'AnyThing', 'IsOneOf'
 
@@ -138,7 +130,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
             return self._repr_ne()
 
 
-InstanceOrType: 'TypeAlias' = 'Union[DirtyEquals[Any], DirtyEqualsMeta]'
+InstanceOrType: TypeAlias = Union[DirtyEquals[Any], DirtyEqualsMeta]
 
 
 class DirtyOr(DirtyEquals[Any]):
