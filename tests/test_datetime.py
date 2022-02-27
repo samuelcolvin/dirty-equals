@@ -142,8 +142,10 @@ def test_tz():
         pytest.param(date(2000, 1, 1), IsDate(approx=date(2000, 1, 1)), True, id='same'),
         # Note: this requires the system timezone to be UTC
         pytest.param(946684800, IsDate(approx=date(2000, 1, 1), unix_number=True), True, id='unix-int'),
+        pytest.param(946684800, IsDate(approx=date(2000, 1, 1), unix_number=False), False, id='int'),
         # Note: this requires the system timezone to be UTC
         pytest.param(946684800.123, IsDate(approx=date(2000, 1, 1), unix_number=True), True, id='unix-float'),
+        pytest.param(946684800.123, IsDate(approx=date(2000, 1, 1), unix_number=False), False, id='float'),
         pytest.param('2000-01-01', IsDate(approx=date(2000, 1, 1), iso_string=True), True, id='iso-string-true'),
         pytest.param('2000-01-01', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-different'),
         pytest.param('2000-01-01T00:00', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-different'),
