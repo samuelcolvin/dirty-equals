@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone, tzinfo
+from datetime import date, datetime, timedelta, timezone, tzinfo
 from typing import Any, Optional, Union
 
 from ._numeric import IsNumeric
@@ -178,3 +178,99 @@ class IsNow(IsDatetime):
         )
         if tz is not None:
             self._repr_kwargs['tz'] = tz
+
+
+class IsDate(IsNumeric[date]):
+    """
+    Check if the value is a date, and matches the given conditions.
+    """
+
+    allowed_types = date
+
+    def __init__(
+        self,
+        *,
+        approx: Optional[date] = None,
+        delta: Optional[Union[timedelta, int]] = None,
+        gt: Optional[date] = None,
+        lt: Optional[date] = None,
+        ge: Optional[date] = None,
+        le: Optional[date] = None,
+        unix_number: bool = False,
+        iso_string: bool = False,
+        format_string: Optional[str] = None,
+    ):
+
+        """
+        Args:
+            approx: A value to approximately compare to.
+            delta: The allowable different when comparing to the value to `approx`, if omitted 2 seconds is used,
+                ints are assumed to represent days and converted to `timedelta`s.
+            gt: Value which the compared value should be greater than (after).
+            lt: Value which the compared value should be less than (before).
+            ge: Value which the compared value should be greater than (after) or equal to.
+            le: Value which the compared value should be less than (before) or equal to.
+            unix_number: whether to allow unix timestamp numbers in comparison
+            iso_string: whether to allow iso formatted strings in comparison
+            format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
+
+        Examples of basic usage:
+
+        ```py title="IsDate"
+        from dirty_equals import IsDate
+        from datetime import date
+
+        y2k = date(2000, 1, 1)
+        assert date(2000, 1, 1) == IsDate(approx=y2k)
+        # Note: this requires the system timezone to be UTC
+        assert 946684800.123 == IsDate(approx=y2k, unix_number=True)
+        assert date(2000, 1, 10) == IsDate(approx=y2k, delta=10)
+        assert '2000-01-01' == IsDate(approx=y2k, iso_string=True)
+
+        assert date(2000, 1, 2) == IsDate(gt=y2k)
+        assert date(1999, 1, 2) != IsDate(gt=y2k)
+        ```
+        """
+
+        if isinstance(delta, timedelta):
+            delta = timedelta(days=delta.days)
+        elif isinstance(delta, int):
+            delta = timedelta(days=delta)
+
+        super().__init__(
+            approx=approx,
+            delta=delta,  # type: ignore[arg-type]
+            gt=gt,
+            lt=lt,
+            ge=ge,
+            le=le,
+        )
+
+        self.iso_string = iso_string
+        self.format_string = format_string
+        self.unix_number = unix_number
+        self._repr_kwargs.update(
+            unix_number=Omit if unix_number is False else unix_number,
+            iso_string=Omit if iso_string is False else iso_string,
+            format_string=Omit if format_string is None else format_string,
+        )
+
+    def prepare(self, other: Any) -> date:
+        if isinstance(other, date):
+            dt = other
+        elif isinstance(other, (float, int)):
+            if self.unix_number:
+                dt = date.fromtimestamp(other)
+            else:
+                raise TypeError('numbers not allowed')
+        elif isinstance(other, str):
+            if self.iso_string:
+                dt = date.fromisoformat(other)
+            elif self.format_string:
+                dt = datetime.strptime(other, self.format_string).date()
+            else:
+                raise ValueError('not a valid date string')
+        else:
+            raise ValueError(f'{type(other)} not valid as date')
+
+        return dt

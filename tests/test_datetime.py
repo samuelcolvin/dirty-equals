@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import pytest
 import pytz
 
-from dirty_equals import IsDatetime, IsNow
+from dirty_equals import IsDate, IsDatetime, IsNow
 
 
 @pytest.mark.parametrize(
@@ -134,3 +134,42 @@ def test_tz():
     assert new_year_naive != IsDatetime(approx=new_year_eve_nyc, enforce_tz=False)
     assert new_year_london == IsDatetime(approx=new_year_naive, enforce_tz=False)
     assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
+
+
+@pytest.mark.parametrize(
+    'value,dirty,expect_match',
+    [
+        pytest.param(date(2000, 1, 1), IsDate(approx=date(2000, 1, 1)), True, id='same'),
+        # Note: this requires the system timezone to be UTC
+        pytest.param(946684800, IsDate(approx=date(2000, 1, 1), unix_number=True), True, id='unix-int'),
+        # Note: this requires the system timezone to be UTC
+        pytest.param(946684800.123, IsDate(approx=date(2000, 1, 1), unix_number=True), True, id='unix-float'),
+        pytest.param('2000-01-01', IsDate(approx=date(2000, 1, 1), iso_string=True), True, id='iso-string-true'),
+        pytest.param('2000-01-01', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-different'),
+        pytest.param('2000-01-01T00:00', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-different'),
+        pytest.param('broken', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-wrong'),
+        pytest.param('28/01/87', IsDate(approx=date(1987, 1, 28), format_string='%d/%m/%y'), True, id='string-format'),
+        pytest.param('28/01/87', IsDate(approx=date(2000, 1, 1)), False, id='string-format-different'),
+        pytest.param('foobar', IsDate(approx=date(2000, 1, 1)), False, id='string-format-wrong'),
+        pytest.param([1, 2, 3], IsDate(approx=date(2000, 1, 1)), False, id='wrong-type'),
+        pytest.param(
+            datetime(2000, 1, 1, 10, 11, 12), IsDate(approx=date(2000, 1, 1)), False, id='wrong-type-datetime'
+        ),
+        pytest.param(date(2020, 1, 1), IsDate(approx=date(2020, 1, 1)), True, id='tz-same'),
+        pytest.param(date(2000, 1, 1), IsDate(ge=date(2000, 1, 1)), True, id='ge'),
+        pytest.param(date(1999, 1, 1), IsDate(ge=date(2000, 1, 1)), False, id='ge-not'),
+        pytest.param(date(2000, 1, 2), IsDate(gt=date(2000, 1, 1)), True, id='gt'),
+        pytest.param(date(2000, 1, 1), IsDate(gt=date(2000, 1, 1)), False, id='gt-not'),
+        pytest.param(date(2000, 1, 3), IsDate(delta=2), True, id='delta-equal'),
+        pytest.param(date(2000, 1, 3), IsDate(delta=timedelta(days=2)), True, id='delta-equal-timedelta'),
+        pytest.param(
+            date(2000, 1, 3), IsDate(delta=timedelta(days=2, hours=8)), True, id='delta-equal-timedelta-with-hours'
+        ),
+        pytest.param(date(2000, 1, 5), IsDate(delta=2), True, id='delta-not-equal'),
+    ],
+)
+def test_is_date(value, dirty, expect_match):
+    if expect_match:
+        assert value == dirty
+    else:
+        assert value != dirty
