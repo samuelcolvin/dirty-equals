@@ -1,5 +1,5 @@
 from ._base import AnyThing, DirtyEquals, IsInstance, IsOneOf
-from ._datetime import IsDate, IsDatetime, IsNow
+from ._datetime import IsDate, IsDatetime, IsNow, IsToday
 from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
 from ._numeric import (
     IsApprox,
@@ -30,6 +30,7 @@ __all__ = (
     'IsDatetime',
     'IsNow',
     'IsDate',
+    'IsToday',
     # dict
     'IsDict',
     'IsPartialDict',

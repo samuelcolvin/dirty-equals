@@ -247,3 +247,35 @@ class IsDate(IsNumeric[date]):
             raise ValueError(f'{type(other)} not valid as date')
 
         return dt
+
+
+class IsToday(IsDate):
+    """
+    Check if a date is today, this is similar to `IsDate(approx=date.today())`, but slightly more powerful.
+    """
+
+    def __init__(
+        self,
+        *,
+        iso_string: bool = False,
+        format_string: Optional[str] = None,
+    ):
+        """
+        Args:
+            iso_string: whether to allow iso formatted strings in comparison
+            format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
+        ```py title="IsToday"
+        from dirty_equals import IsToday
+        from datetime import date, timedelta
+
+        today = date.today()
+        assert today == IsToday
+        assert today.isoformat() == IsToday(iso_string=True)
+        assert today.isoformat() != IsToday
+        assert today + timedelta(days=1) != IsToday
+        assert today.strftime('%Y/%m/%d') == IsToday(format_string='%Y/%m/%d')
+        assert today.strftime('%Y/%m/%d') != IsToday()
+        ```
+        """
+
+        super().__init__(approx=date.today(), iso_string=iso_string, format_string=format_string)

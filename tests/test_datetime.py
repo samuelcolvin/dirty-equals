@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta, timezone
 import pytest
 import pytz
 
-from dirty_equals import IsDate, IsDatetime, IsNow
+from dirty_equals import IsDate, IsDatetime, IsNow, IsToday
 
 
 @pytest.mark.parametrize(
@@ -163,3 +163,13 @@ def test_is_date(value, dirty, expect_match):
         assert value == dirty
     else:
         assert value != dirty
+
+
+def test_is_today():
+    today = date.today()
+    assert today == IsToday
+    assert today + timedelta(days=2) != IsToday
+    assert today.isoformat() == IsToday(iso_string=True)
+    assert today.isoformat() != IsToday()
+    assert today.strftime('%Y/%m/%d') == IsToday(format_string='%Y/%m/%d')
+    assert today.strftime('%Y/%m/%d') != IsToday()
