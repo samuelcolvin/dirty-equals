@@ -86,7 +86,7 @@ Without **dirty-equals**, you'd have to compare individual fields and/or modify 
   with or without order constraints
 * nesting any of these types inside any others
 * [`IsInstance`][dirty_equals.IsInstance] lets you simply confirm the type of an object
-* You can even use boolean operators `|` and `&` to combine multiple conditions
+* You can even use [boolean operators](./usage.md#boolean-logic) `|` and `&` to combine multiple conditions
 * and much more...
 
 ## Installation
