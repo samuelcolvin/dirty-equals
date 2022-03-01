@@ -140,12 +140,6 @@ def test_tz():
     'value,dirty,expect_match',
     [
         pytest.param(date(2000, 1, 1), IsDate(approx=date(2000, 1, 1)), True, id='same'),
-        # Note: this requires the system timezone to be UTC
-        pytest.param(946684800, IsDate(approx=date(2000, 1, 1), unix_number=True), True, id='unix-int'),
-        pytest.param(946684800, IsDate(approx=date(2000, 1, 1), unix_number=False), False, id='int'),
-        # Note: this requires the system timezone to be UTC
-        pytest.param(946684800.123, IsDate(approx=date(2000, 1, 1), unix_number=True), True, id='unix-float'),
-        pytest.param(946684800.123, IsDate(approx=date(2000, 1, 1), unix_number=False), False, id='float'),
         pytest.param('2000-01-01', IsDate(approx=date(2000, 1, 1), iso_string=True), True, id='iso-string-true'),
         pytest.param('2000-01-01', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-different'),
         pytest.param('2000-01-01T00:00', IsDate(approx=date(2000, 1, 1)), False, id='iso-string-different'),
@@ -162,12 +156,6 @@ def test_tz():
         pytest.param(date(1999, 1, 1), IsDate(ge=date(2000, 1, 1)), False, id='ge-not'),
         pytest.param(date(2000, 1, 2), IsDate(gt=date(2000, 1, 1)), True, id='gt'),
         pytest.param(date(2000, 1, 1), IsDate(gt=date(2000, 1, 1)), False, id='gt-not'),
-        pytest.param(date(2000, 1, 3), IsDate(delta=2), True, id='delta-equal'),
-        pytest.param(date(2000, 1, 3), IsDate(delta=timedelta(days=2)), True, id='delta-equal-timedelta'),
-        pytest.param(
-            date(2000, 1, 3), IsDate(delta=timedelta(days=2, hours=8)), True, id='delta-equal-timedelta-with-hours'
-        ),
-        pytest.param(date(2000, 1, 5), IsDate(delta=2), True, id='delta-not-equal'),
     ],
 )
 def test_is_date(value, dirty, expect_match):
