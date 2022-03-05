@@ -156,6 +156,11 @@ def test_tz():
         pytest.param(date(1999, 1, 1), IsDate(ge=date(2000, 1, 1)), False, id='ge-not'),
         pytest.param(date(2000, 1, 2), IsDate(gt=date(2000, 1, 1)), True, id='gt'),
         pytest.param(date(2000, 1, 1), IsDate(gt=date(2000, 1, 1)), False, id='gt-not'),
+        pytest.param(date(2000, 1, 1), IsDate(gt=date(2000, 1, 1), delta=10), False, id='delta-int'),
+        pytest.param(date(2000, 1, 1), IsDate(gt=date(2000, 1, 1), delta=10.5), False, id='delta-float'),
+        pytest.param(
+            date(2000, 1, 1), IsDate(gt=date(2000, 1, 1), delta=timedelta(seconds=10)), False, id='delta-timedelta'
+        ),
     ],
 )
 def test_is_date(value, dirty, expect_match):

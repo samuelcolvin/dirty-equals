@@ -191,6 +191,7 @@ class IsDate(IsNumeric[date]):
         self,
         *,
         approx: Optional[date] = None,
+        delta: Optional[Union[timedelta, int, float]] = None,
         gt: Optional[date] = None,
         lt: Optional[date] = None,
         ge: Optional[date] = None,
@@ -224,7 +225,12 @@ class IsDate(IsNumeric[date]):
         ```
         """
 
-        super().__init__(approx=approx, gt=gt, lt=lt, ge=ge, le=le, delta=timedelta())  # type: ignore[arg-type]
+        if delta is None:
+            delta = timedelta()
+        elif isinstance(delta, (int, float)):
+            delta = timedelta(seconds=delta)
+
+        super().__init__(approx=approx, gt=gt, lt=lt, ge=ge, le=le, delta=delta)  # type: ignore[arg-type]
 
         self.iso_string = iso_string
         self.format_string = format_string
