@@ -46,3 +46,7 @@ assert new_year_eve_nyc != IsDatetime(approx=new_year_naive, enforce_tz=False)
 ```
 
 ::: dirty_equals.IsNow
+
+::: dirty_equals.IsDate
+
+::: dirty_equals.IsToday

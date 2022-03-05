@@ -203,6 +203,8 @@ class IsDate(IsNumeric[date]):
         """
         Args:
             approx: A value to approximately compare to.
+            delta: The allowable different when comparing to the value to now, if omitted 2 seconds is used,
+                ints and floats are assumed to represent seconds and converted to `timedelta`s.
             gt: Value which the compared value should be greater than (after).
             lt: Value which the compared value should be less than (before).
             ge: Value which the compared value should be greater than (after) or equal to.
