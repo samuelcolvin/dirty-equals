@@ -1,6 +1,6 @@
 black==21.12b0
 mkdocs==1.2.3
-mkdocs-autorefs==0.4.0
-mkdocs-material==8.2.1
+mkdocs-autorefs==0.4.1
+mkdocs-material==8.2.5
 mkdocs-simple-hooks==0.1.5
 mkdocstrings[python]==0.18.1
