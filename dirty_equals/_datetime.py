@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone, tzinfo
+from datetime import date, datetime, timedelta, timezone, tzinfo
 from typing import Any, Optional, Union
 
 from ._numeric import IsNumeric
@@ -178,3 +178,112 @@ class IsNow(IsDatetime):
         )
         if tz is not None:
             self._repr_kwargs['tz'] = tz
+
+
+class IsDate(IsNumeric[date]):
+    """
+    Check if the value is a date, and matches the given conditions.
+    """
+
+    allowed_types = date
+
+    def __init__(
+        self,
+        *,
+        approx: Optional[date] = None,
+        delta: Optional[Union[timedelta, int, float]] = None,
+        gt: Optional[date] = None,
+        lt: Optional[date] = None,
+        ge: Optional[date] = None,
+        le: Optional[date] = None,
+        iso_string: bool = False,
+        format_string: Optional[str] = None,
+    ):
+
+        """
+        Args:
+            approx: A value to approximately compare to.
+            delta: The allowable different when comparing to the value to now, if omitted 2 seconds is used,
+                ints and floats are assumed to represent seconds and converted to `timedelta`s.
+            gt: Value which the compared value should be greater than (after).
+            lt: Value which the compared value should be less than (before).
+            ge: Value which the compared value should be greater than (after) or equal to.
+            le: Value which the compared value should be less than (before) or equal to.
+            iso_string: whether to allow iso formatted strings in comparison
+            format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
+
+        Examples of basic usage:
+
+        ```py title="IsDate"
+        from dirty_equals import IsDate
+        from datetime import date
+
+        y2k = date(2000, 1, 1)
+        assert date(2000, 1, 1) == IsDate(approx=y2k)
+        assert '2000-01-01' == IsDate(approx=y2k, iso_string=True)
+
+        assert date(2000, 1, 2) == IsDate(gt=y2k)
+        assert date(1999, 1, 2) != IsDate(gt=y2k)
+        ```
+        """
+
+        if delta is None:
+            delta = timedelta()
+        elif isinstance(delta, (int, float)):
+            delta = timedelta(seconds=delta)
+
+        super().__init__(approx=approx, gt=gt, lt=lt, ge=ge, le=le, delta=delta)  # type: ignore[arg-type]
+
+        self.iso_string = iso_string
+        self.format_string = format_string
+        self._repr_kwargs.update(
+            iso_string=Omit if iso_string is False else iso_string,
+            format_string=Omit if format_string is None else format_string,
+        )
+
+    def prepare(self, other: Any) -> date:
+        if type(other) is date:
+            dt = other
+        elif isinstance(other, str):
+            if self.iso_string:
+                dt = date.fromisoformat(other)
+            elif self.format_string:
+                dt = datetime.strptime(other, self.format_string).date()
+            else:
+                raise ValueError('not a valid date string')
+        else:
+            raise ValueError(f'{type(other)} not valid as date')
+
+        return dt
+
+
+class IsToday(IsDate):
+    """
+    Check if a date is today, this is similar to `IsDate(approx=date.today())`, but slightly more powerful.
+    """
+
+    def __init__(
+        self,
+        *,
+        iso_string: bool = False,
+        format_string: Optional[str] = None,
+    ):
+        """
+        Args:
+            iso_string: whether to allow iso formatted strings in comparison
+            format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
+        ```py title="IsToday"
+        from dirty_equals import IsToday
+        from datetime import date, timedelta
+
+        today = date.today()
+        assert today == IsToday
+        assert today.isoformat() == IsToday(iso_string=True)
+        assert today.isoformat() != IsToday
+        assert today + timedelta(days=1) != IsToday
+        assert today.strftime('%Y/%m/%d') == IsToday(format_string='%Y/%m/%d')
+        assert today.strftime('%Y/%m/%d') != IsToday()
+        ```
+        """
+
+        super().__init__(approx=date.today(), iso_string=iso_string, format_string=format_string)
