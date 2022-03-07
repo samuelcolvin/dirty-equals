@@ -4,6 +4,7 @@ site_url: https://dirty-equals.helpmanual.io
 
 theme:
   name: material
+  custom_dir: docs/overrides
   palette:
   - scheme: default
     primary: blue grey

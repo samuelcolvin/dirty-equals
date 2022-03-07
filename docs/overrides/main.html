@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{%- block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/qabot@0.4"></script>
+<script>
+  // This prevents the global search interfere with qa-bot internal text input.
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('qa-bot').forEach((x) => {
+      x.addEventListener('keydown', (event) => {
+        event.stopPropagation();
+      });
+    });
+  });
+</script>
+<qa-bot
+    token="Hlssdx6Kdi9YB22wMXRfFnP_ezdPGHL8dzUBE3f4aiIBEm__fzdfWXrlfShdFjDgdzVNWX_j"
+    title="dirty-equals"
+    description="Doing dirty (but extremely useful) things with equals"
+    style="font-size: 0.8rem">
+    <template>
+        <dl>
+            <dt>You can ask questions about dirty-equals. Try</dt>
+            <dd>Where can dirty-equals be used?</dd>
+            <dd>Can i compare a subset of a dictionary?</dd>
+            <dd>Does dirty-equals allow comparison with the uninitialized types？</dd>
+        </dl>
+    </template>
+ </qa-bot>
+{%- endblock %}
