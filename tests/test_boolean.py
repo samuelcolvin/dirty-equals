@@ -18,16 +18,16 @@ from dirty_equals import IsFalseLike
         ({'a', 'b', 'c'}, ~IsFalseLike),
         (None, IsFalseLike),
         (object, ~IsFalseLike),
-        (0, IsFalseLike(numeric=True)),
-        (1, ~IsFalseLike(numeric=True)),
-        (0.0, IsFalseLike(numeric=True)),
-        (1.0, ~IsFalseLike(numeric=True)),
-        ('0', IsFalseLike(string=True)),
-        ('1', ~IsFalseLike(string=True)),
-        ('0.0', IsFalseLike(string=True)),
-        ('1.0', ~IsFalseLike(string=True)),
-        ('False', IsFalseLike(string=True)),
-        ('True', ~IsFalseLike(string=True)),
+        (0, IsFalseLike),
+        (1, ~IsFalseLike),
+        (0.0, IsFalseLike),
+        (1.0, ~IsFalseLike),
+        ('0', IsFalseLike(allow_strings=True)),
+        ('1', ~IsFalseLike(allow_strings=True)),
+        ('0.0', IsFalseLike(allow_strings=True)),
+        ('1.0', ~IsFalseLike(allow_strings=True)),
+        ('False', IsFalseLike(allow_strings=True)),
+        ('True', ~IsFalseLike(allow_strings=True)),
     ],
 )
 class TestIsFalseLike:
@@ -39,14 +39,6 @@ class TestIsFalseLike:
             assert other != expected
 
 
-@pytest.mark.parametrize(
-    'kwargs,error_message, error_type',
-    [
-        ({'numeric': True, 'string': True}, '"numeric" and "string" cannot be combined', TypeError),
-        ({'numeric': 'I should be a boolean'}, '"numeric" requires a boolean argument', ValueError),
-        ({'string': 'I should be a boolean'}, '"string" requires a boolean argument', ValueError),
-    ],
-)
-def test_invalid_initialization(kwargs, error_message, error_type):
-    with pytest.raises(error_type, match=error_message):
-        IsFalseLike(**kwargs)
+def test_invalid_initialization():
+    with pytest.raises(TypeError, match='takes 1 positional argument but 2 were given'):
+        IsFalseLike(True)
