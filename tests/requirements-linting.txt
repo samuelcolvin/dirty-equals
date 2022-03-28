@@ -1,9 +1,9 @@
-black==21.12b0
+black==22.1.0
 flake8==4.0.1
 flake8-quotes==3.3.1
 isort[colors]==5.10.1
-mypy==0.931
+mypy==0.942
 pre-commit==2.17.0
 pycodestyle==2.8.0
 pyflakes==2.4.0
-types-pytz==2021.3.5
+types-pytz==2021.3.6
