@@ -29,6 +29,12 @@ def import_execute(request, tmp_path: Path):
 
 def extract_code_chunks(path: Path, text: str, offset: int):
     rel_path = path.relative_to(ROOT_DIR)
+    fences = len(re.findall(r'^```', text, flags=re.M))
+    if fences % 2 != 0:
+        raise ValueError(
+            f'{rel_path}:{offset} has an odd number of code fences (```), might be missing a closing fence'
+        )
+
     for m_code in re.finditer(r'^```(.*?)$\n(.*?)^```', text, flags=re.M | re.S):
         prefix = m_code.group(1).lower()
         if not prefix.startswith(('py', '{.py')) or 'test="false"' in prefix:
