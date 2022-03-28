@@ -277,8 +277,10 @@ class IsOneOf(DirtyEquals[Any]):
 
         assert 1 == IsOneOf(1, 2, 3)
         assert 4 != IsOneOf(1, 2, 3)
+        # check that a list either contain 1 or is empty
         assert [1, 2, 3] == Contains(1) | IsOneOf([])
         assert [] == Contains(1) | IsOneOf([])
+        ```
         """
         self.expected_values: Tuple[Any, ...] = (expected_value,) + more_expected_values
         super().__init__(*self.expected_values)
