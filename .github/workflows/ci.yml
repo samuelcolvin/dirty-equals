@@ -90,9 +90,9 @@ jobs:
 
     - name: install mkdocs-material-insiders
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-      run: pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
+      run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs-material/mkdocs_material-8.2.8+insiders.4.12.0-py3-none-any.whl
       env:
-        GH_TOKEN: ${{ secrets.gh_token }}
+        MKDOCS_TOKEN: ${{ secrets.mkdocs_token }}
 
     - name: build site
       run: mkdocs build --strict
