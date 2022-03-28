@@ -34,9 +34,10 @@ class TestIsFalseLike:
     def test_dirty_equals(self, other, expected):
         assert other == expected
 
-    def test_dirty_not_equals(self, other, expected):
-        with pytest.raises(AssertionError):
-            assert other != expected
+
+def test_dirty_not_equals():
+    with pytest.raises(AssertionError):
+        assert 0 != IsFalseLike
 
 
 def test_invalid_initialization():
