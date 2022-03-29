@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import AnyThing, HasAttributes, HasName, IsInstance, IsInt, IsStr
+from dirty_equals import AnyThing, HasAttributes, HasName, HasRepr, IsInstance, IsInt, IsStr
 
 
 class Foo:
@@ -19,7 +19,8 @@ def test_is_instance_of():
 
 
 class Bar(Foo):
-    pass
+    def __repr__(self):
+        return f'Bar(a={self.a}, b={self.b})'
 
 
 def test_is_instance_of_inherit():
@@ -74,4 +75,20 @@ def test_has_name(value, dirty):
     ],
 )
 def test_has_attributes(value, dirty):
+    assert value == dirty
+
+
+@pytest.mark.parametrize(
+    'value,dirty',
+    [
+        (Bar(1, 2), HasRepr('Bar(a=1, b=2)')),
+        (Bar(1, 2), HasRepr['Bar(a=1, b=2)']),
+        (4, ~HasRepr('Bar(a=1, b=2)')),
+        (Foo(), HasRepr(IsStr(regex=r'<tests.test_inspection.Foo object at 0x[0-9a-f]{6,10}>'))),
+        (Foo, HasRepr("<class 'tests.test_inspection.Foo'>")),
+        (42, HasRepr('42')),
+        (43, ~HasRepr('42')),
+    ],
+)
+def test_has_repr(value, dirty):
     assert value == dirty

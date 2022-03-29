@@ -56,10 +56,10 @@ class IsInstance(DirtyEquals[ExpectedType]):
             return isinstance(other, self.expected_type)
 
 
-HasNameType = TypeVar('HasNameType')
+T = TypeVar('T')
 
 
-class HasName(DirtyEquals[HasNameType]):
+class HasName(DirtyEquals[T]):
     """
     A type which checks that the value has the given `__name__` attribute.
     """
@@ -95,7 +95,7 @@ class HasName(DirtyEquals[HasNameType]):
             kwargs['allow_instances'] = allow_instances
         super().__init__(expected_name, allow_instances=allow_instances)
 
-    def __class_getitem__(cls, expected_name: str) -> 'HasName[HasNameType]':
+    def __class_getitem__(cls, expected_name: str) -> 'HasName[T]':
         return cls(expected_name)
 
     def equals(self, other: Any) -> bool:
@@ -113,11 +113,46 @@ class HasName(DirtyEquals[HasNameType]):
         return False
 
 
+class HasRepr(DirtyEquals[T]):
+    """
+    A type which checks that the value has the given `repr()` value.
+    """
+
+    def __init__(self, expected_repr: str):
+        """
+        Args:
+            expected_repr: The expected repr value.
+
+        Example:
+        ```py title="HasRepr"
+        from dirty_equals import HasRepr, IsStr
+
+        class Foo:
+            def __repr__(self):
+                return 'This is a Foo'
+
+        assert Foo() == HasRepr('This is a Foo')
+        assert Foo() == HasRepr['This is a Foo']
+        assert Foo == HasRepr(IsStr(regex='<class.+'))
+        assert 42 == HasRepr('42')
+        assert 43 != HasRepr('42')
+        ```
+        """
+        self.expected_repr = expected_repr
+        super().__init__(expected_repr)
+
+    def __class_getitem__(cls, expected_repr: str) -> 'HasRepr[T]':
+        return cls(expected_repr)
+
+    def equals(self, other: Any) -> bool:
+        return repr(other) == self.expected_repr
+
+
 class HasAttributes(DirtyEquals[Any]):
     """
     A type which checks that the value has the given attributes.
 
-    This is a partial check - e.g. the list of attributes checked should not be exhaustive.
+    This is a partial check - e.g. the attributes provided to check do not need to be exhaustive.
     """
 
     @overload
@@ -145,6 +180,7 @@ class HasAttributes(DirtyEquals[Any]):
                 pass
 
         assert Foo(1, 2) == HasAttributes(a=1, b=2)
+        assert Foo(1, 2) == HasAttributes(a=1)
         assert Foo(1, 's') == HasAttributes(a=IsInt, b=IsStr)
         assert Foo(1, 2) != HasAttributes(a=IsInt, b=IsStr)
         assert Foo(1, 2) != HasAttributes(a=1, b=2, c=3)
