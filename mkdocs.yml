@@ -41,9 +41,9 @@ nav:
       - types/sequence.md
       - types/string.md
       - types/inspection.md
+      - types/boolean.md
       - types/other.md
       - types/custom.md
-      - types/boolean.md
 
 markdown_extensions:
   - toc:
