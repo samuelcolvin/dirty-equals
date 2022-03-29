@@ -1,7 +1,8 @@
-from ._base import AnyThing, DirtyEquals, IsInstance, IsOneOf
+from ._base import AnyThing, DirtyEquals, IsOneOf
 from ._boolean import IsFalseLike
 from ._datetime import IsDate, IsDatetime, IsNow, IsToday
 from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
+from ._inspection import HasName, IsInstance
 from ._numeric import (
     IsApprox,
     IsFloat,
@@ -25,7 +26,6 @@ __all__ = (
     # base
     'DirtyEquals',
     'AnyThing',
-    'IsInstance',
     'IsOneOf',
     # boolean
     'IsFalseLike',
@@ -59,6 +59,9 @@ __all__ = (
     'IsFloat',
     'IsPositiveFloat',
     'IsNegativeFloat',
+    # inspection
+    'IsInstance',
+    'HasName',
     # other
     'FunctionCheck',
     'IsJson',
