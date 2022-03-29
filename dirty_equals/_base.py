@@ -16,8 +16,15 @@ __all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'AnyThing', 'IsOneOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
+    def __new__(mcls, name, bases, dct):
+        # remove bases which are not part of dirty_equals to avoid problems initialising those types
+        # don't use issubclass here as it will cause an error with ABCs
+        bases = tuple(b for b in bases if b.__module__.startswith('dirty_equals'))
+        cls = super().__new__(mcls, name, bases, dct)
+        return cls
+
     def __eq__(self, other: Any) -> bool:
-        # this is required as fancy things happen when creating generics which include equals checks, without it
+        # this is required as fancy things happen when creating generics which include equals checks, without it,
         # we get some recursive errors
         if self is DirtyEquals or other is Generic or other is Protocol:
             return False
@@ -28,6 +35,9 @@ class DirtyEqualsMeta(ABCMeta):
                 # we don't want to raise a type error here since somewhere deep in pytest it does something like
                 # type(a) == type(b), if we raised TypeError we would upset the pytest error message
                 return False
+
+    # def __getitem__(cls, expected_value: Any) -> 'DirtyEqualsMeta':
+    #     return cls(expected_value)
 
     def __or__(self, other: Any) -> 'DirtyOr':  # type: ignore[override]
         return DirtyOr(self, other)
@@ -48,12 +58,10 @@ class DirtyEqualsMeta(ABCMeta):
 T = TypeVar('T')
 
 
-class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
+class DirtyEquals(metaclass=DirtyEqualsMeta):
     """
     Base type for all *dirty-equals* types.
     """
-
-    __slots__ = '_other', '_was_equal', '_repr_args', '_repr_kwargs'
 
     def __init__(self, *repr_args: Any, **repr_kwargs: Any):
         """
@@ -64,7 +72,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         self._other: Any = None
         self._was_equal: Optional[bool] = None
         self._repr_args: Iterable[Any] = repr_args
-        self._repr_kwargs: Dict[str, Any] = repr_kwargs
+        self._repr_kwargs: Dict[str, Any] = repr_kwargs or {}
 
     def equals(self, other: Any) -> bool:
         """
@@ -141,7 +149,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
 InstanceOrType: 'TypeAlias' = 'Union[DirtyEquals[Any], DirtyEqualsMeta]'
 
 
-class DirtyOr(DirtyEquals[Any]):
+class DirtyOr(DirtyEquals):
     def __init__(self, a: 'InstanceOrType', b: 'InstanceOrType', *extra: 'InstanceOrType'):
         self.dirties = (a, b) + extra
         super().__init__()
@@ -153,7 +161,7 @@ class DirtyOr(DirtyEquals[Any]):
         return ' | '.join(_repr_ne(d) for d in self.dirties)
 
 
-class DirtyAnd(DirtyEquals[Any]):
+class DirtyAnd(DirtyEquals):
     def __init__(self, a: InstanceOrType, b: InstanceOrType, *extra: InstanceOrType):
         self.dirties = (a, b) + extra
         super().__init__()
@@ -165,7 +173,7 @@ class DirtyAnd(DirtyEquals[Any]):
         return ' & '.join(_repr_ne(d) for d in self.dirties)
 
 
-class DirtyNot(DirtyEquals[Any]):
+class DirtyNot(DirtyEquals):
     def __init__(self, subject: InstanceOrType):
         self.subject = subject
         super().__init__()
@@ -184,7 +192,7 @@ def _repr_ne(v: InstanceOrType) -> str:
         return v._repr_ne()
 
 
-class AnyThing(DirtyEquals[Any]):
+class AnyThing(DirtyEquals):
     """
     A type which matches any value. `AnyThing` isn't generally very useful on its own, but can be used within
     other comparisons.
@@ -206,7 +214,7 @@ class AnyThing(DirtyEquals[Any]):
         return True
 
 
-class IsOneOf(DirtyEquals[Any]):
+class IsOneOf(DirtyEquals):
     """
     A type which checks that the value is equal to one of the given values.
 

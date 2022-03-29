@@ -4,7 +4,7 @@ from ._base import DirtyEquals
 from ._utils import Omit
 
 
-class IsTrueLike(DirtyEquals[bool]):
+class IsTrueLike(DirtyEquals):
     """
     Check if the value is True like. `IsTrueLike` allows comparison to anything and effectively uses just
     `return bool(other)`.
@@ -29,7 +29,7 @@ class IsTrueLike(DirtyEquals[bool]):
         return bool(other)
 
 
-class IsFalseLike(DirtyEquals[bool]):
+class IsFalseLike(DirtyEquals):
     """
     Check if the value is False like. `IsFalseLike` allows comparison to anything and effectively uses
     `return not bool(other)` (with string checks if `allow_strings=True` is set).

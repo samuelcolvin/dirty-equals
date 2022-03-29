@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Container, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
 
 from ._base import DirtyEquals
 from ._utils import Omit, plain_repr
@@ -11,7 +11,7 @@ T = TypeVar('T', List[Any], Tuple[Any, ...])
 LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]]]'
 
 
-class HasLen(DirtyEquals[Sized]):
+class HasLen(DirtyEquals):
     """
     Check that some has a given length, or length in a given range.
     """
@@ -55,7 +55,7 @@ class HasLen(DirtyEquals[Sized]):
         return _length_correct(self.length, other)
 
 
-class Contains(DirtyEquals[Container[Any]]):
+class Contains(DirtyEquals):
     """
     Check that an object contains one or more values.
     """
@@ -84,7 +84,7 @@ class Contains(DirtyEquals[Container[Any]]):
         return all(v in other for v in self.contained_values)
 
 
-class IsListOrTuple(DirtyEquals[T]):
+class IsListOrTuple(DirtyEquals):
     """
     Check that some object is a list or tuple and optionally its values match some constraints.
     """
@@ -214,7 +214,7 @@ class IsListOrTuple(DirtyEquals[T]):
             return True
 
 
-class IsList(IsListOrTuple[List[Any]]):
+class IsList(IsListOrTuple, list):
     """
     All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a list.
 
@@ -235,7 +235,7 @@ class IsList(IsListOrTuple[List[Any]]):
     allowed_type = list
 
 
-class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
+class IsTuple(IsListOrTuple, tuple):
     """
     All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a tuple.
 

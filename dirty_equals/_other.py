@@ -11,7 +11,7 @@ except ImportError:
     from typing_extensions import Literal  # type: ignore[misc]
 
 
-class IsUUID(DirtyEquals[UUID]):
+class IsUUID(DirtyEquals):
     """
     A class that checks if a value is a valid UUID, optionally checking UUID version.
     """
@@ -55,7 +55,7 @@ AnyJson = object
 JsonType = TypeVar('JsonType', AnyJson, Any)
 
 
-class IsJson(DirtyEquals[JsonType]):
+class IsJson(DirtyEquals):
     """
     A class that checks if a value is a JSON object, and check the contents of the JSON.
     """
@@ -120,7 +120,7 @@ class IsJson(DirtyEquals[JsonType]):
             return False
 
 
-class FunctionCheck(DirtyEquals[Any]):
+class FunctionCheck(DirtyEquals):
     """
     Use a function to check if a value "equals" whatever you want to check
     """

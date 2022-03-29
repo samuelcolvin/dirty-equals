@@ -8,7 +8,7 @@ from ._utils import get_dict_arg
 NotGiven = object()
 
 
-class IsDict(DirtyEquals[Dict[Any, Any]]):
+class IsDict(DirtyEquals, dict):
     """
     Base class for comparing dictionaries. By default, `IsDict` isn't particularly useful on its own
     (it behaves pretty much like a normal `dict`), but it can be subclassed

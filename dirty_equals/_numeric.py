@@ -26,7 +26,7 @@ AnyNumber = Union[int, float, Decimal]
 N = TypeVar('N', int, float, Decimal, date, datetime, AnyNumber)
 
 
-class IsNumeric(DirtyEquals[N]):
+class IsNumeric(DirtyEquals):
     """
     Base class for all numeric types, `IsNumeric` implements approximate and inequality comparisons,
     as well as the type checks.
@@ -133,7 +133,7 @@ class IsNumeric(DirtyEquals[N]):
         return abs(self.approx - other) <= delta
 
 
-class IsNumber(IsNumeric[AnyNumber]):
+class IsNumber(IsNumeric):
     """
     Base class for all types that can be used with all number types, e.g. numeric but not `date` or `datetime`.
 
@@ -263,7 +263,7 @@ class IsNonPositive(IsNumber):
         self._repr_kwargs = {}
 
 
-class IsInt(IsNumeric[int]):
+class IsInt(IsNumeric, int):
     """
     Checks that a value is an integer.
 
@@ -329,7 +329,7 @@ class IsNegativeInt(IsInt):
         self._repr_kwargs = {}
 
 
-class IsFloat(IsNumeric[float]):
+class IsFloat(float, IsNumeric):
     """
     Checks that a value is a float.
 

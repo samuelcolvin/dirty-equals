@@ -5,7 +5,7 @@ from ._numeric import IsNumeric
 from ._utils import Omit
 
 
-class IsDatetime(IsNumeric[datetime]):
+class IsDatetime(IsNumeric, datetime):
     """
     Check if the value is a datetime, and matches the given conditions.
     """
@@ -180,7 +180,7 @@ class IsNow(IsDatetime):
             self._repr_kwargs['tz'] = tz
 
 
-class IsDate(IsNumeric[date]):
+class IsDate(IsNumeric, date):
     """
     Check if the value is a date, and matches the given conditions.
     """

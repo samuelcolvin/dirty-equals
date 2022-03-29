@@ -1,5 +1,5 @@
 import re
-from typing import Any, Optional, Pattern, Tuple, Type, TypeVar, Union
+from typing import Any, Optional, Pattern, Tuple, Type, Union
 
 from ._base import DirtyEquals
 from ._utils import Omit, plain_repr
@@ -9,12 +9,11 @@ try:
 except ImportError:
     from typing_extensions import Literal  # type: ignore[misc]
 
-T = TypeVar('T', str, bytes)
-
 __all__ = 'IsStr', 'IsBytes', 'IsAnyStr'
+AnyStr = Union[str, bytes]
 
 
-class IsAnyStr(DirtyEquals[T]):
+class IsAnyStr(DirtyEquals):
     """
     Comparison of `str` or `bytes` objects.
 
@@ -31,7 +30,7 @@ class IsAnyStr(DirtyEquals[T]):
         min_length: Optional[int] = None,
         max_length: Optional[int] = None,
         case: Literal['upper', 'lower', None] = None,
-        regex: Union[None, T, Pattern[T]] = None,
+        regex: Union[None, AnyStr, Pattern[AnyStr]] = None,
         regex_flags: int = 0,
     ):
         """
@@ -67,7 +66,7 @@ class IsAnyStr(DirtyEquals[T]):
         self.case = case
         self._flex = len(self.expected_types) > 1
         if regex is None:
-            self.regex: Union[None, T, Pattern[T]] = None
+            self.regex: Union[None, AnyStr, Pattern[AnyStr]] = None
             self.regex_flags: int = 0
         else:
             self.regex, self.regex_flags = self._prepare_regex(regex, regex_flags)
@@ -105,7 +104,9 @@ class IsAnyStr(DirtyEquals[T]):
 
         return True
 
-    def _prepare_regex(self, regex: Union[T, Pattern[T]], regex_flags: int) -> Tuple[Union[T, Pattern[T]], int]:
+    def _prepare_regex(
+        self, regex: Union[AnyStr, Pattern[AnyStr]], regex_flags: int
+    ) -> Tuple[Union[AnyStr, Pattern[AnyStr]], int]:
         if isinstance(regex, re.Pattern):
             if self._flex:
                 # less performant, but more flexible
@@ -122,7 +123,7 @@ class IsAnyStr(DirtyEquals[T]):
         return regex, regex_flags
 
 
-class IsStr(IsAnyStr[str]):
+class IsStr(IsAnyStr, str):
     """
     Checks if the value is a string, and optionally meets some constraints.
 
@@ -143,7 +144,7 @@ class IsStr(IsAnyStr[str]):
     expected_types = (str,)
 
 
-class IsBytes(IsAnyStr[bytes]):
+class IsBytes(IsAnyStr, str):
     """
     Checks if the value is a bytes object, and optionally meets some constraints.
 

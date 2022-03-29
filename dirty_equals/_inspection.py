@@ -6,7 +6,7 @@ from ._utils import get_dict_arg
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
 
-class IsInstance(DirtyEquals[ExpectedType]):
+class IsInstance(DirtyEquals):
     """
     A type which checks that the value is an instance of the expected type.
     """
@@ -59,7 +59,7 @@ class IsInstance(DirtyEquals[ExpectedType]):
 T = TypeVar('T')
 
 
-class HasName(DirtyEquals[T]):
+class HasName(DirtyEquals):
     """
     A type which checks that the value has the given `__name__` attribute.
     """
@@ -113,7 +113,7 @@ class HasName(DirtyEquals[T]):
         return False
 
 
-class HasRepr(DirtyEquals[T]):
+class HasRepr(DirtyEquals):
     """
     A type which checks that the value has the given `repr()` value.
     """
@@ -139,7 +139,7 @@ class HasRepr(DirtyEquals[T]):
         ```
         """
         self.expected_repr = expected_repr
-        super().__init__(expected_repr)
+        super().__init__(repr=expected_repr)
 
     def __class_getitem__(cls, expected_repr: str) -> 'HasRepr[T]':
         return cls(expected_repr)
@@ -148,7 +148,7 @@ class HasRepr(DirtyEquals[T]):
         return repr(other) == self.expected_repr
 
 
-class HasAttributes(DirtyEquals[Any]):
+class HasAttributes(DirtyEquals):
     """
     A type which checks that the value has the given attributes.
 

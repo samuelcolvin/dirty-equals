@@ -12,12 +12,11 @@ We won't inherit from [`IsNumeric`][dirty_equals.IsNumeric] in this case to keep
 
 ```py
 title="IsEven"
-from decimal import Decimal
-from typing import Any, Union
+from typing import Any
 from dirty_equals import IsOneOf
 from dirty_equals import DirtyEquals
 
-class IsEven(DirtyEquals[Union[int, float, Decimal]]):
+class IsEven(DirtyEquals):
     def equals(self, other: Any) -> bool:
         return other % 2 == 0
 
