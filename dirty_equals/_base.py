@@ -17,13 +17,6 @@ __all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'AnyThing', 'IsOneOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
-    # def __new__(mcls, name, bases, dct):
-    #     # remove bases which are not part of dirty_equals to avoid problems initialising those types
-    #     # don't use issubclass here as it will cause an error with ABCs
-    #     # bases = tuple(b for b in bases if b.__module__.startswith('dirty_equals'))
-    #     cls = super().__new__(mcls, name, bases, dct)
-    #     return cls
-
     def __eq__(self, other: Any) -> bool:
         # this is required as fancy things happen when creating generics which include equals checks, without it,
         # we get some recursive errors
@@ -36,9 +29,6 @@ class DirtyEqualsMeta(ABCMeta):
                 # we don't want to raise a type error here since somewhere deep in pytest it does something like
                 # type(a) == type(b), if we raised TypeError we would upset the pytest error message
                 return False
-
-    # def __getitem__(cls, expected_value: Any) -> 'DirtyEqualsMeta':
-    #     return cls(expected_value)
 
     def __or__(self, other: Any) -> 'DirtyOr':  # type: ignore[override]
         return DirtyOr(self, other)
