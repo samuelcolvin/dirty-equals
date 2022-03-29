@@ -1,10 +1,14 @@
 import pytest
 
-from dirty_equals import HasName, IsInstance, IsStr
+from dirty_equals import AnyThing, HasAttributes, HasName, IsInstance, IsInt, IsStr
 
 
 class Foo:
-    def snap(self):
+    def __init__(self, a=1, b=2):
+        self.a = a
+        self.b = b
+
+    def spam(self):
         pass
 
 
@@ -38,7 +42,7 @@ def even(x):
 
 
 @pytest.mark.parametrize(
-    'type,dirty',
+    'value,dirty',
     [
         (Foo, HasName('Foo')),
         (Foo, HasName['Foo']),
@@ -48,9 +52,26 @@ def even(x):
         (int, HasName('int')),
         (42, HasName('int')),
         (even, HasName('even')),
+        (Foo().spam, HasName('spam')),
+        (Foo.spam, HasName('spam')),
         (Foo, HasName(IsStr(regex='F..'))),
         (Bar, ~HasName(IsStr(regex='F..'))),
     ],
 )
-def test_has_name(type, dirty):
-    assert type == dirty
+def test_has_name(value, dirty):
+    assert value == dirty
+
+
+@pytest.mark.parametrize(
+    'value,dirty',
+    [
+        (Foo(1, 2), HasAttributes(a=1, b=2)),
+        (Foo(1, 's'), HasAttributes(a=IsInt, b=IsStr)),
+        (Foo(1, 2), ~HasAttributes(a=IsInt, b=IsStr)),
+        (Foo(1, 2), ~HasAttributes(a=1, b=2, c=3)),
+        (Foo(1, 2), HasAttributes(a=1, b=2, spam=AnyThing)),
+        (Foo(1, 2), ~HasAttributes(a=1, b=2, missing=AnyThing)),
+    ],
+)
+def test_has_attributes(value, dirty):
+    assert value == dirty

@@ -2,7 +2,7 @@ from ._base import AnyThing, DirtyEquals, IsOneOf
 from ._boolean import IsFalseLike
 from ._datetime import IsDate, IsDatetime, IsNow, IsToday
 from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
-from ._inspection import HasName, IsInstance
+from ._inspection import HasAttributes, HasName, IsInstance
 from ._numeric import (
     IsApprox,
     IsFloat,
@@ -62,6 +62,7 @@ __all__ = (
     # inspection
     'IsInstance',
     'HasName',
+    'HasAttributes',
     # other
     'FunctionCheck',
     'IsJson',

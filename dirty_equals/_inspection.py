@@ -1,6 +1,7 @@
-from typing import Any, Tuple, TypeVar, Union
+from typing import Any, Dict, Tuple, TypeVar, Union, overload
 
 from ._base import DirtyEquals
+from ._utils import get_dict_arg
 
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
@@ -98,13 +99,69 @@ class HasName(DirtyEquals[HasNameType]):
         return cls(expected_name)
 
     def equals(self, other: Any) -> bool:
-        direct_name = getattr(other, '__name__', None) == self.expected_name
-        if direct_name:
+        direct_name = getattr(other, '__name__', None)
+        if direct_name is not None and direct_name == self.expected_name:
             return True
 
         if self.allow_instances:
             cls = getattr(other, '__class__', None)
-            if cls is not None and getattr(cls, '__name__', None) == self.expected_name:
-                return True
+            if cls is not None:  # pragma: no branch
+                cls_name = getattr(cls, '__name__', None)
+                if cls_name is not None and cls_name == self.expected_name:
+                    return True
 
         return False
+
+
+class HasAttributes(DirtyEquals[Any]):
+    """
+    A type which checks that the value has the given attributes.
+
+    This is a partial check - e.g. the list of attributes checked should not be exhaustive.
+    """
+
+    @overload
+    def __init__(self, expected: Dict[Any, Any]):
+        ...
+
+    @overload
+    def __init__(self, **expected: Any):
+        ...
+
+    def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any):
+        """
+        Can be created from either keyword arguments or an existing dictionary (same as `dict()`).
+
+        Example:
+        ```py title="HasAttributes"
+        from dirty_equals import HasAttributes, IsInt, IsStr, AnyThing
+
+        class Foo:
+            def __init__(self, a, b):
+                self.a = a
+                self.b = b
+
+            def spam(self):
+                pass
+
+        assert Foo(1, 2) == HasAttributes(a=1, b=2)
+        assert Foo(1, 's') == HasAttributes(a=IsInt, b=IsStr)
+        assert Foo(1, 2) != HasAttributes(a=IsInt, b=IsStr)
+        assert Foo(1, 2) != HasAttributes(a=1, b=2, c=3)
+        assert Foo(1, 2) == HasAttributes(a=1, b=2, spam=AnyThing)
+        ```
+        """
+        self.expected_attrs = get_dict_arg('HasAttributes', expected_args, expected_kwargs)
+        super().__init__(**self.expected_attrs)
+
+    def equals(self, other: Any) -> bool:
+        for attr, expected_value in self.expected_attrs.items():
+            # done like this to avoid problems with `AnyThing` equaling `None` or `DefaultAttr`
+            try:
+                value = getattr(other, attr)
+            except AttributeError:
+                return False
+            else:
+                if value != expected_value:
+                    return False
+        return True

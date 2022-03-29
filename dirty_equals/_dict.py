@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any, Callable, Container, Dict, Optional, Union, overload
 
 from ._base import DirtyEquals, DirtyEqualsMeta
+from ._utils import get_dict_arg
 
 NotGiven = object()
 
@@ -25,7 +26,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
 
     def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any):
         """
-        Can be created from either key word arguments or an existing dictionary (same as `dict()`).
+        Can be created from either keyword arguments or an existing dictionary (same as `dict()`).
 
         `IsDict` is not particularly useful on its own, but it can be subclassed or modified with
         [`.settings(...)`][dirty_equals.IsDict.settings] to facilitate powerful comparison of dictionaries.
@@ -37,19 +38,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         assert {1: 2, 3: 4} == IsDict({1: 2, 3: 4})
         ```
         """
-        if expected_kwargs:
-            self.expected_values = expected_kwargs
-            if expected_args:
-                raise TypeError('IsDict requires either a single argument or kwargs, not both')
-        elif not expected_args:
-            self.expected_values = {}
-        elif len(expected_args) == 1:
-            self.expected_values = expected_args[0]
-        else:
-            raise TypeError(f'IsDict expected at most 1 argument, got {len(expected_args)}')
-
-        if not isinstance(self.expected_values, dict):
-            raise TypeError(f'expected_values must be a dict, got {type(self.expected_values)}')
+        self.expected_values = get_dict_arg('IsDict', expected_args, expected_kwargs)
 
         self.strict = False
         self.partial = False
