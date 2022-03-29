@@ -1,5 +1,5 @@
 from ._base import AnyThing, DirtyEquals, IsInstance, IsOneOf
-from ._boolean import IsFalseLike
+from ._boolean import IsFalseLike, IsTrueLike
 from ._datetime import IsDate, IsDatetime, IsNow, IsToday
 from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
 from ._numeric import (
@@ -28,6 +28,7 @@ __all__ = (
     'IsInstance',
     'IsOneOf',
     # boolean
+    'IsTrueLike',
     'IsFalseLike',
     # datetime
     'IsDatetime',
