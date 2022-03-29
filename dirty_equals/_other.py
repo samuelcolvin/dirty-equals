@@ -1,5 +1,5 @@
 import json
-from typing import Any, Callable, TypeVar, overload
+from typing import Any, Callable, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
@@ -52,7 +52,6 @@ class IsUUID(DirtyEquals):
 
 
 AnyJson = object
-JsonType = TypeVar('JsonType', AnyJson, Any)
 
 
 class IsJson(DirtyEquals):
@@ -61,14 +60,14 @@ class IsJson(DirtyEquals):
     """
 
     @overload
-    def __init__(self, expected_value: JsonType = AnyJson):
+    def __init__(self, expected_value: Any = AnyJson):
         ...
 
     @overload
     def __init__(self, **expected_kwargs: Any):
         ...
 
-    def __init__(self, expected_value: JsonType = AnyJson, **expected_kwargs: Any):
+    def __init__(self, expected_value: Any = AnyJson, **expected_kwargs: Any):
         """
         Args:
             expected_value: Value to compare the JSON to, if omitted, any JSON is accepted.
@@ -106,7 +105,7 @@ class IsJson(DirtyEquals):
             self.expected_value = expected_value
         super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)
 
-    def __class_getitem__(cls, expected_type: JsonType) -> 'IsJson[JsonType]':
+    def __class_getitem__(cls, expected_type: Any) -> 'IsJson':
         return cls(expected_type)
 
     def equals(self, other: Any) -> bool:

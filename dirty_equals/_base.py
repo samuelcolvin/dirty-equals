@@ -1,4 +1,5 @@
 from abc import ABCMeta
+from datetime import date
 from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar
 
 try:
@@ -16,12 +17,12 @@ __all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'AnyThing', 'IsOneOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
-    def __new__(mcls, name, bases, dct):
-        # remove bases which are not part of dirty_equals to avoid problems initialising those types
-        # don't use issubclass here as it will cause an error with ABCs
-        bases = tuple(b for b in bases if b.__module__.startswith('dirty_equals'))
-        cls = super().__new__(mcls, name, bases, dct)
-        return cls
+    # def __new__(mcls, name, bases, dct):
+    #     # remove bases which are not part of dirty_equals to avoid problems initialising those types
+    #     # don't use issubclass here as it will cause an error with ABCs
+    #     # bases = tuple(b for b in bases if b.__module__.startswith('dirty_equals'))
+    #     cls = super().__new__(mcls, name, bases, dct)
+    #     return cls
 
     def __eq__(self, other: Any) -> bool:
         # this is required as fancy things happen when creating generics which include equals checks, without it,
@@ -63,6 +64,15 @@ class DirtyEquals(metaclass=DirtyEqualsMeta):
     Base type for all *dirty-equals* types.
     """
 
+    def __new__(cls, *args: Any, **kwargs: Any) -> 'DirtyEquals':
+        if issubclass(cls, date):
+            # the __new__ method for dates and datetimes require year, month and day, hence we have to do this
+            # although the value is never used, use this year to minimise the chance anyone can confuse it with a
+            # year they're really working with
+            return super().__new__(cls, year=123, month=1, day=1)  # type: ignore[call-arg]
+        else:
+            return super().__new__(cls)
+
     def __init__(self, *repr_args: Any, **repr_kwargs: Any):
         """
         Args:
@@ -73,6 +83,7 @@ class DirtyEquals(metaclass=DirtyEqualsMeta):
         self._was_equal: Optional[bool] = None
         self._repr_args: Iterable[Any] = repr_args
         self._repr_kwargs: Dict[str, Any] = repr_kwargs or {}
+        # note we don't call super __init__ here as we don't want to initialise any outer base classes
 
     def equals(self, other: Any) -> bool:
         """
@@ -145,8 +156,11 @@ class DirtyEquals(metaclass=DirtyEqualsMeta):
             # else return something which explains what's going on.
             return self._repr_ne()
 
+    def __str__(self) -> str:
+        return self.__repr__()
 
-InstanceOrType: 'TypeAlias' = 'Union[DirtyEquals[Any], DirtyEqualsMeta]'
+
+InstanceOrType: 'TypeAlias' = 'Union[DirtyEquals, DirtyEqualsMeta]'
 
 
 class DirtyOr(DirtyEquals):

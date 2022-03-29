@@ -89,7 +89,10 @@ class IsListOrTuple(DirtyEquals):
     Check that some object is a list or tuple and optionally its values match some constraints.
     """
 
-    allowed_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
+    allowed_type: Union[Type[List[Any]], Type[Tuple[Any, ...]], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (
+        list,
+        tuple,
+    )
 
     @overload
     def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None):
@@ -214,7 +217,7 @@ class IsListOrTuple(DirtyEquals):
             return True
 
 
-class IsList(IsListOrTuple, list):
+class IsList(IsListOrTuple, list):  # type: ignore[type-arg]
     """
     All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a list.
 
@@ -235,7 +238,7 @@ class IsList(IsListOrTuple, list):
     allowed_type = list
 
 
-class IsTuple(IsListOrTuple, tuple):
+class IsTuple(IsListOrTuple, tuple):  # type: ignore[type-arg]
     """
     All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a tuple.
 

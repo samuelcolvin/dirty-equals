@@ -11,6 +11,7 @@ except ImportError:
 
 __all__ = 'IsStr', 'IsBytes', 'IsAnyStr'
 AnyStr = Union[str, bytes]
+AnyPattern = Union[Pattern[str], Pattern[bytes]]
 
 
 class IsAnyStr(DirtyEquals):
@@ -30,7 +31,7 @@ class IsAnyStr(DirtyEquals):
         min_length: Optional[int] = None,
         max_length: Optional[int] = None,
         case: Literal['upper', 'lower', None] = None,
-        regex: Union[None, AnyStr, Pattern[AnyStr]] = None,
+        regex: Union[None, AnyStr, AnyPattern] = None,
         regex_flags: int = 0,
     ):
         """
@@ -66,7 +67,7 @@ class IsAnyStr(DirtyEquals):
         self.case = case
         self._flex = len(self.expected_types) > 1
         if regex is None:
-            self.regex: Union[None, AnyStr, Pattern[AnyStr]] = None
+            self.regex: Union[None, AnyStr, AnyPattern] = None
             self.regex_flags: int = 0
         else:
             self.regex, self.regex_flags = self._prepare_regex(regex, regex_flags)
@@ -105,8 +106,8 @@ class IsAnyStr(DirtyEquals):
         return True
 
     def _prepare_regex(
-        self, regex: Union[AnyStr, Pattern[AnyStr]], regex_flags: int
-    ) -> Tuple[Union[AnyStr, Pattern[AnyStr]], int]:
+        self, regex: Union[AnyStr, AnyPattern], regex_flags: int
+    ) -> Tuple[Union[AnyStr, AnyPattern], int]:
         if isinstance(regex, re.Pattern):
             if self._flex:
                 # less performant, but more flexible
@@ -118,7 +119,7 @@ class IsAnyStr(DirtyEquals):
                 regex = regex.pattern
 
         if self._flex and isinstance(regex, str):
-            regex = regex.encode()  # type: ignore[assignment]
+            regex = regex.encode()
 
         return regex, regex_flags
 
@@ -144,7 +145,7 @@ class IsStr(IsAnyStr, str):
     expected_types = (str,)
 
 
-class IsBytes(IsAnyStr, str):
+class IsBytes(IsAnyStr, bytes):
     """
     Checks if the value is a bytes object, and optionally meets some constraints.
 

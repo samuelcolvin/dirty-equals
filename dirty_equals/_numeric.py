@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 from decimal import Decimal
-from typing import Any, Optional, Tuple, Type, TypeVar, Union
+from typing import Any, Generic, Optional, Tuple, Type, TypeVar, Union
 
 from ._base import DirtyEquals
 
@@ -26,7 +26,7 @@ AnyNumber = Union[int, float, Decimal]
 N = TypeVar('N', int, float, Decimal, date, datetime, AnyNumber)
 
 
-class IsNumeric(DirtyEquals):
+class IsNumeric(DirtyEquals, Generic[N]):
     """
     Base class for all numeric types, `IsNumeric` implements approximate and inequality comparisons,
     as well as the type checks.
@@ -133,7 +133,7 @@ class IsNumeric(DirtyEquals):
         return abs(self.approx - other) <= delta
 
 
-class IsNumber(IsNumeric):
+class IsNumber(IsNumeric[AnyNumber]):
     """
     Base class for all types that can be used with all number types, e.g. numeric but not `date` or `datetime`.
 
@@ -263,7 +263,7 @@ class IsNonPositive(IsNumber):
         self._repr_kwargs = {}
 
 
-class IsInt(IsNumeric, int):
+class IsInt(IsNumeric[int], int):  # type: ignore[misc]
     """
     Checks that a value is an integer.
 
@@ -329,7 +329,7 @@ class IsNegativeInt(IsInt):
         self._repr_kwargs = {}
 
 
-class IsFloat(float, IsNumeric):
+class IsFloat(IsNumeric[float], float):
     """
     Checks that a value is a float.
 

@@ -8,7 +8,7 @@ from ._utils import get_dict_arg
 NotGiven = object()
 
 
-class IsDict(DirtyEquals, dict):
+class IsDict(DirtyEquals, dict):  # type: ignore[misc,type-arg]
     """
     Base class for comparing dictionaries. By default, `IsDict` isn't particularly useful on its own
     (it behaves pretty much like a normal `dict`), but it can be subclassed
@@ -43,8 +43,8 @@ class IsDict(DirtyEquals, dict):
         self.strict = False
         self.partial = False
         self.ignore: Union[None, Container[Any], Callable[[Any], bool]] = None
-        self._post_init()
         super().__init__()
+        self._post_init()
 
     def _post_init(self) -> None:
         pass

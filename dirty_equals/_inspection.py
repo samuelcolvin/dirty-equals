@@ -1,9 +1,7 @@
-from typing import Any, Dict, Tuple, TypeVar, Union, overload
+from typing import Any, Dict, Tuple, Union, overload
 
 from ._base import DirtyEquals
 from ._utils import get_dict_arg
-
-ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
 
 
 class IsInstance(DirtyEquals):
@@ -11,7 +9,12 @@ class IsInstance(DirtyEquals):
     A type which checks that the value is an instance of the expected type.
     """
 
-    def __init__(self, expected_type: ExpectedType, *, only_direct_instance: bool = False):
+    def __init__(
+        self,
+        expected_type: Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]],
+        *,
+        only_direct_instance: bool = False,
+    ):
         """
         Args:
             expected_type: The type to check against.
@@ -46,7 +49,7 @@ class IsInstance(DirtyEquals):
         self.only_direct_instance = only_direct_instance
         super().__init__(expected_type)
 
-    def __class_getitem__(cls, expected_type: ExpectedType) -> 'IsInstance[ExpectedType]':
+    def __class_getitem__(cls, expected_type: Any) -> 'IsInstance':
         return cls(expected_type)
 
     def equals(self, other: Any) -> bool:
@@ -54,9 +57,6 @@ class IsInstance(DirtyEquals):
             return type(other) == self.expected_type
         else:
             return isinstance(other, self.expected_type)
-
-
-T = TypeVar('T')
 
 
 class HasName(DirtyEquals):
@@ -95,7 +95,7 @@ class HasName(DirtyEquals):
             kwargs['allow_instances'] = allow_instances
         super().__init__(expected_name, allow_instances=allow_instances)
 
-    def __class_getitem__(cls, expected_name: str) -> 'HasName[T]':
+    def __class_getitem__(cls, expected_name: str) -> 'HasName':
         return cls(expected_name)
 
     def equals(self, other: Any) -> bool:
@@ -141,7 +141,7 @@ class HasRepr(DirtyEquals):
         self.expected_repr = expected_repr
         super().__init__(repr=expected_repr)
 
-    def __class_getitem__(cls, expected_repr: str) -> 'HasRepr[T]':
+    def __class_getitem__(cls, expected_repr: str) -> 'HasRepr':
         return cls(expected_repr)
 
     def equals(self, other: Any) -> bool:
