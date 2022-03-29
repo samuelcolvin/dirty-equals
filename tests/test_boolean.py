@@ -11,6 +11,8 @@ from dirty_equals import IsFalseLike, IsTrueLike
         ([], IsFalseLike),
         ([1], ~IsFalseLike),
         ((), IsFalseLike),
+        ('', IsFalseLike),
+        ('', IsFalseLike(allow_strings=True)),
         ((1, 2), ~IsFalseLike),
         ({}, IsFalseLike),
         ({1: 'a'}, ~IsFalseLike),
@@ -33,6 +35,12 @@ from dirty_equals import IsFalseLike, IsTrueLike
 )
 def test_is_false_like(other, expected):
     assert other == expected
+
+
+def test_is_false_like_repr():
+    assert repr(IsFalseLike) == 'IsFalseLike'
+    assert repr(IsFalseLike()) == 'IsFalseLike()'
+    assert repr(IsFalseLike(allow_strings=True)) == 'IsFalseLike(allow_strings=True)'
 
 
 def test_dirty_not_equals():

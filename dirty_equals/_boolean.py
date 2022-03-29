@@ -1,32 +1,29 @@
-from typing import Any, Optional
+from typing import Any
 
 from ._base import DirtyEquals
+from ._utils import Omit
 
 
 class IsTrueLike(DirtyEquals[bool]):
     """
     Check if the value is True like. `IsTrueLike` allows comparison to anything and effectively uses just
     `return bool(other)`.
+
+    Example of basic usage:
+
+    ```py title="IsTrueLike"
+    from dirty_equals import IsTrueLike
+
+    assert True == IsTrueLike
+    assert 1 == IsTrueLike
+    assert 'true' == IsTrueLike
+    assert 'foobar' == IsTrueLike  # any non-empty string is "True"
+    assert '' != IsTrueLike
+    assert [1] == IsTrueLike
+    assert {} != IsTrueLike
+    assert None != IsTrueLike
+    ```
     """
-
-    def __init__(self) -> None:
-        """
-        Example of basic usage:
-
-        ```py title="IsTrueLike"
-        from dirty_equals import IsTrueLike
-
-        assert True == IsTrueLike
-        assert 1 == IsTrueLike
-        assert 'true' == IsTrueLike
-        assert 'foobar' == IsTrueLike  # any non-empty string is "True"
-        assert '' != IsTrueLike
-        assert [1] == IsTrueLike
-        assert {} != IsTrueLike
-        assert None != IsTrueLike
-        ```
-        """
-        super().__init__()
 
     def equals(self, other: Any) -> bool:
         return bool(other)
@@ -42,7 +39,7 @@ class IsFalseLike(DirtyEquals[bool]):
         """
         Args:
             allow_strings: if `True`, allow comparisons to `False` like strings, case-insensitive, allows
-                `'false'` and any string where `float(other) == 0` (e.g. `'0'`).
+                `''`, `'false'` and any string where `float(other) == 0` (e.g. `'0'`).
 
         Example of basic usage:
 
@@ -59,10 +56,12 @@ class IsFalseLike(DirtyEquals[bool]):
         assert [1] != IsFalseLike
         assert {} == IsFalseLike
         assert None == IsFalseLike
+        assert '' == IsFalseLike(allow_strings=True)
+        assert '' == IsFalseLike
         ```
         """
-        self.allow_strings: Optional[bool] = allow_strings
-        super().__init__(allow_strings=allow_strings)
+        self.allow_strings = allow_strings
+        super().__init__(allow_strings=allow_strings or Omit)
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, str) and self.allow_strings:
@@ -71,7 +70,7 @@ class IsFalseLike(DirtyEquals[bool]):
 
     @staticmethod
     def make_string_check(other: str) -> bool:
-        if other.lower() == 'false':
+        if other.lower() in {'false', ''}:
             return True
 
         try:
