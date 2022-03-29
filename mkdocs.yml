@@ -40,6 +40,7 @@ nav:
       - types/dict.md
       - types/sequence.md
       - types/string.md
+      - types/inspection.md
       - types/boolean.md
       - types/other.md
       - types/custom.md

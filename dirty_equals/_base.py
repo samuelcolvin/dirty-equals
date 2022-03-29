@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar
 
 try:
     from typing import Protocol
@@ -10,9 +10,9 @@ except ImportError:
 from ._utils import Omit
 
 if TYPE_CHECKING:
-    from typing import TypeAlias
+    from typing import TypeAlias, Union  # noqa: F401
 
-__all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'IsInstance', 'AnyThing', 'IsOneOf'
+__all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'AnyThing', 'IsOneOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
@@ -182,59 +182,6 @@ def _repr_ne(v: InstanceOrType) -> str:
         return repr(v)
     else:
         return v._repr_ne()
-
-
-ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
-
-
-class IsInstance(DirtyEquals[ExpectedType]):
-    """
-    A type which checks that the value is an instance of the expected type.
-    """
-
-    def __init__(self, expected_type: ExpectedType, *, only_direct_instance: bool = False):
-        """
-        Args:
-            expected_type: The type to check against.
-            only_direct_instance: whether instances of subclasses of `expected_type` should be considered equal.
-
-        !!! note
-            `IsInstance` can be parameterized or initialised with a type -
-            `IsInstance[Foo]` is exactly equivalent to `IsInstance(Foo)`.
-
-            This allows usage to be analogous to type hints.
-
-        Example:
-        ```py title="IsInstance"
-        from dirty_equals import IsInstance
-
-        class Foo:
-            pass
-
-        class Bar(Foo):
-            pass
-
-        assert Foo() == IsInstance[Foo]
-        assert Foo() == IsInstance(Foo)
-        assert Foo != IsInstance[Bar]
-
-        assert Bar() == IsInstance[Foo]
-        assert Foo() == IsInstance(Foo, only_direct_instance=True)
-        assert Bar() != IsInstance(Foo, only_direct_instance=True)
-        ```
-        """
-        self.expected_type = expected_type
-        self.only_direct_instance = only_direct_instance
-        super().__init__(expected_type)
-
-    def __class_getitem__(cls, expected_type: ExpectedType) -> 'IsInstance[ExpectedType]':
-        return cls(expected_type)
-
-    def equals(self, other: Any) -> bool:
-        if self.only_direct_instance:
-            return type(other) == self.expected_type
-        else:
-            return isinstance(other, self.expected_type)
 
 
 class AnyThing(DirtyEquals[Any]):

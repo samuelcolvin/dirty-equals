@@ -1,6 +1,6 @@
 import pytest
 
-from dirty_equals import Contains, IsApprox, IsInstance, IsInt, IsNegative, IsOneOf, IsPositive, IsStr
+from dirty_equals import Contains, IsApprox, IsInt, IsNegative, IsOneOf, IsPositive, IsStr
 
 
 def test_or():
@@ -50,35 +50,6 @@ def test_value_ne():
     assert repr(v) == 'IsStr()'
     with pytest.raises(AttributeError, match='value is not available until __eq__ has been called'):
         v.value
-
-
-class Foo:
-    pass
-
-
-def test_is_instance_of():
-    assert Foo() == IsInstance(Foo)
-    assert Foo() == IsInstance[Foo]
-    assert 1 != IsInstance[Foo]
-
-
-class Bar(Foo):
-    pass
-
-
-def test_is_instance_of_inherit():
-    assert Bar() == IsInstance(Foo)
-    assert Foo() == IsInstance(Foo, only_direct_instance=True)
-    assert Bar() != IsInstance(Foo, only_direct_instance=True)
-
-    assert Foo != IsInstance(Foo)
-    assert Bar != IsInstance(Foo)
-    assert type != IsInstance(Foo)
-
-
-def test_is_instance_of_repr():
-    assert repr(IsInstance) == 'IsInstance'
-    assert repr(IsInstance(Foo)) == "IsInstance(<class 'tests.test_base.Foo'>)"
 
 
 def test_dict_compare():
