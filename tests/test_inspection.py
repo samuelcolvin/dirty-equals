@@ -12,6 +12,12 @@ class Foo:
         pass
 
 
+def dirty_repr(value):
+    if hasattr(value, 'equals'):
+        return repr(value)
+    return ''
+
+
 def test_is_instance_of():
     assert Foo() == IsInstance(Foo)
     assert Foo() == IsInstance[Foo]
@@ -58,6 +64,7 @@ def even(x):
         (Foo, HasName(IsStr(regex='F..'))),
         (Bar, ~HasName(IsStr(regex='F..'))),
     ],
+    ids=dirty_repr,
 )
 def test_has_name(value, dirty):
     assert value == dirty
@@ -73,6 +80,7 @@ def test_has_name(value, dirty):
         (Foo(1, 2), HasAttributes(a=1, b=2, spam=AnyThing)),
         (Foo(1, 2), ~HasAttributes(a=1, b=2, missing=AnyThing)),
     ],
+    ids=dirty_repr,
 )
 def test_has_attributes(value, dirty):
     assert value == dirty
@@ -84,11 +92,12 @@ def test_has_attributes(value, dirty):
         (Bar(1, 2), HasRepr('Bar(a=1, b=2)')),
         (Bar(1, 2), HasRepr['Bar(a=1, b=2)']),
         (4, ~HasRepr('Bar(a=1, b=2)')),
-        (Foo(), HasRepr(IsStr(regex=r'<tests.test_inspection.Foo object at 0x[0-9a-f]{6,10}>'))),
+        (Foo(), HasRepr(IsStr(regex=r'<tests.test_inspection.Foo object at 0x[0-9a-f]{6,20}>'))),
         (Foo, HasRepr("<class 'tests.test_inspection.Foo'>")),
         (42, HasRepr('42')),
         (43, ~HasRepr('42')),
     ],
+    ids=dirty_repr,
 )
 def test_has_repr(value, dirty):
     assert value == dirty
