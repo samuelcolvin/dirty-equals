@@ -42,6 +42,7 @@ nav:
       - types/string.md
       - types/other.md
       - types/custom.md
+      - types/boolean.md
 
 markdown_extensions:
   - toc:
