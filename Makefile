@@ -24,6 +24,7 @@ lint:
 .PHONY: test
 test:
 	coverage run -m pytest
+	coverage run tests/mypy_checks.py
 
 .PHONY: testcov
 testcov: test
@@ -32,7 +33,7 @@ testcov: test
 
 .PHONY: mypy
 mypy:
-	mypy --show-error-codes dirty_equals
+	mypy dirty_equals tests/mypy_checks.py
 
 .PHONY: docs
 docs:

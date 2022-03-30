@@ -1,6 +1,7 @@
 from typing import Any, Dict, Tuple, TypeVar, Union, overload
 
 from ._base import DirtyEquals
+from ._strings import IsStr
 from ._utils import get_dict_arg
 
 ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
@@ -64,7 +65,7 @@ class HasName(DirtyEquals[T]):
     A type which checks that the value has the given `__name__` attribute.
     """
 
-    def __init__(self, expected_name: str, *, allow_instances: bool = True):
+    def __init__(self, expected_name: Union[IsStr, str], *, allow_instances: bool = True):
         """
         Args:
             expected_name: The name to check against.
@@ -118,7 +119,7 @@ class HasRepr(DirtyEquals[T]):
     A type which checks that the value has the given `repr()` value.
     """
 
-    def __init__(self, expected_repr: str):
+    def __init__(self, expected_repr: Union[IsStr, str]):
         """
         Args:
             expected_repr: The expected repr value.
