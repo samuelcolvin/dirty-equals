@@ -2,12 +2,8 @@ import re
 from typing import Any, Optional, Pattern, Tuple, Type, TypeVar, Union
 
 from ._base import DirtyEquals
+from ._typing import Literal
 from ._utils import Omit, plain_repr
-
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal  # type: ignore[misc]
 
 T = TypeVar('T', str, bytes)
 

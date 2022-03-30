@@ -1,23 +1,15 @@
 from abc import ABCMeta
-from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar
+from typing import Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar, Union
 
-try:
-    from typing import Protocol
-except ImportError:
-    # Python 3.7 doesn't have Protocol
-    Protocol = object  # type: ignore[assignment]
-
+from ._typing import Protocol, TypeAlias
 from ._utils import Omit
-
-if TYPE_CHECKING:
-    from typing import TypeAlias, Union  # noqa: F401
 
 __all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'AnyThing', 'IsOneOf'
 
 
 class DirtyEqualsMeta(ABCMeta):
     def __eq__(self, other: Any) -> bool:
-        # this is required as fancy things happen when creating generics which include equals checks, without it
+        # this is required as fancy things happen when creating generics which include equals checks, without it,
         # we get some recursive errors
         if self is DirtyEquals or other is Generic or other is Protocol:
             return False
@@ -138,7 +130,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
             return self._repr_ne()
 
 
-InstanceOrType: 'TypeAlias' = 'Union[DirtyEquals[Any], DirtyEqualsMeta]'
+InstanceOrType: 'TypeAlias' = Union[DirtyEquals[Any], DirtyEqualsMeta]
 
 
 class DirtyOr(DirtyEquals[Any]):

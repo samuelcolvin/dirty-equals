@@ -1,10 +1,8 @@
-from typing import TYPE_CHECKING, Any, Container, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
+from typing import Any, Container, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
 
 from ._base import DirtyEquals
+from ._typing import TypeAlias
 from ._utils import Omit, plain_repr
-
-if TYPE_CHECKING:
-    from typing import TypeAlias
 
 __all__ = 'HasLen', 'Contains', 'IsListOrTuple', 'IsList', 'IsTuple'
 T = TypeVar('T', List[Any], Tuple[Any, ...])
