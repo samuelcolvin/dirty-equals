@@ -24,7 +24,7 @@ lint:
 .PHONY: test
 test:
 	coverage run -m pytest
-	coverage run tests/mypy_checks.py
+	python tests/mypy_checks.py
 
 .PHONY: testcov
 testcov: test
