@@ -72,7 +72,7 @@ class IsJson(DirtyEquals[JsonType]):
         """
         Args:
             expected_value: Value to compare the JSON to, if omitted, any JSON is accepted.
-            expected_kwargs (Any): Keyword arguments forming a dict to compare the JSON to,
+            **expected_kwargs: Keyword arguments forming a dict to compare the JSON to,
                 `expected_value` and `expected_kwargs` may not be combined.
 
         As with any `dirty_equals` type, types can be nested to provide more complex checks.
