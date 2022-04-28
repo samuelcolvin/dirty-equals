@@ -74,8 +74,8 @@ def test_has_name(value, dirty):
     'value,dirty',
     [
         (Foo(1, 2), HasAttributes(a=1, b=2)),
-        (Foo(1, 's'), HasAttributes(a=IsInt, b=IsStr)),
-        (Foo(1, 2), ~HasAttributes(a=IsInt, b=IsStr)),
+        (Foo(1, 's'), HasAttributes(a=IsInt(), b=IsStr())),
+        (Foo(1, 2), ~HasAttributes(a=IsInt(), b=IsStr())),
         (Foo(1, 2), ~HasAttributes(a=1, b=2, c=3)),
         (Foo(1, 2), HasAttributes(a=1, b=2, spam=AnyThing)),
         (Foo(1, 2), ~HasAttributes(a=1, b=2, missing=AnyThing)),

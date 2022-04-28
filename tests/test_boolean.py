@@ -1,3 +1,5 @@
+import platform
+
 import pytest
 
 from dirty_equals import IsFalseLike, IsTrueLike
@@ -43,9 +45,15 @@ def test_is_false_like_repr():
     assert repr(IsFalseLike(allow_strings=True)) == 'IsFalseLike(allow_strings=True)'
 
 
+@pytest.mark.skipif(platform.python_implementation() == 'PyPy', reason='PyPy does not metaclass dunder methods')
 def test_dirty_not_equals():
     with pytest.raises(AssertionError):
         assert 0 != IsFalseLike
+
+
+def test_dirty_not_equals_instance():
+    with pytest.raises(AssertionError):
+        assert 0 != IsFalseLike()
 
 
 def test_invalid_initialization():

@@ -11,12 +11,12 @@ on:
 
 jobs:
   test:
-    name: test py${{ matrix.python-version }} on ${{ matrix.os }}
+    name: test py-${{ matrix.python-version }} on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu, macos]
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10', 'pypy-3.7', 'pypy-3.8', 'pypy-3.9']
 
     runs-on: ${{ matrix.os }}-latest
 
@@ -39,10 +39,10 @@ jobs:
         key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tests/requirements.txt') }}
 
     - run: pip install -r tests/requirements.txt
-      if: steps.cache.outputs.cache-hit != 'true'
+#      if: steps.cache.outputs.cache-hit != 'true'  # breaks pypy tests
 
     - run: poetry install
-      if: steps.cache.outputs.cache-hit != 'true'
+#      if: steps.cache.outputs.cache-hit != 'true'  # breaks pypy tests
 
     - run: make test
 
