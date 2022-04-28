@@ -23,6 +23,10 @@ assert ['a', 'b', 'c'] == ~Contains('z')
 
 ## Initialised vs. Class comparison
 
+!!! warning
+
+    This does not work with PyPy.
+
 *dirty-equals* allows comparison with types regardless of whether they've been initialised.
 
 This saves users adding `()` in lots of places.
