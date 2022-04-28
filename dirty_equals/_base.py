@@ -44,11 +44,6 @@ class DirtyEqualsMeta(ABCMeta):
     def __repr__(self) -> str:
         return self.__name__
 
-    # def __instancecheck__(self, instance) -> bool:
-    #     print(repr(self))
-    #     print(f'instancecheck {instance} ({type(instance)}) - {super().__instancecheck__(instance)}')
-    #     return super().__instancecheck__(instance)
-
 
 T = TypeVar('T')
 

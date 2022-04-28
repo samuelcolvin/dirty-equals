@@ -51,6 +51,11 @@ def test_dirty_not_equals():
         assert 0 != IsFalseLike
 
 
+def test_dirty_not_equals_instance():
+    with pytest.raises(AssertionError):
+        assert 0 != IsFalseLike()
+
+
 def test_invalid_initialization():
     with pytest.raises(TypeError, match='takes 1 positional argument but 2 were given'):
         IsFalseLike(True)
