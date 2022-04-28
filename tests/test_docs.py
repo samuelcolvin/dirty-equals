@@ -1,4 +1,5 @@
 import importlib.util
+import platform
 import re
 from pathlib import Path
 from textwrap import dedent
@@ -65,5 +66,6 @@ def pytest_generate_tests(metafunc):
     metafunc.parametrize('module_name,source_code', generate_code_chunks('dirty_equals', 'docs'))
 
 
+@pytest.mark.skipif(platform.python_implementation() == 'PyPy', reason='PyPy does not metaclass dunder methods')
 def test_docs_examples(module_name, source_code, import_execute):
     import_execute(module_name, source_code, True)

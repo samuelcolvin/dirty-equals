@@ -121,7 +121,8 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         return {k: v for k, v in d.items() if not self._ignore_value(v)}
 
     def _ignore_value(self, v: Any) -> bool:
-        if isinstance(v, (DirtyEquals, DirtyEqualsMeta)):
+        # `isinstance(v, (DirtyEquals, DirtyEqualsMeta))` seems to always return `True` on pypy, no idea why
+        if type(v) in (DirtyEquals, DirtyEqualsMeta):
             return False
         elif callable(self.ignore):
             return self.ignore(v)

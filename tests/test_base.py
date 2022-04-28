@@ -1,3 +1,5 @@
+import platform
+
 import pytest
 
 from dirty_equals import Contains, IsApprox, IsInt, IsNegative, IsOneOf, IsPositive, IsStr
@@ -58,6 +60,7 @@ def test_dict_compare():
     assert v == {'foo': IsInt() & IsApprox(1), 'bar': IsPositive() | IsNegative(), 'spam': ~IsStr()}
 
 
+@pytest.mark.skipif(platform.python_implementation() == 'PyPy', reason='PyPy does not metaclass dunder methods')
 def test_not_repr():
     v = ~IsInt
     assert str(v) == '~IsInt'
@@ -66,6 +69,16 @@ def test_not_repr():
         assert 1 == v
 
     assert str(v) == '~IsInt'
+
+
+def test_not_repr_instance():
+    v = ~IsInt()
+    assert str(v) == '~IsInt()'
+
+    with pytest.raises(AssertionError):
+        assert 1 == v
+
+    assert str(v) == '~IsInt()'
 
 
 def test_repr():
