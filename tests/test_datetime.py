@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta, timezone
+from unittest.mock import Mock
 
 import pytest
 import pytz
@@ -25,7 +26,6 @@ from dirty_equals import IsDate, IsDatetime, IsNow, IsToday
         ),
         pytest.param('28/01/87', IsDatetime(approx=datetime(2000, 1, 1)), False, id='string-format-different'),
         pytest.param('foobar', IsDatetime(approx=datetime(2000, 1, 1)), False, id='string-format-wrong'),
-        pytest.param(datetime.now().isoformat(), IsNow(iso_string=True), True, id='isnow-str-true'),
         pytest.param(datetime(2000, 1, 1).isoformat(), IsNow(iso_string=True), False, id='isnow-str-different'),
         pytest.param([1, 2, 3], IsDatetime(approx=datetime(2000, 1, 1)), False, id='wrong-type'),
         pytest.param(
@@ -119,6 +119,12 @@ def test_delta():
     assert IsNow(delta=timedelta(hours=2)).delta == timedelta(seconds=7200)
     assert IsNow(delta=3600).delta == timedelta(seconds=3600)
     assert IsNow(delta=3600.1).delta == timedelta(seconds=3600, microseconds=100000)
+
+
+def test_is_now_relative(monkeypatch):
+    mock = Mock(return_value=datetime(2020, 1, 1, 12, 13, 14))
+    monkeypatch.setattr(IsNow, '_get_now', mock)
+    assert IsNow() == datetime(2020, 1, 1, 12, 13, 14)
 
 
 def test_tz():
