@@ -44,6 +44,7 @@ nav:
       - types/boolean.md
       - types/other.md
       - types/custom.md
+  - Internals: internals.md
 
 markdown_extensions:
   - toc:

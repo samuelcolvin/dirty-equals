@@ -1,5 +1,5 @@
-## Internals
-### How the magic of `DirtyEquals.__eq__` works?
+# Internals
+## How the magic of `DirtyEquals.__eq__` works?
 When you call `x == y`, Python first calls `x.__eq__(y)`. This would not help us
 much, because we would have to keep an eye on order of the arguments when
 comparing to `DirtyEquals` objects. But that's where were another feature of
