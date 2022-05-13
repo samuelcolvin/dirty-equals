@@ -1,5 +1,5 @@
 ## Internals
-### How is is the magical `DirtyEquals.__eq__` called?
+### How the magic of `DirtyEquals.__eq__` works?
 When you call `x == y`, Python first calls `x.__eq__(y)`. This would not help us
 much, because we would have to keep an eye on order of the arguments when
 comparing to `DirtyEquals` objects. But that's where were another feature of
@@ -15,6 +15,6 @@ you can see an example how that is implemented in Python.
 
 > By default, object implements `__eq__()` by using `is`,
 > returning `NotImplemented` in the case of a false comparison: 
-> `True if x is y else NotImplemented``.
+> `True if x is y else NotImplemented`.
 
-See the Python documentation for more information ([`object.__eq__``](https://docs.python.org/3/reference/datamodel.html#object.__eq__])).
+See the Python documentation for more information ([`object.__eq__`](https://docs.python.org/3/reference/datamodel.html#object.__eq__)).
