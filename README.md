@@ -97,3 +97,4 @@ pip install dirty-equals
 ```
 
 **dirty-equals** requires **Python 3.7+**.
+
