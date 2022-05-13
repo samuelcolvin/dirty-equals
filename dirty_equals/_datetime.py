@@ -163,13 +163,12 @@ class IsNow(IsDatetime):
 
             tz = pytz.timezone(tz)
 
-        if tz is not None:
-            now = datetime.utcnow().replace(tzinfo=timezone.utc).astimezone(tz)
-        else:
-            now = datetime.now()
+        self.tz = tz
+
+        approx = self._get_now()
 
         super().__init__(
-            approx=now,
+            approx=approx,
             delta=delta,
             unix_number=unix_number,
             iso_string=iso_string,
@@ -178,6 +177,20 @@ class IsNow(IsDatetime):
         )
         if tz is not None:
             self._repr_kwargs['tz'] = tz
+
+    def _get_now(self) -> datetime:
+        if self.tz is None:
+            return datetime.now()
+        else:
+            return datetime.utcnow().replace(tzinfo=timezone.utc).astimezone(self.tz)
+
+    def prepare(self, other: Any) -> datetime:
+
+        # update approx for every comparing, to check if other value is dirty equal
+        # to current moment of time
+        self.approx = self._get_now()
+
+        return super().prepare(other)
 
 
 class IsDate(IsNumeric[date]):
