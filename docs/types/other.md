@@ -11,3 +11,5 @@
 ::: dirty_equals.AnyThing
 
 ::: dirty_equals.IsOneOf
+
+::: dirty_equals.IsIP
