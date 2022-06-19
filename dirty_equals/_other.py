@@ -1,4 +1,5 @@
 import json
+import re
 from typing import Any, Callable, TypeVar, overload
 from uuid import UUID
 
@@ -145,3 +146,42 @@ class FunctionCheck(DirtyEquals[Any]):
 
     def equals(self, other: Any) -> bool:
         return self.func(other)
+
+
+class IsHash(DirtyEquals[str]):
+    """
+    A class that checks if a value is a valid common hash type.
+    """
+
+    def __init__(self, hash_type: Literal['md5', 'sha-1', 'sha-256']):
+        """
+        Args:
+            hash_type: The hash type to check. Must be specified.
+
+        ```py title="IsUUID"
+        from dirty_equals import IsHash
+
+        assert 'f1e069787ece74531d112559945c6871' == IsHash('md5')
+        assert 'f1e069787ece74531d112559945c6871' != IsHash('sha-256')
+        assert 'F1E069787ECE74531D112559945C6871' == IsHash('md5')
+        assert '40bd001563085fc35165329ea1ff5c5ecbdbbeef' == IsHash('sha-1')
+        assert 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3' == IsHash('sha-256')
+        ```
+        """
+
+        allowed_hashes = ('md5', 'sha-1', 'sha-256')
+        if hash_type and hash_type not in allowed_hashes:
+            raise ValueError(f"Hash type must be one of the following values: {', '.join(allowed_hashes)}")
+
+        self.hash_type = hash_type
+        super().__init__(hash_type)
+
+        md5_regex = re.compile(r'^[a-fA-F\d]{32}$')
+        sha_1_regex = re.compile(r'^[a-fA-F\d]{40}$')
+        sha256_regex = re.compile(r'^[a-fA-F\d]{64}$')
+        self.hash_type_regex_patterns = {'md5': md5_regex, 'sha-1': sha_1_regex, 'sha-256': sha256_regex}
+
+    def equals(self, other: Any) -> bool:
+        match = re.fullmatch(self.hash_type_regex_patterns[self.hash_type], other)
+        result = True if match else False
+        return result

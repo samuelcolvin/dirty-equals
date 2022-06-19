@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsJson, IsUUID
+from dirty_equals import FunctionCheck, IsHash, IsJson, IsUUID
 
 
 @pytest.mark.parametrize(
@@ -128,3 +128,45 @@ def test_equals_function_fail():
 def test_json_both():
     with pytest.raises(TypeError, match='IsJson requires either an argument or kwargs, not both'):
         IsJson(1, a=2)
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('f1e069787ECE74531d112559945c6871', IsHash('md5')),
+        ('40bd001563085fc35165329ea1FF5c5ecbdbbeef', IsHash('sha-1')),
+        ('a665a45920422f9d417e4867eFDC4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', IsHash('sha-256')),
+    ],
+)
+def test_is_hash_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('foobar', IsHash('md5')),
+        ([1, 2, 3], IsHash('sha-1')),
+        ('f1e069787ECE74531d112559945c6871d', IsHash('md5')),
+        ('400bd001563085fc35165329ea1FF5c5ecbdbbeef', IsHash('sha-1')),
+        ('a665a45920422g9d417e4867eFDC4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', IsHash('sha-256')),
+    ],
+)
+def test_is_hash_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'hash_type',
+    ['md5', 'sha-1', 'sha-256'],
+)
+def test_is_hash_md5_false_repr(hash_type):
+    is_hash = IsHash(hash_type)
+    with pytest.raises(AssertionError):
+        assert '123' == is_hash
+    assert str(is_hash) == f"IsHash('{hash_type}')"
+
+
+def test_wrong_hash_type():
+    with pytest.raises(ValueError, match='Hash type must be one of the following values: md5, sha-1, sha-256'):
+        assert '123' == IsHash('ntlm')
