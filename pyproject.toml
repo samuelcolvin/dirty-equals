@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dirty-equals"
-version = "0"
+version = "0.0.dev0"
 description = "Doing dirty (but extremely useful) things with equals."
 authors = ["Samuel Colvin <s@muelcolvin.com>"]
 readme = "README.md"
