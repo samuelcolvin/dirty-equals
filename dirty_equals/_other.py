@@ -193,17 +193,13 @@ class IsIP(DirtyEquals[IP]):
         else:
             return False
 
-        return self.run_kwargs_checks(ip)
-
-    def run_kwargs_checks(self, ip: Union[IPv4Network, IPv6Network]) -> bool:
-
-        if self.version and not self.netmask:
-            return self.version == ip.version
-
-        if self.version and self.netmask:
-            version_check = self.version == ip.version
-            address_format = {4: IPv4Address, 6: IPv6Address}[self.version]
-            netmask_check = int(address_format(self.netmask)) == int(ip.netmask)
-            return version_check and netmask_check
+        if self.version:
+            if self.netmask:
+                version_check = self.version == ip.version
+                address_format = {4: IPv4Address, 6: IPv6Address}[self.version]
+                netmask_check = int(address_format(self.netmask)) == int(ip.netmask)
+                return version_check and netmask_check
+            elif self.version != ip.version:
+                return False
 
         return True
