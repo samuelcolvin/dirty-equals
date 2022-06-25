@@ -1,9 +1,10 @@
 import json
-from typing import Any, Callable, TypeVar, overload
+from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
+from typing import Any, Callable, Optional, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
-from ._utils import plain_repr
+from ._utils import Omit, plain_repr
 
 try:
     from typing import Literal
@@ -145,3 +146,60 @@ class FunctionCheck(DirtyEquals[Any]):
 
     def equals(self, other: Any) -> bool:
         return self.func(other)
+
+
+IP = TypeVar('IP', IPv4Address, IPv4Network, IPv6Address, IPv6Network, Union[str, int, bytes])
+
+
+class IsIP(DirtyEquals[IP]):
+    """
+    A class that checks if a value is a valid IP address, optionally checking IP version, netmask.
+    """
+
+    def __init__(self, *, version: Literal[None, 4, 6] = None, netmask: Optional[str] = None):
+        """
+        Args:
+            version: The version of the IP to check, if omitted, versions 4 and 6 are both accepted.
+            netmask: The netmask of the IP to check, if omitted, any netmask is accepted. Requires version.
+
+        ```py title="IsIP"
+        from ipaddress import IPv4Address, IPv6Address, IPv4Network
+        from dirty_equals import IsIP
+
+        assert '179.27.154.96' == IsIP
+        assert '179.27.154.96' == IsIP(version=4)
+        assert '2001:0db8:0a0b:12f0:0000:0000:0000:0001' == IsIP(version=6)
+        assert IPv4Address('127.0.0.1') == IsIP
+        assert IPv4Network('43.48.0.0/12') == IsIP
+        assert IPv6Address('::eeff:ae3f:d473') == IsIP
+        assert '54.43.53.219/10' == IsIP(version=4, netmask='255.192.0.0')
+        assert '54.43.53.219/10' == IsIP(version=4, netmask=4290772992)
+        assert '::ffff:aebf:d473/12' == IsIP(version=6, netmask='fff0::')
+        assert 3232235521 == IsIP
+        ```
+        """
+        self.version = version
+        if netmask and not self.version:
+            raise TypeError('To check the netmask you must specify the IP version')
+        self.netmask = netmask
+        super().__init__(version=version or Omit, netmask=netmask or Omit)
+
+    def equals(self, other: Any) -> bool:
+
+        if isinstance(other, (IPv4Network, IPv6Network)):
+            ip = other
+        elif isinstance(other, (str, bytes, int, IPv4Address, IPv6Address)):
+            ip = ip_network(other, strict=False)
+        else:
+            return False
+
+        if self.version:
+            if self.netmask:
+                version_check = self.version == ip.version
+                address_format = {4: IPv4Address, 6: IPv6Address}[self.version]
+                netmask_check = int(address_format(self.netmask)) == int(ip.netmask)
+                return version_check and netmask_check
+            elif self.version != ip.version:
+                return False
+
+        return True

@@ -1,8 +1,9 @@
 import uuid
+from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsJson, IsUUID
+from dirty_equals import FunctionCheck, IsIP, IsJson, IsUUID
 
 
 @pytest.mark.parametrize(
@@ -128,3 +129,57 @@ def test_equals_function_fail():
 def test_json_both():
     with pytest.raises(TypeError, match='IsJson requires either an argument or kwargs, not both'):
         IsJson(1, a=2)
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (IPv4Address('127.0.0.1'), IsIP()),
+        (IPv4Network('43.48.0.0/12'), IsIP()),
+        (IPv6Address('::eeff:ae3f:d473'), IsIP()),
+        (IPv6Network('::eeff:ae3f:d473/128'), IsIP()),
+        ('2001:0db8:0a0b:12f0:0000:0000:0000:0001', IsIP()),
+        ('179.27.154.96', IsIP),
+        ('43.62.123.119', IsIP(version=4)),
+        ('::ffff:2b3e:7b77', IsIP(version=6)),
+        ('0:0:0:0:0:ffff:2b3e:7b77', IsIP(version=6)),
+        ('54.43.53.219/10', IsIP(version=4, netmask='255.192.0.0')),
+        ('::ffff:aebf:d473/12', IsIP(version=6, netmask='fff0::')),
+        ('2001:0db8:0a0b:12f0:0000:0000:0000:0001', IsIP(version=6)),
+        (3232235521, IsIP()),
+        (b'\xC0\xA8\x00\x01', IsIP()),
+        (338288524927261089654018896845572831328, IsIP(version=6)),
+        (b'\x20\x01\x06\x58\x02\x2a\xca\xfe\x02\x00\x00\x00\x00\x00\x00\x01', IsIP(version=6)),
+    ],
+)
+def test_is_ip_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('foobar', IsIP()),
+        ([1, 2, 3], IsIP()),
+        ('210.115.28.193', IsIP(version=6)),
+        ('::ffff:d273:1cc1', IsIP(version=4)),
+        ('210.115.28.193/12', IsIP(version=6, netmask='255.255.255.0')),
+        ('::ffff:d273:1cc1', IsIP(version=6, netmask='fff0::')),
+        (3232235521, IsIP(version=6)),
+        (338288524927261089654018896845572831328, IsIP(version=4)),
+    ],
+)
+def test_is_ip_false(other, dirty):
+    assert other != dirty
+
+
+def test_not_ip_repr():
+    is_ip = IsIP()
+    with pytest.raises(AssertionError):
+        assert '123' == is_ip
+    assert str(is_ip) == 'IsIP()'
+
+
+def test_ip_bad_netmask():
+    with pytest.raises(TypeError, match='To check the netmask you must specify the IP version'):
+        IsIP(netmask='255.255.255.0')

@@ -18,7 +18,7 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import FunctionCheck, IsJson, IsUUID
+from ._other import FunctionCheck, IsIP, IsJson, IsUUID
 from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
 
@@ -69,6 +69,7 @@ __all__ = (
     'FunctionCheck',
     'IsJson',
     'IsUUID',
+    'IsIP',
     # strings
     'IsStr',
     'IsBytes',
