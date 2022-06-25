@@ -1,4 +1,5 @@
 import uuid
+from hashlib import md5, sha1, sha256
 
 import pytest
 
@@ -165,6 +166,14 @@ def test_is_hash_md5_false_repr(hash_type):
     with pytest.raises(AssertionError):
         assert '123' == is_hash
     assert str(is_hash) == f"IsHash('{hash_type}')"
+
+
+@pytest.mark.parametrize(
+    'hash_func, hash_type',
+    [(md5, 'md5'), (sha1, 'sha-1'), (sha256, 'sha-256')],
+)
+def test_hashlib_hashes(hash_func, hash_type):
+    assert hash_func(b'dirty equals').hexdigest() == IsHash(hash_type)
 
 
 def test_wrong_hash_type():
