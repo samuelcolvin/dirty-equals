@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsJson, IsUUID
+from dirty_equals import FunctionCheck, IsJson, IsUrl, IsUUID
 
 
 @pytest.mark.parametrize(
@@ -128,3 +128,46 @@ def test_equals_function_fail():
 def test_json_both():
     with pytest.raises(TypeError, match='IsJson requires either an argument or kwargs, not both'):
         IsJson(1, a=2)
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('https://example.com', IsUrl),
+        ('https://example.com', IsUrl(scheme='https')),
+        ('postgres://user:pass@localhost:5432/app', IsUrl(url_type='PostgresDsn')),
+    ],
+)
+def test_is_url_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('https://example.com', IsUrl(url_type='PostgresDsn')),
+        ('https://example.com', IsUrl(scheme='http')),
+        ('definitely not a url', IsUrl),
+        (42, IsUrl),
+    ],
+)
+def test_is_url_false(other, dirty):
+    assert other != dirty
+
+
+def test_is_url_invalid_kwargs():
+    with pytest.raises(
+        TypeError,
+        match='IsURL only checks these attributes: scheme, host, host_type, user, password, tld, port, path, query, '
+        'fragment',
+    ):
+        IsUrl(https=True)
+
+
+def test_is_url_invalid_url_type():
+    with pytest.raises(
+        TypeError,
+        match='IsUrl only checks these Pydantic URL types: AnyUrl, AnyHttpUrl, HttpUrl, '
+        'FileUrl, PostgresDsn, AmpqDsn, RedisDsn',
+    ):
+        IsUrl(url_type='HttpsUrl')

@@ -1,6 +1,8 @@
 import json
-from typing import Any, Callable, TypeVar, overload
+from typing import Any, Callable, Set, TypeVar, overload
 from uuid import UUID
+
+from pydantic import AmqpDsn, AnyHttpUrl, AnyUrl, BaseModel, FileUrl, HttpUrl, PostgresDsn, RedisDsn
 
 from ._base import DirtyEquals
 from ._utils import plain_repr
@@ -145,3 +147,85 @@ class FunctionCheck(DirtyEquals[Any]):
 
     def equals(self, other: Any) -> bool:
         return self.func(other)
+
+
+class IsUrl(DirtyEquals[AnyUrl]):
+    """
+    A class that checks if a value is a valid URL, optionally checking different URL types and attributes with
+    [Pydantic](https://pydantic-docs.helpmanual.io/usage/types/#urls).
+    """
+
+    allowed_attribute_checks: Set[str] = {
+        'scheme',
+        'host',
+        'host_type',
+        'user',
+        'password',
+        'tld',
+        'port',
+        'path',
+        'query',
+        'fragment',
+    }
+
+    def __init__(
+        self,
+        url_type: Literal[
+            'AnyUrl', 'AnyHttpUrl', 'HttpUrl', 'FileUrl', 'PostgresDsn', 'AmpqpDsn', 'RedisDsn'
+        ] = 'AnyUrl',
+        **expected_attributes: Any,
+    ):
+        """
+        Args:
+            url_type: A Pydantic url type to check the url against
+            **expected_attributes: Expected values for url attributes
+        ```py title="IsUrl"
+        from dirty_equals import IsUrl
+
+        assert 'https://example.com' == IsUrl
+        assert 'https://example.com' == IsUrl(tld='com')
+        assert 'https://example.com' == IsUrl(scheme='https')
+        assert 'https://example.com' != IsUrl(scheme='http')
+        assert 'postgres://user:pass@localhost:5432/app' == IsUrl(url_type='PostgresDsn')
+        assert 'postgres://user:pass@localhost:5432/app' != IsUrl(url_type='HttpUrl')
+        ```
+        """
+        for item in expected_attributes:
+            if item not in self.allowed_attribute_checks:
+                raise TypeError(
+                    'IsURL only checks these attributes: scheme, host, host_type, user, password, tld, '
+                    'port, path, query, fragment'
+                )
+
+        self.attribute_checks = expected_attributes
+        try:
+            self.url_type = {
+                'AnyUrl': AnyUrl,
+                'AnyHttpUrl': AnyHttpUrl,
+                'HttpUrl': HttpUrl,
+                'FileUrl': FileUrl,
+                'PostgresDsn': PostgresDsn,
+                'AmpqpDsn': AmqpDsn,
+                'RedisDsn': RedisDsn,
+            }[url_type]
+        except KeyError:
+            raise TypeError(
+                'IsUrl only checks these Pydantic URL types: AnyUrl, AnyHttpUrl, HttpUrl, FileUrl, '
+                'PostgresDsn, AmpqDsn, RedisDsn'
+            )
+        super().__init__(url_type)
+
+    def equals(self, other: Any) -> bool:
+
+        url_type = self.url_type
+
+        class UserModel(BaseModel):
+            url: url_type  # type: ignore[valid-type]
+
+        if not self.attribute_checks:
+            return UserModel(url=other).url == other
+
+        for attribute, expected in self.attribute_checks.items():
+            if getattr(UserModel(url=other).url, attribute) != expected:
+                return False
+        return UserModel(url=other).url == other
