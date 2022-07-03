@@ -34,6 +34,7 @@ classifiers = [
 python = "^3.7.0"
 typing-extensions = {version = "^4.0.1", python = "<3.8"}
 pytz = ">=2021.3"
+pydantic = ">=1.9.1"
 
 [build-system]
 requires = ["poetry-core"]
