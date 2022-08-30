@@ -25,27 +25,26 @@ jobs:
       OS: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: set up python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: cache
       with:
         path: ${{ env.pythonLocation }}
         key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('requirements/tests.txt') }}
 
     - run: pip install -r requirements/tests.txt -r requirements/pyproject.txt
-#      if: steps.cache.outputs.cache-hit != 'true'  # breaks pypy tests
 
     - run: make test
 
     - run: coverage xml
 
-    - uses: codecov/codecov-action@v2.1.0
+    - uses: codecov/codecov-action@v3
       with:
         file: ./coverage.xml
         env_vars: PYTHON,OS
@@ -54,13 +53,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: cache
       with:
         path: ${{ env.pythonLocation }}
@@ -74,10 +73,10 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: set up python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
@@ -94,7 +93,7 @@ jobs:
       run: mkdocs build --strict
 
     - name: store docs site
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: docs
         path: site
@@ -108,15 +107,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: set up python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: get docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: docs
           path: site
@@ -142,7 +141,7 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.pypi_token }}
 
       - name: publish docs
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4
         if: '!fromJSON(steps.check-version.outputs.IS_PRERELEASE)'
         with:
           branch: gh-pages
