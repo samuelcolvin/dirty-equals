@@ -2,9 +2,10 @@
 This module is run with mypy to check types can be used correctly externally.
 """
 import sys
+
 sys.path.append('.')
 
-from dirty_equals import HasName, HasRepr, IsStr
+from dirty_equals import HasName, HasRepr, IsStr  # noqa E402
 
 assert 123 == HasName('int')
 assert 123 == HasRepr('123')
