@@ -69,8 +69,7 @@ jobs:
     - run: pip install -r requirements/linting.txt
       if: steps.cache.outputs.cache-hit != 'true'
 
-    - run: make lint
-    - run: make mypy
+    - run: pre-commit run -a
 
   docs:
     runs-on: ubuntu-latest
