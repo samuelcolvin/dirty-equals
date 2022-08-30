@@ -79,7 +79,9 @@ jobs:
     - run: pip install -r requirements/linting.txt
       if: '!fromJSON(steps.cache.outputs.cache-hit)'
 
-    - run: pre-commit run -a
+    - uses: pre-commit/action@v3
+      with:
+        extra_args: run -a
 
   docs:
     runs-on: ubuntu-latest
