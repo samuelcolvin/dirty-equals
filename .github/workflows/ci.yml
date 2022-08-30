@@ -39,6 +39,7 @@ jobs:
         key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('requirements/tests.txt') }}
 
     - run: pip install -r requirements/tests.txt -r requirements/pyproject.txt
+      if: '!fromJSON(steps.cache.outputs.cache-hit)'
 
     - run: make test
 
@@ -66,7 +67,7 @@ jobs:
         key: ${{ env.pythonLocation }}-${{ hashFiles('requirements/linting.txt') }}-${{ hashFiles('pyproject.toml') }}
 
     - run: pip install -r requirements/linting.txt
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: '!fromJSON(steps.cache.outputs.cache-hit)'
 
     - run: pre-commit run -a
 
