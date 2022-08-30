@@ -4,9 +4,7 @@ black = black dirty_equals tests
 
 .PHONY: install
 install:
-	pip install -r tests/requirements.txt
-	pip install -r tests/requirements-linting.txt
-	pip install -r docs/requirements.txt
+	pip install -r requirements/all.txt
 	pre-commit install
 
 .PHONY: format

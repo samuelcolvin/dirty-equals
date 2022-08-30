@@ -81,7 +81,7 @@ jobs:
 
     - uses: pre-commit/action@v3.0.0
       with:
-        extra_args: run -a
+        extra_args: --all-files
 
   docs:
     runs-on: ubuntu-latest
