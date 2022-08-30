@@ -1,46 +1,51 @@
-[tool.poetry]
-name = "dirty-equals"
-version = "0.0.dev0"
-description = "Doing dirty (but extremely useful) things with equals."
-authors = ["Samuel Colvin <s@muelcolvin.com>"]
-readme = "README.md"
-homepage = "https://dirty-equals.helpmanual.io"
-repository = "https://github.com/samuelcolvin/dirty-equals"
-license = "MIT"
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Framework :: Pytest",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Education",
-    "Intended Audience :: Information Technology",
-    "Intended Audience :: Science/Research",
-    "Intended Audience :: System Administrators",
-    "Operating System :: Unix",
-    "Operating System :: POSIX :: Linux",
-    "Environment :: Console",
-    "Environment :: MacOS X",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Internet",
-    "Typing :: Typed",
-]
-
-[tool.poetry.dependencies]
-python = "^3.7.0"
-typing-extensions = {version = "^4.0.1", python = "<3.8"}
-pytz = ">=2021.3"
-
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ['hatchling']
+build-backend = 'hatchling.build'
 
-[tool.poetry-version-plugin]
-source = "init"
+[tool.hatch.version]
+path = 'dirty_equals/version.py'
+
+[project]
+name = 'dirty-equals'
+description = 'Doing dirty (but extremely useful) things with equals.'
+authors = [{name = 'Samuel Colvin', email = 's@muelcolvin.com'}]
+license = {file = 'LICENSE'}
+readme = 'README.md'
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Framework :: Pytest',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Education',
+    'Intended Audience :: Information Technology',
+    'Intended Audience :: Science/Research',
+    'Intended Audience :: System Administrators',
+    'Operating System :: Unix',
+    'Operating System :: POSIX :: Linux',
+    'Environment :: Console',
+    'Environment :: MacOS X',
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: Internet',
+    'Typing :: Typed',
+]
+requires-python = '>=3.7'
+dependencies = [
+    'typing-extensions>=4.0.1',
+    'pytz>=2021.3',
+]
+dynamic = ['version']
+
+[project.urls]
+Homepage = 'https://github.com/samuelcolvin/dirty-equals'
+Documentation = 'https://dirty-equals.helpmanual.io'
+Funding = 'https://github.com/sponsors/samuelcolvin'
+Source = 'https://github.com/samuelcolvin/dirty-equals'
+Changelog = 'https://github.com/samuelcolvin/dirty-equals/releases'
 
 [tool.pytest.ini_options]
 testpaths = "tests"
