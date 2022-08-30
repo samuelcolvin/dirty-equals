@@ -79,7 +79,7 @@ jobs:
     - run: pip install -r requirements/linting.txt
       if: '!fromJSON(steps.cache.outputs.cache-hit)'
 
-    - uses: pre-commit/action@v3
+    - uses: pre-commit/action@v3.0.0
       with:
         extra_args: run -a
 
