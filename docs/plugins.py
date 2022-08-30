@@ -22,11 +22,13 @@ def test_examples():
     """
     Run the examples tests.
     """
-    if not pytest:
+    try:
+        run_pytest = getattr('pytest', 'main')
+    except AttributeError:
         logger.info('pytest not installed, skipping examples tests')
     else:
         logger.info('running examples tests...')
-        return_code = pytest.main(['-q', '-p', 'no:sugar', 'tests/test_docs.py'])
+        return_code = run_pytest(['-q', '-p', 'no:sugar', 'tests/test_docs.py'])
         if return_code != 0:
             logger.warning('examples tests failed')
 
