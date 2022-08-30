@@ -1,8 +1,10 @@
 import platform
 
+import packaging.version
 import pytest
 
 from dirty_equals import Contains, IsApprox, IsInt, IsNegative, IsOneOf, IsPositive, IsStr
+from dirty_equals.version import VERSION
 
 
 def test_or():
@@ -136,3 +138,7 @@ def test_ne_repr():
 )
 def test_is_one_of(value, dirty):
     assert value == dirty
+
+
+def test_version():
+    packaging.version.parse(VERSION)
