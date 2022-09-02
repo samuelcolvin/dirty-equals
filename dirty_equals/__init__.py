@@ -18,9 +18,10 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import FunctionCheck, IsHash, IsJson, IsUUID
+from ._other import FunctionCheck, IsHash, IsIP, IsJson, IsUUID
 from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
+from .version import VERSION
 
 __all__ = (
     # base
@@ -70,6 +71,7 @@ __all__ = (
     'IsJson',
     'IsUUID',
     'IsHash',
+    'IsIP',
     # strings
     'IsStr',
     'IsBytes',
@@ -78,4 +80,4 @@ __all__ = (
     '__version__',
 )
 
-__version__ = '0.0.dev0'
+__version__ = VERSION

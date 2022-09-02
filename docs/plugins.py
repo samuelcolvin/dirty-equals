@@ -22,11 +22,13 @@ def test_examples():
     """
     Run the examples tests.
     """
-    if not pytest:
+    try:
+        run_pytest = getattr('pytest', 'main')
+    except AttributeError:
         logger.info('pytest not installed, skipping examples tests')
     else:
         logger.info('running examples tests...')
-        return_code = pytest.main(['-q', '-p', 'no:sugar', 'tests/test_docs.py'])
+        return_code = run_pytest(['-q', '-p', 'no:sugar', 'tests/test_docs.py'])
         if return_code != 0:
             logger.warning('examples tests failed')
 
@@ -38,7 +40,7 @@ def on_files(files: Files, config: Config) -> Files:
 def remove_files(files: Files) -> Files:
     to_remove = []
     for file in files:
-        if file.src_path in {'plugins.py', 'requirements.txt'}:
+        if file.src_path in {'plugins.py'}:
             to_remove.append(file)
         elif file.src_path.startswith('__pycache__/'):
             to_remove.append(file)

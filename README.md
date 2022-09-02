@@ -74,17 +74,17 @@ the test would not be declarative or as clear.
 
 *dirty-equals* can do so much more than that, for example:
 
-* [`IsPartialDict`](https://dirty-equals.helpmanual.io/types/dict/#dirty_equals.IsPartialDict) 
+* [`IsPartialDict`](https://dirty-equals.helpmanual.io/types/dict/#dirty_equals.IsPartialDict)
   lets you compare a subset of a dictionary
-* [`IsStrictDict`](https://dirty-equals.helpmanual.io/types/dict/#dirty_equals.IsStrictDict) 
+* [`IsStrictDict`](https://dirty-equals.helpmanual.io/types/dict/#dirty_equals.IsStrictDict)
   lets you confirm order in a dictionary
-* [`IsList`](https://dirty-equals.helpmanual.io/types/sequence/#dirty_equals.IsList) and 
+* [`IsList`](https://dirty-equals.helpmanual.io/types/sequence/#dirty_equals.IsList) and
   [`IsTuple`](https://dirty-equals.helpmanual.io/types/sequence/#dirty_equals.IsTuple)
   lets you compare partial lists and tuples, with or without order constraints
 * nesting any of these types inside any others
-* [`IsInstance`](https://dirty-equals.helpmanual.io/types/other/#dirty_equals.IsInstance) 
+* [`IsInstance`](https://dirty-equals.helpmanual.io/types/other/#dirty_equals.IsInstance)
   lets you simply confirm the type of an object
-* You can even use [boolean operators](https://dirty-equals.helpmanual.io/usage/#boolean-logic) 
+* You can even use [boolean operators](https://dirty-equals.helpmanual.io/usage/#boolean-logic)
   `|` and `&` to combine multiple conditions
 * and much more...
 
@@ -97,4 +97,3 @@ pip install dirty-equals
 ```
 
 **dirty-equals** requires **Python 3.7+**.
-

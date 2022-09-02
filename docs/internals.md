@@ -14,7 +14,7 @@ In [`pathlib.PurePath`](https://github.com/python/cpython/blob/aebbd7579a421208f
 you can see an example how that is implemented in Python.
 
 > By default, object implements `__eq__()` by using `is`,
-> returning `NotImplemented` in the case of a false comparison: 
+> returning `NotImplemented` in the case of a false comparison:
 > `True if x is y else NotImplemented`.
 
 See the Python documentation for more information ([`object.__eq__`](https://docs.python.org/3/reference/datamodel.html#object.__eq__)).

@@ -13,3 +13,5 @@
 ::: dirty_equals.IsOneOf
 
 ::: dirty_equals.IsHash
+
+::: dirty_equals.IsIP

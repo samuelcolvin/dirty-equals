@@ -11,12 +11,22 @@ on:
 
 jobs:
   test:
-    name: test py-${{ matrix.python-version }} on ${{ matrix.os }}
+    name: test ${{ matrix.python-version }} on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu, macos]
-        python-version: ['3.7', '3.8', '3.9', '3.10', 'pypy-3.7', 'pypy-3.8', 'pypy-3.9']
+        python-version: ['3.7', '3.8', '3.9', '3.10']
+        # test 3.11-dev and pypy on ubuntu only to speed up CI, no reason why macos X pypy should fail separately
+        include:
+          - os: 'ubuntu'
+            python-version: '3.11-dev'
+          - os: 'ubuntu'
+            python-version: 'pypy-3.7'
+          - os: 'ubuntu'
+            python-version: 'pypy-3.8'
+          - os: 'ubuntu'
+            python-version: 'pypy-3.9'
 
     runs-on: ${{ matrix.os }}-latest
 
@@ -25,30 +35,27 @@ jobs:
       OS: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: set up python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: cache
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('tests/requirements.txt') }}
+        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('requirements/tests.txt') }}
 
-    - run: pip install -r tests/requirements.txt
-#      if: steps.cache.outputs.cache-hit != 'true'  # breaks pypy tests
-
-    - run: poetry install
-#      if: steps.cache.outputs.cache-hit != 'true'  # breaks pypy tests
+    - run: pip install -r requirements/tests.txt -r requirements/pyproject.txt
+      if: steps.cache.outputs.cache-hit != 'true'
 
     - run: make test
 
     - run: coverage xml
 
-    - uses: codecov/codecov-action@v2.1.0
+    - uses: codecov/codecov-action@v3
       with:
         file: ./coverage.xml
         env_vars: PYTHON,OS
@@ -57,36 +64,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       id: cache
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ hashFiles('tests/requirements-linting.txt') }}
+        key: ${{ env.pythonLocation }}-${{ hashFiles('requirements/linting.txt') }}-${{ hashFiles('pyproject.toml') }}
 
-    - run: pip install -r tests/requirements-linting.txt
+    - run: pip install -r requirements/linting.txt
       if: steps.cache.outputs.cache-hit != 'true'
 
-    - run: make lint
-    - run: make mypy
+    - uses: pre-commit/action@v3.0.0
+      with:
+        extra_args: --all-files
 
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: set up python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
     - name: install
-      run: pip install -r docs/requirements.txt
+      run: pip install -r requirements/docs.txt
 
     - name: install mkdocs-material-insiders
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
@@ -98,7 +106,7 @@ jobs:
       run: mkdocs build --strict
 
     - name: store docs site
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: docs
         path: site
@@ -112,30 +120,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: set up python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: get docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: docs
           path: site
 
-      - name: set version
-        run: VERSION_PATH=dirty_equals python <(curl -Ls https://bit.ly/set__version__)
+      - name: install
+        run: pip install -U twine build packaging
 
-      - run: pip install poetry==1.2.0a2 poetry-version-plugin
-
-      - run: poetry publish --build
+      - name: check version
+        id: check-version
+        run: python <(curl -Ls https://gist.githubusercontent.com/samuelcolvin/4e1ad439c5489e8d6478cdee3eb952ef/raw/check_version.py)
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.pypi_token }}
+          VERSION_PATH: 'dirty_equals/version.py'
+
+      - name: build
+        run: python -m build
+
+      - run: twine check dist/*
+
+      - name: upload to pypi
+        run: twine upload dist/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.pypi_token }}
 
       - name: publish docs
-        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        uses: JamesIves/github-pages-deploy-action@v4
+        if: '!fromJSON(steps.check-version.outputs.IS_PRERELEASE)'
         with:
           branch: gh-pages
           folder: site
