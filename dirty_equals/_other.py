@@ -148,17 +148,20 @@ class FunctionCheck(DirtyEquals[Any]):
         return self.func(other)
 
 
+HashTypes = Literal['md5', 'sha-1', 'sha-256']
+
+
 class IsHash(DirtyEquals[str]):
     """
     A class that checks if a value is a valid common hash type, using a simple length and allowed characters regex.
     """
 
-    def __init__(self, hash_type: Literal['md5', 'sha-1', 'sha-256']):
+    def __init__(self, hash_type: HashTypes):
         """
         Args:
             hash_type: The hash type to check. Must be specified.
 
-        ```py title="IsUUID"
+        ```py title="IsHash"
         from dirty_equals import IsHash
 
         assert 'f1e069787ece74531d112559945c6871' == IsHash('md5')
@@ -170,7 +173,7 @@ class IsHash(DirtyEquals[str]):
         """
 
         allowed_hashes = 'md5', 'sha-1', 'sha-256'
-        if hash_type not in allowed_hashes:
+        if hash_type not in HashTypes.__args__:  # type: ignore[attr-defined]
             raise ValueError(f"Hash type must be one of the following values: {', '.join(allowed_hashes)}")
 
         self.hash_type = hash_type
@@ -178,8 +181,8 @@ class IsHash(DirtyEquals[str]):
 
     def equals(self, other: Any) -> bool:
         hash_type_regex_patterns = {
-            'md5': r'^[a-fA-F\d]{32}$',
-            'sha-1': r'^[a-fA-F\d]{40}$',
-            'sha-256': r'^[a-fA-F\d]{64}$',
+            'md5': r'[a-fA-F\d]{32}',
+            'sha-1': r'[a-fA-F\d]{40}',
+            'sha-256': r'[a-fA-F\d]{64}',
         }
         return bool(re.fullmatch(hash_type_regex_patterns[self.hash_type], other))
