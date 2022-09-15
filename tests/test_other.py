@@ -192,6 +192,8 @@ def test_ip_bad_netmask():
         ('f1e069787ECE74531d112559945c6871', IsHash('md5')),
         ('40bd001563085fc35165329ea1FF5c5ecbdbbeef', IsHash('sha-1')),
         ('a665a45920422f9d417e4867eFDC4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', IsHash('sha-256')),
+        (b'f1e069787ECE74531d112559945c6871', IsHash('md5')),
+        (bytearray(b'f1e069787ECE74531d112559945c6871'), IsHash('md5')),
     ],
 )
 def test_is_hash_true(other, dirty):
@@ -202,6 +204,7 @@ def test_is_hash_true(other, dirty):
     'other,dirty',
     [
         ('foobar', IsHash('md5')),
+        (b'\x81 UnicodeDecodeError', IsHash('md5')),
         ([1, 2, 3], IsHash('sha-1')),
         ('f1e069787ECE74531d112559945c6871d', IsHash('md5')),
         ('400bd001563085fc35165329ea1FF5c5ecbdbbeef', IsHash('sha-1')),

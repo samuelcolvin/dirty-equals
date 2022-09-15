@@ -166,6 +166,7 @@ class IsHash(DirtyEquals[str]):
         from dirty_equals import IsHash
 
         assert 'f1e069787ece74531d112559945c6871' == IsHash('md5')
+        assert b'f1e069787ece74531d112559945c6871' == IsHash('md5')
         assert 'f1e069787ece74531d112559945c6871' != IsHash('sha-256')
         assert 'F1E069787ECE74531D112559945C6871' == IsHash('md5')
         assert '40bd001563085fc35165329ea1ff5c5ecbdbbeef' == IsHash('sha-1')
@@ -173,20 +174,26 @@ class IsHash(DirtyEquals[str]):
         ```
         """
 
-        allowed_hashes = 'md5', 'sha-1', 'sha-256'
-        if hash_type not in HashTypes.__args__:  # type: ignore[attr-defined]
+        allowed_hashes = HashTypes.__args__  # type: ignore[attr-defined]
+        if hash_type not in allowed_hashes:
             raise ValueError(f"Hash type must be one of the following values: {', '.join(allowed_hashes)}")
 
         self.hash_type = hash_type
         super().__init__(hash_type)
 
     def equals(self, other: Any) -> bool:
+        if isinstance(other, str):
+            s = other
+        elif isinstance(other, (bytes, bytearray)):
+            s = other.decode()
+        else:
+            return False
         hash_type_regex_patterns = {
             'md5': r'[a-fA-F\d]{32}',
             'sha-1': r'[a-fA-F\d]{40}',
             'sha-256': r'[a-fA-F\d]{64}',
         }
-        return bool(re.fullmatch(hash_type_regex_patterns[self.hash_type], other))
+        return bool(re.fullmatch(hash_type_regex_patterns[self.hash_type], s))
 
 
 IP = TypeVar('IP', IPv4Address, IPv4Network, IPv6Address, IPv6Network, Union[str, int, bytes])
