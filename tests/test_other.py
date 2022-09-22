@@ -279,4 +279,4 @@ def test_is_url_too_many_url_types():
         ValueError,
         match='You can only check against one Pydantic url type at a time',
     ):
-        assert "https://example.com" == IsUrl(any_url=True, http_url=True, postgres_dsn=True)
+        assert 'https://example.com' == IsUrl(any_url=True, http_url=True, postgres_dsn=True)

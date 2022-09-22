@@ -243,7 +243,10 @@ class IsUrl(DirtyEquals[str]):
                     'port, path, query, fragment'
                 )
         self.attribute_checks = expected_attributes
-        url_type = AnyUrl if url_types_sum == 0 else max(url_type_mappings, key=url_type_mappings.get)
+        if url_types_sum == 0:
+            url_type = AnyUrl
+        else:
+            url_type = max(url_type_mappings, key=url_type_mappings.get)  # type: ignore[arg-type]
         self.url_type = url_type
         super().__init__(url_type)
 
