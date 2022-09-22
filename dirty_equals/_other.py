@@ -147,7 +147,7 @@ class FunctionCheck(DirtyEquals[Any]):
         return self.func(other)
 
 
-class IsUrl(DirtyEquals):
+class IsUrl(DirtyEquals[str]):
     """
     A class that checks if a value is a valid URL, optionally checking different URL types and attributes with
     [Pydantic](https://pydantic-docs.helpmanual.io/usage/types/#urls).
