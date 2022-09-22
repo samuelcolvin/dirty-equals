@@ -252,7 +252,7 @@ class IsUrl(DirtyEquals[str]):
         try:
             parsed = self.parse_obj_as(self.url_type, other)
         except self.ValidationError:
-            raise ValueError("Invalid URL")
+            raise ValueError('Invalid URL')
         if not self.attribute_checks:
             return parsed == other
 
