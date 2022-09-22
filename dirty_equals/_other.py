@@ -225,15 +225,15 @@ class IsUrl(DirtyEquals[str]):
         except ImportError as e:
             raise ImportError('pydantic is not installed, run `pip install dirty-equals[pydantic]`') from e
         url_type_mappings = {
-            any_url: self.AnyUrl,
-            any_http_url: self.AnyHttpUrl,
-            http_url: self.HttpUrl,
-            file_url: self.FileUrl,
-            postgres_dsn: self.PostgresDsn,
-            ampqp_dsn: self.AmqpDsn,
-            redis_dsn: self.RedisDsn,
+            self.AnyUrl: any_url,
+            self.AnyHttpUrl: any_http_url,
+            self.HttpUrl: http_url,
+            self.FileUrl: file_url,
+            self.PostgresDsn: postgres_dsn,
+            self.AmqpDsn: ampqp_dsn,
+            self.RedisDsn: redis_dsn,
         }
-        url_types_sum = sum(url_type_mappings.keys())
+        url_types_sum = sum(url_type_mappings.values())
         if url_types_sum > 1:
             raise ValueError('You can only check against one Pydantic url type at a time')
         for item in expected_attributes:
@@ -243,7 +243,7 @@ class IsUrl(DirtyEquals[str]):
                     'port, path, query, fragment'
                 )
         self.attribute_checks = expected_attributes
-        url_type = AnyUrl if url_types_sum == 0 else url_type_mappings[True]
+        url_type = AnyUrl if url_types_sum == 0 else max(url_type_mappings, key=url_type_mappings.get)
         self.url_type = url_type
         super().__init__(url_type)
 

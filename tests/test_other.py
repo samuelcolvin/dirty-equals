@@ -258,7 +258,7 @@ def test_is_url_true(other, dirty):
         ('https://example.com', IsUrl(scheme='http')),
         ('definitely not a url', IsUrl),
         (42, IsUrl),
-        ('https://anotherexample.com', IsUrl(postgres_dsn=True, any_url=True)),
+        ('https://anotherexample.com', IsUrl(postgres_dsn=True)),
     ],
 )
 def test_is_url_false(other, dirty):
@@ -272,3 +272,11 @@ def test_is_url_invalid_kwargs():
         'fragment',
     ):
         IsUrl(https=True)
+
+
+def test_is_url_too_many_url_types():
+    with pytest.raises(
+        ValueError,
+        match='You can only check against one Pydantic url type at a time',
+    ):
+        assert "https://example.com" == IsUrl(any_url=True, http_url=True, postgres_dsn=True)
