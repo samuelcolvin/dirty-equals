@@ -4,6 +4,7 @@ flake8-quotes
 isort[colors]
 mypy
 pre-commit
+pydantic
 pycodestyle
 pyflakes
 types-pytz
