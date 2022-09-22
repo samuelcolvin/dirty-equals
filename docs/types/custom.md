@@ -27,12 +27,12 @@ assert 'foobar' != IsEven
 assert 3 == IsEven | IsOneOf(3)
 ```
 
-There are a few advantages of inheriting from [`DirtyEquals`][dirty_equals.DirtyEquals] compared to just 
+There are a few advantages of inheriting from [`DirtyEquals`][dirty_equals.DirtyEquals] compared to just
 implementing your own class with an `__eq__` method:
 
 1. `TypeError` and `ValueError` in `equals` are caught and result in a not-equals result.
 2. A useful `__repr__` is generated, and modified if the `==` operation returns `True`,
    see [pytest compatibility](../usage.md#__repr__-and-pytest-compatibility)
 3. [boolean logic](../usage.md#boolean-logic) works out of the box
-4. [Uninitialised usage](../usage.md#initialised-vs-class-comparison) 
+4. [Uninitialised usage](../usage.md#initialised-vs-class-comparison)
    (`IsEven` rather than `IsEven()`) works out of the box

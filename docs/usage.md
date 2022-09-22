@@ -1,7 +1,7 @@
 ## Boolean Logic
 
-*dirty-equals* types can be combined based on either `&` 
-(and, all checks must be `True` for the combined check to be `True`) or `|` 
+*dirty-equals* types can be combined based on either `&`
+(and, all checks must be `True` for the combined check to be `True`) or `|`
 (or, any check can be `True` for the combined check to be `True`).
 
 Types can also be inverted using the `~` operator, this is equivalent to using `!=` instead of `==`.
@@ -72,7 +72,7 @@ assert 42 == v
 assert repr(v) == '42'
 ```
 
-This black magic is designed to make the output of pytest when asserts on large objects fail as simple as 
+This black magic is designed to make the output of pytest when asserts on large objects fail as simple as
 possible to read.
 
 Consider the following unit test:
@@ -100,7 +100,7 @@ def test_partial_dict():
     }
 ```
 
-1. For simplicity we've hardcoded `id` here, but in a test it could be any positive int, 
+1. For simplicity we've hardcoded `id` here, but in a test it could be any positive int,
    hence why we need `IsPositiveInt()`
 
 Here's an except from the output of `pytest -vv` show the error details:

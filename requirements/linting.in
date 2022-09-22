@@ -1,0 +1,9 @@
+black
+flake8
+flake8-quotes
+isort[colors]
+mypy
+pre-commit
+pycodestyle
+pyflakes
+types-pytz

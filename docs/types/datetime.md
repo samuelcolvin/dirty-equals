@@ -11,12 +11,12 @@ based on the `enforce_tz` parameter:
 
 * `enforce_tz=True` (the default):
     * if the datetime wrapped by `IsDatetime` is timezone naive, the compared value must also be timezone naive.
-    * if the datetime wrapped by `IsDatetime` has a timezone, the compared value must have a 
+    * if the datetime wrapped by `IsDatetime` has a timezone, the compared value must have a
       timezone with the same offset.
 * `enforce_tz=False`:
-    * if the datetime wrapped by `IsDatetime` is timezone naive, the compared value can either be naive or have a 
+    * if the datetime wrapped by `IsDatetime` is timezone naive, the compared value can either be naive or have a
       timezone all that matters is the datetime values match.
-    * if the datetime wrapped by `IsDatetime` has a timezone, the compared value needs to represent the same point in 
+    * if the datetime wrapped by `IsDatetime` has a timezone, the compared value needs to represent the same point in
       time - either way it must have a timezone.
 
 Example

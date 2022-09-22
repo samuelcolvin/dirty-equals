@@ -13,3 +13,7 @@
 ::: dirty_equals.IsOneOf
 
 ::: dirty_equals.IsUrl
+
+::: dirty_equals.IsHash
+
+::: dirty_equals.IsIP
