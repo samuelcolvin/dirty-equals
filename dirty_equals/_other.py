@@ -1,8 +1,7 @@
 import json
 import re
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, Optional, TypeVar, Union, overload, Set
-
+from typing import Any, Callable, Optional, Set, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
@@ -170,15 +169,15 @@ class IsUrl(DirtyEquals[str]):
     }
 
     def __init__(
-            self,
-            any_url: bool = False,
-            any_http_url: bool = False,
-            http_url: bool = False,
-            file_url: bool = False,
-            postgres_dsn: bool = False,
-            ampqp_dsn: bool = False,
-            redis_dsn: bool = False,
-            **expected_attributes: Any,
+        self,
+        any_url: bool = False,
+        any_http_url: bool = False,
+        http_url: bool = False,
+        file_url: bool = False,
+        postgres_dsn: bool = False,
+        ampqp_dsn: bool = False,
+        redis_dsn: bool = False,
+        **expected_attributes: Any,
     ):
         """
         Args:
@@ -202,8 +201,18 @@ class IsUrl(DirtyEquals[str]):
         ```
         """
         try:
-            from pydantic import AmqpDsn, AnyHttpUrl, AnyUrl, FileUrl, HttpUrl, PostgresDsn, RedisDsn, parse_obj_as, \
-                ValidationError
+            from pydantic import (
+                AmqpDsn,
+                AnyHttpUrl,
+                AnyUrl,
+                FileUrl,
+                HttpUrl,
+                PostgresDsn,
+                RedisDsn,
+                ValidationError,
+                parse_obj_as,
+            )
+
             self.AmqpDsn = AmqpDsn
             self.AnyHttpUrl = AnyHttpUrl
             self.AnyUrl = AnyUrl
@@ -215,13 +224,15 @@ class IsUrl(DirtyEquals[str]):
             self.ValidationError = ValidationError
         except ImportError as e:
             raise ImportError('pydantic is not installed, run `pip install dirty-equals[pydantic]`') from e
-        url_type_mappings = {any_url: self.AnyUrl,
-                             any_http_url: self.AnyHttpUrl,
-                             http_url: self.HttpUrl,
-                             file_url: self.FileUrl,
-                             postgres_dsn: self.PostgresDsn,
-                             ampqp_dsn: self.AmqpDsn,
-                             redis_dsn: self.RedisDsn}
+        url_type_mappings = {
+            any_url: self.AnyUrl,
+            any_http_url: self.AnyHttpUrl,
+            http_url: self.HttpUrl,
+            file_url: self.FileUrl,
+            postgres_dsn: self.PostgresDsn,
+            ampqp_dsn: self.AmqpDsn,
+            redis_dsn: self.RedisDsn,
+        }
         url_types_sum = sum(url_type_mappings.keys())
         if url_types_sum > 1:
             raise ValueError('You can only check against one Pydantic url type at a time')
@@ -249,6 +260,7 @@ class IsUrl(DirtyEquals[str]):
             if getattr(parsed, attribute) != expected:
                 return False
         return parsed == other
+
 
 HashTypes = Literal['md5', 'sha-1', 'sha-256']
 

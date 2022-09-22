@@ -18,7 +18,7 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import FunctionCheck, IsJson, IsHash, IsIP, IsUrl, IsUUID
+from ._other import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
 from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
 from .version import VERSION

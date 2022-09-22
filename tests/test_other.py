@@ -4,7 +4,7 @@ from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUUID, IsUrl
+from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
 
 
 @pytest.mark.parametrize(
@@ -258,7 +258,7 @@ def test_is_url_true(other, dirty):
         ('https://example.com', IsUrl(scheme='http')),
         ('definitely not a url', IsUrl),
         (42, IsUrl),
-        ("https://anotherexample.com", IsUrl(postgres_dsn=True, any_url=True))
+        ("https://anotherexample.com", IsUrl(postgres_dsn=True, any_url=True)),
     ],
 )
 def test_is_url_false(other, dirty):
