@@ -169,14 +169,13 @@ def custom_repr(value: Any) -> Any:
         return PlainRepr(repr(value))
 
 
-class PlainRepr:
-    __slots__ = ('s',)
-
-    def __init__(self, s: str):
-        self.s = s
+class PlainRepr(str):
+    """
+    String class where repr doesn't include quotes.
+    """
 
     def __repr__(self) -> str:
-        return self.s
+        return str(self)
 
 
 def plural(v: int | Sized) -> str:
