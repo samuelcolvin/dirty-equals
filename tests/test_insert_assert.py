@@ -15,6 +15,7 @@ def test_string_assert(insert_assert):
 
 
 def test_insert_assert(pytester):
+    os.environ.pop('CI', None)
     pytester.makeconftest(config)
     test_file = pytester.makepyfile(default_test)
     result = pytester.runpytest()
@@ -31,6 +32,7 @@ def test_insert_assert(pytester):
 
 
 def test_insert_assert_disabled(pytester):
+    os.environ.pop('CI', None)
     pytester.makeconftest(config)
     test_file = pytester.makepyfile(default_test)
     # assert r == 0
@@ -40,6 +42,7 @@ def test_insert_assert_disabled(pytester):
 
 
 def test_insert_assert_print(pytester, capsys):
+    os.environ.pop('CI', None)
     pytester.makeconftest(config)
     test_file = pytester.makepyfile(default_test)
     # assert r == 0
@@ -52,6 +55,7 @@ def test_insert_assert_print(pytester, capsys):
 
 
 def test_insert_assert_fail(pytester):
+    os.environ.pop('CI', None)
     pytester.makeconftest(config)
     test_file = pytester.makepyfile(default_test)
     # assert r == 0
@@ -61,6 +65,7 @@ def test_insert_assert_fail(pytester):
 
 
 def test_deep(pytester):
+    os.environ.pop('CI', None)
     pytester.makeconftest(config)
     # language=Python
     test_file = pytester.makepyfile(
@@ -83,6 +88,7 @@ def test_deep(pytester):
 
 
 def test_enum(pytester, capsys):
+    os.environ.pop('CI', None)
     pytester.makeconftest(config)
     # language=Python
     pytester.makepyfile(
