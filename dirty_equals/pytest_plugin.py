@@ -37,25 +37,26 @@ insert_assert_enabled: ContextVar[bool] = ContextVar('insert_assert_enabled')
 
 
 def insert_assert(value: Any) -> int:
+    call_frame: FrameType = sys._getframe(1)
     if sys.version_info < (3, 8):  # pragma: no cover
         raise RuntimeError('insert_assert() requires Python 3.8+')
     if not insert_assert_enabled.get():
         raise RuntimeError('insert_assert() is disabled, either due to --insert-assert-disable or "CI" env var')
-    call_frame: FrameType = sys._getframe(1)
 
-    source = Source.for_frame(call_frame)
-    ex = source.executing(call_frame)
+    format_code = load_black()
+    ex = Source.for_frame(call_frame).executing(call_frame)
+    if ex.node is None:  # pragma: no cover
+        python_code = format_code(str(custom_repr(value)))
+        raise RuntimeError(
+            f'insert_assert() was unable to find the frame from which it was called, called with:\n{python_code}'
+        )
     ast_arg = ex.node.args[0]
     if isinstance(ast_arg, ast.Name):
         arg = ast_arg.id
     else:
         arg = ' '.join(map(str.strip, ex.source.asttokens().get_text(ast_arg).splitlines()))
 
-    python_code = f'# insert_assert({arg})\nassert {arg} == {custom_repr(value)}'
-
-    format_code = load_black()
-    if format_code:
-        python_code = format_code(python_code)
+    python_code = format_code(f'# insert_assert({arg})\nassert {arg} == {custom_repr(value)}')
 
     python_code = textwrap.indent(python_code, ex.node.col_offset * ' ')
     to_replace.append(ToReplace(Path(call_frame.f_code.co_filename), ex.node.lineno, ex.node.end_lineno, python_code))
@@ -187,7 +188,7 @@ def plural(v: int | Sized) -> str:
 
 
 @lru_cache(maxsize=None)
-def load_black() -> Callable[[str], str] | None:  # noqa: C901
+def load_black() -> Callable[[str], str]:  # noqa: C901
     """
     Build black configuration from "pyproject.toml".
 
@@ -199,7 +200,7 @@ def load_black() -> Callable[[str], str] | None:  # noqa: C901
         from black.mode import Mode, TargetVersion
         from black.parsing import InvalidInput
     except ImportError:
-        return None
+        return lambda x: x
 
     def convert_target_version(target_version_config: Any) -> set[Any] | None:
         if target_version_config is not None:
