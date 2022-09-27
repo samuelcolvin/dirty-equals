@@ -91,5 +91,5 @@ warn_return_any = false
 show_error_codes = true
 
 [[tool.mypy.overrides]]
-module = ['executing.*']
+module = ['executing.*', 'pygments.*']
 ignore_missing_imports = true

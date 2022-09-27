@@ -236,9 +236,9 @@ def load_black() -> Callable[[str], str] | None:  # noqa: C901
 @lru_cache
 def get_pygments() -> Callable[[str], str] | None:
     try:
-        import pygments  # type: ignore
-        from pygments.formatters import Terminal256Formatter  # type: ignore
-        from pygments.lexers import PythonLexer  # type: ignore
+        import pygments
+        from pygments.formatters import Terminal256Formatter
+        from pygments.lexers import PythonLexer
     except ImportError:  # pragma: no cover
         return None
     else:
