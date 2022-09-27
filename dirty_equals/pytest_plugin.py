@@ -101,7 +101,11 @@ def insert_assert_add_to_builtins(request: SubRequest) -> None:
         as_enabled = not bool(os.getenv('CI'))
     insert_assert_enabled.set(as_enabled)
     if as_enabled:
-        __builtins__['insert_assert'] = insert_assert
+        try:
+            __builtins__['insert_assert'] = insert_assert
+        except TypeError:
+            # happens on pypy
+            pass
 
 
 @pytest.fixture(autouse=True)
