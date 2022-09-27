@@ -39,6 +39,7 @@ dependencies = [
     'typing-extensions>=4.0.1;python_version<"3.8"',
     'pytz>=2021.3',
 ]
+optional-dependencies = {pydantic = ['pydantic>=1.9.1'] }
 dynamic = ['version']
 
 [project.urls]

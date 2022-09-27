@@ -1,7 +1,7 @@
 import json
 import re
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, Optional, TypeVar, Union, overload
+from typing import Any, Callable, Optional, Set, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
@@ -147,6 +147,122 @@ class FunctionCheck(DirtyEquals[Any]):
 
     def equals(self, other: Any) -> bool:
         return self.func(other)
+
+
+class IsUrl(DirtyEquals[str]):
+    """
+    A class that checks if a value is a valid URL, optionally checking different URL types and attributes with
+    [Pydantic](https://pydantic-docs.helpmanual.io/usage/types/#urls).
+    """
+
+    allowed_attribute_checks: Set[str] = {
+        'scheme',
+        'host',
+        'host_type',
+        'user',
+        'password',
+        'tld',
+        'port',
+        'path',
+        'query',
+        'fragment',
+    }
+
+    def __init__(
+        self,
+        any_url: bool = False,
+        any_http_url: bool = False,
+        http_url: bool = False,
+        file_url: bool = False,
+        postgres_dsn: bool = False,
+        ampqp_dsn: bool = False,
+        redis_dsn: bool = False,
+        **expected_attributes: Any,
+    ):
+        """
+        Args:
+            any_url: any scheme allowed, TLD not required, host required
+            any_http_url: scheme http or https, TLD not required, host required
+            http_url: scheme http or https, TLD required, host required, max length 2083
+            file_url: scheme file, host not required
+            postgres_dsn: user info required, TLD not required
+            ampqp_dsn: schema amqp or amqps, user info not required, TLD not required, host not required
+            redis_dsn: scheme redis or rediss, user info not required, tld not required, host not required
+            **expected_attributes: Expected values for url attributes
+        ```py title="IsUrl"
+        from dirty_equals import IsUrl
+
+        assert 'https://example.com' == IsUrl
+        assert 'https://example.com' == IsUrl(tld='com')
+        assert 'https://example.com' == IsUrl(scheme='https')
+        assert 'https://example.com' != IsUrl(scheme='http')
+        assert 'postgres://user:pass@localhost:5432/app' == IsUrl(postgres_dsn=True)
+        assert 'postgres://user:pass@localhost:5432/app' != IsUrl(http_url=True)
+        ```
+        """
+        try:
+            from pydantic import (
+                AmqpDsn,
+                AnyHttpUrl,
+                AnyUrl,
+                FileUrl,
+                HttpUrl,
+                PostgresDsn,
+                RedisDsn,
+                ValidationError,
+                parse_obj_as,
+            )
+
+            self.AmqpDsn = AmqpDsn
+            self.AnyHttpUrl = AnyHttpUrl
+            self.AnyUrl = AnyUrl
+            self.FileUrl = FileUrl
+            self.HttpUrl = HttpUrl
+            self.PostgresDsn = PostgresDsn
+            self.RedisDsn = RedisDsn
+            self.parse_obj_as = parse_obj_as
+            self.ValidationError = ValidationError
+        except ImportError as e:
+            raise ImportError('pydantic is not installed, run `pip install dirty-equals[pydantic]`') from e
+        url_type_mappings = {
+            self.AnyUrl: any_url,
+            self.AnyHttpUrl: any_http_url,
+            self.HttpUrl: http_url,
+            self.FileUrl: file_url,
+            self.PostgresDsn: postgres_dsn,
+            self.AmqpDsn: ampqp_dsn,
+            self.RedisDsn: redis_dsn,
+        }
+        url_types_sum = sum(url_type_mappings.values())
+        if url_types_sum > 1:
+            raise ValueError('You can only check against one Pydantic url type at a time')
+        for item in expected_attributes:
+            if item not in self.allowed_attribute_checks:
+                raise TypeError(
+                    'IsURL only checks these attributes: scheme, host, host_type, user, password, tld, '
+                    'port, path, query, fragment'
+                )
+        self.attribute_checks = expected_attributes
+        if url_types_sum == 0:
+            url_type = AnyUrl
+        else:
+            url_type = max(url_type_mappings, key=url_type_mappings.get)  # type: ignore[arg-type]
+        self.url_type = url_type
+        super().__init__(url_type)
+
+    def equals(self, other: Any) -> bool:
+
+        try:
+            parsed = self.parse_obj_as(self.url_type, other)
+        except self.ValidationError:
+            raise ValueError('Invalid URL')
+        if not self.attribute_checks:
+            return parsed == other
+
+        for attribute, expected in self.attribute_checks.items():
+            if getattr(parsed, attribute) != expected:
+                return False
+        return parsed == other
 
 
 HashTypes = Literal['md5', 'sha-1', 'sha-256']

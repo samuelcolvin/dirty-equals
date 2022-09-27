@@ -4,7 +4,7 @@ from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUUID
+from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
 
 
 @pytest.mark.parametrize(
@@ -237,3 +237,46 @@ def test_hashlib_hashes(hash_func, hash_type):
 def test_wrong_hash_type():
     with pytest.raises(ValueError, match='Hash type must be one of the following values: md5, sha-1, sha-256'):
         assert '123' == IsHash('ntlm')
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('https://example.com', IsUrl),
+        ('https://example.com', IsUrl(scheme='https')),
+        ('postgres://user:pass@localhost:5432/app', IsUrl(postgres_dsn=True)),
+    ],
+)
+def test_is_url_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        ('https://example.com', IsUrl(postgres_dsn=True)),
+        ('https://example.com', IsUrl(scheme='http')),
+        ('definitely not a url', IsUrl),
+        (42, IsUrl),
+        ('https://anotherexample.com', IsUrl(postgres_dsn=True)),
+    ],
+)
+def test_is_url_false(other, dirty):
+    assert other != dirty
+
+
+def test_is_url_invalid_kwargs():
+    with pytest.raises(
+        TypeError,
+        match='IsURL only checks these attributes: scheme, host, host_type, user, password, tld, port, path, query, '
+        'fragment',
+    ):
+        IsUrl(https=True)
+
+
+def test_is_url_too_many_url_types():
+    with pytest.raises(
+        ValueError,
+        match='You can only check against one Pydantic url type at a time',
+    ):
+        assert 'https://example.com' == IsUrl(any_url=True, http_url=True, postgres_dsn=True)
