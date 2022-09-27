@@ -36,6 +36,32 @@ insert_assert_print: ContextVar[bool] = ContextVar('insert_assert_print')
 insert_assert_enabled: ContextVar[bool] = ContextVar('insert_assert_enabled')
 
 
+def insert_assert(value: Any) -> int:
+    if not insert_assert_enabled.get():
+        raise RuntimeError('insert_assert() is disabled, either due to --insert-assert-disable or "CI" env var')
+    call_frame: FrameType = sys._getframe(1)
+
+    source = Source.for_frame(call_frame)
+    ex = source.executing(call_frame)
+    ast_arg = ex.node.args[0]
+    if isinstance(ast_arg, ast.Name):
+        arg = ast_arg.id
+    else:
+        arg = ' '.join(map(str.strip, ex.source.asttokens().get_text(ast_arg).splitlines()))
+
+    python_code = f'# insert_assert({arg})\nassert {arg} == {custom_repr(value)}'
+
+    format_code = load_black()
+    if format_code:
+        python_code = format_code(python_code)
+
+    python_code = textwrap.indent(python_code, ex.node.col_offset * ' ')
+    to_replace.append(ToReplace(Path(call_frame.f_code.co_filename), ex.node.lineno, ex.node.end_lineno, python_code))
+    calls = insert_assert_calls.get() + 1
+    insert_assert_calls.set(calls)
+    return calls
+
+
 def pytest_addoption(parser: Any) -> None:
     parser.addoption(
         '--insert-assert-print',
@@ -72,7 +98,8 @@ def insert_assert_add_to_builtins(request: SubRequest) -> None:
     if as_enabled is None:
         as_enabled = not bool(os.getenv('CI'))
     insert_assert_enabled.set(as_enabled)
-    __builtins__['insert_assert'] = insert_assert
+    if as_enabled:
+        __builtins__['insert_assert'] = insert_assert
 
 
 @pytest.fixture(autouse=True)
@@ -85,6 +112,14 @@ def insert_assert_maybe_fail(request: SubRequest) -> Generator[None, None, None]
         count = insert_assert_calls.get()
         if count:
             pytest.fail(f'{count} insert_assert() call{plural(count)}, failing due to --insert-assert-fail option')
+
+
+@pytest.fixture(name='insert_assert')
+def insert_assert_fixture() -> Callable[[Any], int]:
+    if not insert_assert_enabled.get():
+        pytest.fail('insert_assert() is disabled, either due to --insert-assert-disable or "CI" env var')
+    else:
+        return insert_assert
 
 
 def pytest_terminal_summary() -> None:
@@ -104,37 +139,16 @@ def pytest_terminal_summary() -> None:
                 if print_instead:
                     hr = '-' * 80
                     code = highlight(tr.code) if highlight else tr.code
-                    print(f'{file} - {tr.start_line}:{tr.end_line}:\n{hr}\n{code}{hr}\n')
+                    line_no = f'{tr.start_line}' if tr.start_line == tr.end_line else f'{tr.start_line}-{tr.end_line}'
+                    print(f'{file} - {line_no}:\n{hr}\n{code}{hr}\n')
                 else:
                     lines[tr.start_line - 1 : tr.end_line] = tr.code.splitlines()
             if not print_instead:
                 file.write_text('\n'.join(lines))
             files += 1
-        print(f'Replaced {len(to_replace)} insert_assert() call{plural(to_replace)} in {files} file{plural(files)}')
-
-
-def insert_assert(value: Any) -> None:
-    if not insert_assert_enabled.get():
-        raise RuntimeError('insert_assert() is disabled, either due to --insert-assert-disable or "CI" env var')
-    call_frame: FrameType = sys._getframe(1)
-
-    source = Source.for_frame(call_frame)
-    ex = source.executing(call_frame)
-    ast_arg = ex.node.args[0]
-    if isinstance(ast_arg, ast.Name):
-        arg = ast_arg.id
-    else:
-        arg = ' '.join(map(str.strip, ex.source.asttokens().get_text(ast_arg).splitlines()))
-
-    python_code = f'# insert_assert({arg})\nassert {arg} == {custom_repr(value)}'
-
-    format_code = load_black()
-    if format_code:
-        python_code = format_code(python_code)
-
-    python_code = textwrap.indent(python_code, ex.node.col_offset * ' ')
-    to_replace.append(ToReplace(Path(call_frame.f_code.co_filename), ex.node.lineno, ex.node.end_lineno, python_code))
-    insert_assert_calls.set(insert_assert_calls.get() + 1)
+        prefix = 'Printed' if print_instead else 'Replaced'
+        print(f'{prefix} {len(to_replace)} insert_assert() call{plural(to_replace)} in {files} file{plural(files)}')
+        to_replace.clear()
 
 
 def custom_repr(value: Any) -> Any:
@@ -219,7 +233,9 @@ def load_black() -> Callable[[str], str] | None:  # noqa: C901
                 except KeyError:
                     pass
                 else:
-                    kwargs[config_arg.keyword_name] = config_arg.converter(value)
+                    value = config_arg.converter(value)
+                    if value is not None:
+                        kwargs[config_arg.keyword_name] = value
 
             mode_ = Mode(**kwargs)
             fast = bool(config.get('fast'))
@@ -237,7 +253,9 @@ def load_black() -> Callable[[str], str] | None:  # noqa: C901
 
 
 @lru_cache
-def get_pygments() -> Callable[[str], str] | None:
+def get_pygments() -> Callable[[str], str] | None:  # pragma: no cover
+    if not isatty():
+        return None
     try:
         import pygments
         from pygments.formatters import Terminal256Formatter
@@ -251,3 +269,11 @@ def get_pygments() -> Callable[[str], str] | None:
             return pygments.highlight(code, lexer=pyg_lexer, formatter=terminal_formatter)
 
         return highlight
+
+
+def isatty() -> bool:
+    stream = sys.stdout
+    try:
+        return stream.isatty()
+    except Exception:
+        return False

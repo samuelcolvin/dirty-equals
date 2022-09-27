@@ -55,7 +55,10 @@ Changelog = 'https://github.com/samuelcolvin/dirty-equals/releases'
 
 [tool.pytest.ini_options]
 testpaths = 'tests'
-filterwarnings = 'error'
+filterwarnings = [
+    'error',
+    'ignore:.*:pytest.PytestRemovedIn8Warning',
+]
 
 [tool.coverage.run]
 source = ['dirty_equals']
