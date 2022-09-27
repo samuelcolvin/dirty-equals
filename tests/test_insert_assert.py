@@ -1,6 +1,12 @@
 import os
+import sys
+
+import pytest
 
 from dirty_equals.pytest_plugin import load_black
+
+pytestmark = pytest.mark.skipif(sys.version_info < (3, 8), reason='requires Python 3.8+')
+
 
 config = "pytest_plugins = ['dirty_equals.pytest_plugin']"
 # language=Python

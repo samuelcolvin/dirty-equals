@@ -37,6 +37,8 @@ insert_assert_enabled: ContextVar[bool] = ContextVar('insert_assert_enabled')
 
 
 def insert_assert(value: Any) -> int:
+    if sys.version_info < (3, 8):  # pragma: no cover
+        raise RuntimeError('insert_assert() requires Python 3.8+')
     if not insert_assert_enabled.get():
         raise RuntimeError('insert_assert() is disabled, either due to --insert-assert-disable or "CI" env var')
     call_frame: FrameType = sys._getframe(1)
