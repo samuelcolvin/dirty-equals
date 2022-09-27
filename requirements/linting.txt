@@ -66,7 +66,6 @@ types-pytz==2022.2.1.0
     # via -r requirements/linting.in
 typing-extensions==4.3.0
     # via
-    #   black
     #   mypy
     #   pydantic
 virtualenv==20.16.4

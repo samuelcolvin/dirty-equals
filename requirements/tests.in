@@ -1,6 +1,5 @@
 coverage[toml]
 packaging
-pydantic
 pytest
 pytest-mock
 pytest-sugar
