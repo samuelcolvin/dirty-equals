@@ -7,4 +7,5 @@ pre-commit
 pydantic
 pycodestyle
 pyflakes
+pytest
 types-pytz

@@ -11,10 +11,13 @@ from functools import lru_cache
 from itertools import groupby
 from pathlib import Path
 from types import FrameType
-from typing import Any, Callable, Generator, Sized
+from typing import TYPE_CHECKING, Any, Callable, Generator, Sized
 
 import pytest
 from executing import Source
+
+if TYPE_CHECKING:
+    from _pytest.fixtures import SubRequest
 
 __all__ = ('insert_assert',)
 
@@ -63,7 +66,7 @@ def pytest_addoption(parser: Any) -> None:
 
 
 @pytest.fixture(scope='session', autouse=True)
-def insert_assert_add_to_builtins(request: Any) -> None:
+def insert_assert_add_to_builtins(request: SubRequest) -> None:
     insert_assert_print.set(request.config.getoption('insert_assert_print'))
     as_enabled = request.config.getoption('insert_assert_enabled')
     if as_enabled is None:
@@ -73,7 +76,7 @@ def insert_assert_add_to_builtins(request: Any) -> None:
 
 
 @pytest.fixture(autouse=True)
-def insert_assert_maybe_fail(request: Any) -> Generator[None, None, None]:
+def insert_assert_maybe_fail(request: SubRequest) -> Generator[None, None, None]:
     if not request.config.getoption('insert_assert_fail'):
         yield
     else:

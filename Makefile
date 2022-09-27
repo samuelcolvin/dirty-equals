@@ -7,6 +7,18 @@ install:
 	pip install -r requirements/all.txt
 	pre-commit install
 
+.PHONY: generate-dependencies-310
+generate-dependencies-310:
+	python -c 'import sys; sys.exit(sys.version_info[:2] != (3, 10))'
+	python -m piptools compile --resolver backtracking --output-file=requirements/linting.txt requirements/linting.in
+	python -m piptools compile --resolver backtracking --output-file=requirements/docs.txt requirements/docs.in
+
+.PHONY: generate-dependencies-37
+generate-dependencies-37:
+	python -c 'import sys; sys.exit(sys.version_info[:2] != (3, 7))'
+	python -m piptools compile --resolver backtracking --output-file=requirements/tests.txt requirements/tests.in
+	python -m piptools compile --resolver backtracking --output-file=requirements/pyproject.txt pyproject.toml
+
 .PHONY: format
 format:
 	$(isort)
