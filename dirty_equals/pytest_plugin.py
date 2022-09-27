@@ -180,7 +180,7 @@ def plural(v: int | Sized) -> str:
     return '' if n == 1 else 's'
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def load_black() -> Callable[[str], str] | None:  # noqa: C901
     """
     Build black configuration from "pyproject.toml".
@@ -252,7 +252,7 @@ def load_black() -> Callable[[str], str] | None:  # noqa: C901
     return format_code
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def get_pygments() -> Callable[[str], str] | None:  # pragma: no cover
     if not isatty():
         return None
