@@ -37,10 +37,14 @@ classifiers = [
 requires-python = '>=3.7'
 dependencies = [
     'typing-extensions>=4.0.1;python_version<"3.8"',
+    'executing>=0.8.0',
     'pytz>=2021.3',
 ]
 optional-dependencies = {pydantic = ['pydantic>=1.9.1'] }
 dynamic = ['version']
+
+[project.entry-points.pytest11]
+dirty_equals = 'dirty_equals.pytest_plugin'
 
 [project.urls]
 Homepage = 'https://github.com/samuelcolvin/dirty-equals'
@@ -50,21 +54,21 @@ Source = 'https://github.com/samuelcolvin/dirty-equals'
 Changelog = 'https://github.com/samuelcolvin/dirty-equals/releases'
 
 [tool.pytest.ini_options]
-testpaths = "tests"
-filterwarnings = "error"
+testpaths = 'tests'
+filterwarnings = 'error'
 
 [tool.coverage.run]
-source = ["dirty_equals"]
+source = ['dirty_equals']
 branch = true
 
 [tool.coverage.report]
 precision = 2
 exclude_lines = [
-    "pragma: no cover",
-    "raise NotImplementedError",
-    "raise NotImplemented",
-    "if TYPE_CHECKING:",
-    "@overload",
+    'pragma: no cover',
+    'raise NotImplementedError',
+    'raise NotImplemented',
+    'if TYPE_CHECKING:',
+    '@overload',
 ]
 
 [tool.black]
@@ -85,3 +89,7 @@ color_output = true
 strict = true
 warn_return_any = false
 show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = ['executing.*']
+ignore_missing_imports = true
