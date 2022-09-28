@@ -11,7 +11,7 @@ from functools import lru_cache
 from itertools import groupby
 from pathlib import Path
 from types import FrameType
-from typing import TYPE_CHECKING, Any, Callable, Generator, Sized
+from typing import TYPE_CHECKING, Any, Callable, Generator, Mapping, Optional, Sized
 
 import pytest
 from executing import Source
@@ -36,7 +36,64 @@ insert_assert_print: ContextVar[bool] = ContextVar('insert_assert_print')
 insert_assert_enabled: ContextVar[bool] = ContextVar('insert_assert_enabled')
 
 
-def insert_assert(value: Any) -> int:
+class PlainRepr:
+    def __init__(self, value: Any) -> None:
+        self._val = value
+
+    def __repr__(self) -> str:
+        if isinstance(self._val, Enum):
+            return f'{self._val.__class__.__name__}.{self._val.name}'
+        else:
+            return repr(self._val)
+
+    def __hash__(self) -> int:
+        return hash(self._val)
+
+    def __eq__(self, __o: object) -> bool:
+        return self._val == __o
+
+
+def apply_repl(selector: str, value: Any, current: Any) -> Any:
+    if not selector:
+        assert isinstance(current, PlainRepr)
+        return PlainRepr(value)
+    if selector[0] == "[":
+        piece_end = selector.find("]")
+        if piece_end == -1:
+            # TODO: make all of these errors look like Invalid selector '["foo"]>["bar<["baz"]' or something nice
+            raise ValueError("Invalid selector")
+        piece = selector[: piece_end + 1]
+        if '"' in piece or "'" in piece:
+            # ["key"] or ['key']
+            quote = piece[1]
+            if len(piece) < 4 or piece[-2:] != f"{quote}]":
+                raise ValueError("Invalid selector")
+            key = piece[2:-2]
+            current[key] = apply_repl(selector[piece_end + 1 :], value, current[key])
+            return current
+        elif piece == "[]":
+            # index into every item
+            for idx in range(len(current)):
+                current[idx] = apply_repl(selector[piece_end + 1 :], value, current=current[idx])
+            return current
+        elif ":" in piece:
+            # [start?:end?]
+            start, end = piece[1:-1].split(":")
+            start = int(start) if start else 0
+            end = int(end) if end else len(current)
+            for idx in range(start, end):
+                current[idx] = apply_repl(selector[piece_end + 1 :], value, current=current[idx])
+            return current
+        # TODO handle:
+        # - [idx]
+        # - .attr
+        # - .* (every attribute)
+        # - [*] (every key)
+        raise NotImplementedError("Unable to parse selector")
+    return
+
+
+def insert_assert(value: Any, *, repl: Optional[Mapping[str, Any]] = None) -> int:
     call_frame: FrameType = sys._getframe(1)
     if sys.version_info < (3, 8):  # pragma: no cover
         raise RuntimeError('insert_assert() requires Python 3.8+')
@@ -55,8 +112,23 @@ def insert_assert(value: Any) -> int:
         arg = ast_arg.id
     else:
         arg = ' '.join(map(str.strip, ex.source.asttokens().get_text(ast_arg).splitlines()))
+    repl_kwarg = next((kw for kw in ex.node.keywords if kw.arg == "repl"), None)
+    if isinstance(repl_kwarg, ast.Name):
+        repl_repr = repl_kwarg.id
+    elif repl_kwarg is not None:
+        repl_repr = ' '.join(map(str.strip, ex.source.asttokens().get_text(repl_kwarg).splitlines()))
+    else:
+        repl_repr = ""
 
-    python_code = format_code(f'# insert_assert({arg})\nassert {arg} == {custom_repr(value)}')
+    params = ", ".join((p for p in (arg, repl_repr) if p))
+
+    expected_val_repr_template = custom_repr(value)
+
+    if repl:
+        for selector, value in repl.items():
+            expected_val_repr_template = apply_repl(selector, value, expected_val_repr_template)
+
+    python_code = format_code(f'# insert_assert({params})\nassert {arg} == {expected_val_repr_template}')
 
     python_code = textwrap.indent(python_code, ex.node.col_offset * ' ')
     to_replace.append(ToReplace(Path(call_frame.f_code.co_filename), ex.node.lineno, ex.node.end_lineno, python_code))
@@ -163,19 +235,7 @@ def custom_repr(value: Any) -> Any:
         return value.__class__(map(custom_repr, value))
     elif isinstance(value, dict):
         return value.__class__((custom_repr(k), custom_repr(v)) for k, v in value.items())
-    if isinstance(value, Enum):
-        return PlainRepr(f'{value.__class__.__name__}.{value.name}')
-    else:
-        return PlainRepr(repr(value))
-
-
-class PlainRepr(str):
-    """
-    String class where repr doesn't include quotes.
-    """
-
-    def __repr__(self) -> str:
-        return str(self)
+    return PlainRepr(value)
 
 
 def plural(v: int | Sized) -> str:

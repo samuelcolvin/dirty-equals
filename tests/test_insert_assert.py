@@ -19,6 +19,30 @@ def test_string_assert(insert_assert):
     insert_assert(thing)\
 """
 
+# language=Python
+dirty_equals_repl_test = """\
+from datetime import datetime
+from typing import Any, Dict, List
+from uuid import uuid4
+
+from dirty_equals import IsUUID, IsNow
+
+def test_repl_dirty_equals(insert_assert: Any):
+    class Req:
+        def json(self) -> List[Dict[str, Any]]:
+            return [{"id": uuid4(), "ts": datetime.now()}]
+
+    req = Req()
+
+    insert_assert(
+        req.json(),
+        repl={
+            '[]["id"]': IsUUID(),
+            '[0:]["ts"]': IsNow(),
+        }
+    )
+"""
+
 
 def test_insert_assert(pytester):
     os.environ.pop('CI', None)
@@ -26,6 +50,23 @@ def test_insert_assert(pytester):
     test_file = pytester.makepyfile(default_test)
     result = pytester.runpytest()
     result.assert_outcomes(passed=2)
+    assert test_file.read_text() == (
+        'def test_ok():\n'
+        '    assert 1 + 2 == 3\n'
+        '\n'
+        'def test_string_assert(insert_assert):\n'
+        "    thing = 'foobar'\n"
+        '    # insert_assert(thing)\n'
+        '    assert thing == "foobar"'
+    )
+
+
+def test_insert_assert_dirty(pytester):
+    os.environ.pop('CI', None)
+    pytester.makeconftest(config)
+    test_file = pytester.makepyfile(dirty_equals_repl_test)
+    result = pytester.runpytest()
+    result.assert_outcomes(passed=1)
     assert test_file.read_text() == (
         'def test_ok():\n'
         '    assert 1 + 2 == 3\n'

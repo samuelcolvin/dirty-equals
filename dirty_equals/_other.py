@@ -35,7 +35,7 @@ class IsUUID(DirtyEquals[UUID]):
         ```
         """
         self.version = version
-        super().__init__(version or plain_repr('*'))
+        super().__init__(version or plain_repr(''))
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, UUID):
