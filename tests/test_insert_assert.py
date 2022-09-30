@@ -133,3 +133,29 @@ skip-string-normalization = true"""
     f = load_black()
     # no string normalization
     assert f("'foobar'") == "'foobar'\n"
+
+
+def test_insert_assert_repeat(pytester, capsys):
+    os.environ.pop('CI', None)
+    pytester.makeconftest(config)
+    test_file = pytester.makepyfile(
+        """\
+import pytest
+
+@pytest.mark.parametrize('x', [1, 2, 3])
+def test_string_assert(x, insert_assert):
+    insert_assert(x)\
+"""
+    )
+    result = pytester.runpytest()
+    result.assert_outcomes(passed=3)
+    assert test_file.read_text() == (
+        'import pytest\n'
+        '\n'
+        "@pytest.mark.parametrize('x', [1, 2, 3])\n"
+        'def test_string_assert(x, insert_assert):\n'
+        '    # insert_assert(x)\n'
+        '    assert x == 1'
+    )
+    captured = capsys.readouterr()
+    assert '2 insert skipped because an assert statement on that line had already be inserted!\n' in captured.out

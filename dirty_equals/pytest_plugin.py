@@ -139,9 +139,11 @@ def pytest_terminal_summary() -> None:
             highlight = get_pygments()
 
         files = 0
+        dup_count = 0
         for file, group in groupby(to_replace, key=lambda tr: tr.file):
             # we have to substitute lines in reverse order to avoid messing up line numbers
             lines = file.read_text().splitlines()
+            duplicates: set[int] = set()
             for tr in sorted(group, key=lambda x: x.start_line, reverse=True):
                 if print_instead:
                     hr = '-' * 80
@@ -149,12 +151,18 @@ def pytest_terminal_summary() -> None:
                     line_no = f'{tr.start_line}' if tr.start_line == tr.end_line else f'{tr.start_line}-{tr.end_line}'
                     print(f'{file} - {line_no}:\n{hr}\n{code}{hr}\n')
                 else:
-                    lines[tr.start_line - 1 : tr.end_line] = tr.code.splitlines()
+                    if tr.start_line in duplicates:
+                        dup_count += 1
+                    else:
+                        duplicates.add(tr.start_line)
+                        lines[tr.start_line - 1 : tr.end_line] = tr.code.splitlines()
             if not print_instead:
                 file.write_text('\n'.join(lines))
             files += 1
         prefix = 'Printed' if print_instead else 'Replaced'
         print(f'{prefix} {len(to_replace)} insert_assert() call{plural(to_replace)} in {files} file{plural(files)}')
+        if dup_count:
+            print(f'{dup_count} insert skipped because an assert statement on that line had already be inserted!')
         to_replace.clear()
 
 
