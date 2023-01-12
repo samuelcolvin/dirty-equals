@@ -44,7 +44,7 @@ jobs:
       id: cache
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('requirements/tests.txt') }}
+        key: v2-${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('requirements/tests.txt') }}
 
     - run: pip install -r requirements/tests.txt -r requirements/pyproject.txt
       if: steps.cache.outputs.cache-hit != 'true'
