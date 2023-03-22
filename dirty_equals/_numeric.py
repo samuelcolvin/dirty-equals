@@ -401,8 +401,8 @@ class IsFloatInf(IsFloat):
     ```py title="IsFloatInf"
     from dirty_equals import IsFloatInf
 
-    assert float("inf") == IsFloatInf
-    assert float("-inf") == IsFloatInf
+    assert float('inf') == IsFloatInf
+    assert float('-inf') == IsFloatInf
     assert 1.0 != IsFloatInf
     ```
     """
@@ -421,10 +421,10 @@ class IsFloatInfPos(IsFloatInf):
     ```py title="IsFloatInfPos"
     from dirty_equals import IsFloatInfPos
 
-    assert float("inf") == IsFloatInfPos
-    assert -float("-inf") == IsFloatInfPos
-    assert -float("inf") != IsFloatInfPos
-    assert float("-inf") != IsFloatInfPos
+    assert float('inf') == IsFloatInfPos
+    assert -float('-inf') == IsFloatInfPos
+    assert -float('inf') != IsFloatInfPos
+    assert float('-inf') != IsFloatInfPos
     ```
     """
 
@@ -446,10 +446,10 @@ class IsFloatInfNeg(IsFloatInf):
     ```py title="IsFloatInfNeg"
     from dirty_equals import IsFloatInfNeg
 
-    assert -float("inf") == IsFloatInfNeg
-    assert float("-inf") == IsFloatInfNeg
-    assert float("inf") != IsFloatInfNeg
-    assert -float("-inf") != IsFloatInfNeg
+    assert -float('inf') == IsFloatInfNeg
+    assert float('-inf') == IsFloatInfNeg
+    assert float('inf') != IsFloatInfNeg
+    assert -float('-inf') != IsFloatInfNeg
     ```
     """
 
@@ -471,7 +471,7 @@ class IsFloatNan(IsFloat):
     ```py title="IsFloatNan"
     from dirty_equals import IsFloatNan
 
-    assert float("nan") == IsFloatNan
+    assert float('nan') == IsFloatNan
     assert 1.0 != IsFloatNan
     ```
     """
