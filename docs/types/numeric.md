@@ -42,6 +42,22 @@
     rendering:
       merge_init_into_class: false
 
+::: dirty_equals.IsFloatInf
+    rendering:
+      merge_init_into_class: false
+
+::: dirty_equals.IsFloatInfPos
+    rendering:
+      merge_init_into_class: false
+
+::: dirty_equals.IsFloatInfNeg
+    rendering:
+      merge_init_into_class: false
+
+::: dirty_equals.IsFloatNan
+    rendering:
+      merge_init_into_class: false
+
 ::: dirty_equals.IsApprox
 
 ::: dirty_equals.IsNumber
