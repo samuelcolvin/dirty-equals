@@ -3,6 +3,10 @@ import pytest
 from dirty_equals import (
     IsApprox,
     IsFloat,
+    IsFloatInf,
+    IsFloatInfNeg,
+    IsFloatInfPos,
+    IsFloatNan,
     IsInt,
     IsNegative,
     IsNegativeFloat,
@@ -47,6 +51,16 @@ from dirty_equals import (
         (-1.0, IsNonPositive),
         (-1, IsNonPositive & IsInt),
         (1, IsNonNegative & IsInt),
+        (float("inf"), IsFloatInf),
+        (-float("inf"), IsFloatInf),
+        (float("-inf"), IsFloatInf),
+        (float("inf"), IsFloatInfPos),
+        (-float("-inf"), IsFloatInfPos),
+        (-float("inf"), IsFloatInfNeg),
+        (float("-inf"), IsFloatInfNeg),
+        (float("nan"), IsFloatNan),
+        (-float("nan"), IsFloatNan),
+        (float("-nan"), IsFloatNan),
     ],
 )
 def test_dirty_equals(other, dirty):
@@ -82,6 +96,14 @@ def test_dirty_equals(other, dirty):
         (1.0, IsNonPositive),
         (-1.0, IsNonPositive & IsInt),
         (1.0, IsNonNegative & IsInt),
+        (1, IsFloatNan),
+        (1.0, IsFloatNan),
+        (1, IsFloatInf),
+        (1.0, IsFloatInf),
+        (-float("inf"), IsFloatInfPos),
+        (float("-inf"), IsFloatInfPos),
+        (-float("-inf"), IsFloatInfNeg),
+        (-float("-inf"), IsFloatInfNeg),
     ],
 )
 def test_dirty_not_equals(other, dirty):

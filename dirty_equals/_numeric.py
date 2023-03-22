@@ -1,3 +1,4 @@
+import math
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from typing import Any, Optional, Tuple, Type, TypeVar, Union
@@ -389,3 +390,92 @@ class IsNegativeFloat(IsFloat):
     def __init__(self) -> None:
         super().__init__(lt=0)
         self._repr_kwargs = {}
+
+
+class IsFloatInf(IsFloat):
+    """
+    Checks that a value is float and infinite (positive or negative).
+
+    Inherits from [`IsFloat`][dirty_equals.IsFloat].
+
+    ```py title="IsFloatInf"
+    from dirty_equals import IsFloatInf
+
+    assert float("inf") == IsFloatInf
+    assert float("-inf") == IsFloatInf
+    assert 1.0 != IsFloatInf
+    ```
+    """
+
+    def equals(self, other: Any) -> bool:
+        other = self.prepare(other)
+        return math.isinf(other)
+
+
+class IsFloatInfPos(IsFloatInf):
+    """
+    Checks that a value is float and positive infinite.
+
+    Inherits from [`IsFloatInf`][dirty_equals.IsFloatInf].
+
+    ```py title="IsFloatInfPos"
+    from dirty_equals import IsFloatInfPos
+
+    assert float("inf") == IsFloatInfPos
+    assert -float("-inf") == IsFloatInfPos
+    assert -float("inf") != IsFloatInfPos
+    assert float("-inf") != IsFloatInfPos
+    ```
+    """
+
+    def __init__(self) -> None:
+        super().__init__(gt=0)
+        self._repr_kwargs = {}
+
+    def equals(self, other: Any) -> bool:
+
+        return self.bounds_checks(other) and super().equals(other)
+
+
+class IsFloatInfNeg(IsFloatInf):
+    """
+    Checks that a value is float and negative infinite.
+
+    Inherits from [`IsFloatInf`][dirty_equals.IsFloatInf].
+
+    ```py title="IsFloatInfNeg"
+    from dirty_equals import IsFloatInfNeg
+
+    assert -float("inf") == IsFloatInfNeg
+    assert float("-inf") == IsFloatInfNeg
+    assert float("inf") != IsFloatInfNeg
+    assert -float("-inf") != IsFloatInfNeg
+    ```
+    """
+
+    def __init__(self) -> None:
+        super().__init__(lt=0)
+        self._repr_kwargs = {}
+
+    def equals(self, other: Any) -> bool:
+
+        return self.bounds_checks(other) and super().equals(other)
+
+
+class IsFloatNan(IsFloat):
+    """
+    Checks that a value is float and nan (not a number).
+
+    Inherits from [`IsFloat`][dirty_equals.IsFloat].
+
+    ```py title="IsFloatNan"
+    from dirty_equals import IsFloatNan
+
+    assert float("nan") == IsFloatNan
+    assert 1.0 != IsFloatNan
+    ```
+    """
+
+    def equals(self, other: Any) -> bool:
+        other = self.prepare(other)
+        return math.isnan(other)
