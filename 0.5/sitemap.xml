@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/internals/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/internals/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/usage/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/usage/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/boolean/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/boolean/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/custom/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/custom/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/datetime/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/datetime/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/dict/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/dict/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/inspection/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/inspection/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/numeric/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/numeric/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/other/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/other/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/sequence/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/sequence/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dirty-equals.helpmanual.io/latest/0.5/types/string/</loc>
+         <loc>https://dirty-equals.helpmanual.io/latest/latest/types/string/</loc>
          <lastmod>2023-04-27</lastmod>
          <changefreq>daily</changefreq>
     </url>
