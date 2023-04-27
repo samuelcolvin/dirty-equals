@@ -1,0 +1,12 @@
+/ /latest/
+/internals/ /latest/internals/
+/usage/ /latest/usage/
+/types/boolean/ /latest/types/boolean/
+/types/custom/ /latest/types/custom/
+/types/datetime/ /latest/types/datetime/
+/types/dict/ /latest/types/dict/
+/types/inspection/ /latest/types/inspection/
+/types/numeric/ /latest/types/numeric/
+/types/other/ /latest/types/other/
+/types/sequence/ /latest/types/sequence/
+/types/string/ /latest/types/string/
