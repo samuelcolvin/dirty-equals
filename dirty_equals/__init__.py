@@ -6,6 +6,10 @@ from ._inspection import HasAttributes, HasName, HasRepr, IsInstance
 from ._numeric import (
     IsApprox,
     IsFloat,
+    IsFloatInf,
+    IsFloatInfNeg,
+    IsFloatInfPos,
+    IsFloatNan,
     IsInt,
     IsNegative,
     IsNegativeFloat,
@@ -61,6 +65,10 @@ __all__ = (
     'IsFloat',
     'IsPositiveFloat',
     'IsNegativeFloat',
+    'IsFloatInf',
+    'IsFloatInfNeg',
+    'IsFloatInfPos',
+    'IsFloatNan',
     # inspection
     'HasAttributes',
     'HasName',
