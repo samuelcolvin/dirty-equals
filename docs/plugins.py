@@ -57,7 +57,7 @@ def on_page_markdown(markdown: str, page: Page, config: Config, files: Files) ->
 
 
 def add_version(markdown: str, page: Page) -> str:
-    if page.abs_url == '/latest/':
+    if page.file.src_uri == 'index.md':
         version_ref = os.getenv('GITHUB_REF')
         if version_ref:
             version = re.sub('^refs/tags/', '', version_ref.lower())
