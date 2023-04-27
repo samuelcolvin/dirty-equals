@@ -43,8 +43,9 @@ class IsDatetime(IsNumeric[datetime]):
         Examples of basic usage:
 
         ```py title="IsDatetime"
-        from dirty_equals import IsDatetime
         from datetime import datetime
+
+        from dirty_equals import IsDatetime
 
         y2k = datetime(2000, 1, 1)
         assert datetime(2000, 1, 1) == IsDatetime(approx=y2k)
@@ -144,8 +145,9 @@ class IsNow(IsDatetime):
                 if provided now will be converted to this timezone.
 
         ```py title="IsNow"
-        from dirty_equals import IsNow
         from datetime import datetime, timezone
+
+        from dirty_equals import IsNow
 
         now = datetime.now()
         assert now == IsNow
@@ -226,8 +228,9 @@ class IsDate(IsNumeric[date]):
         Examples of basic usage:
 
         ```py title="IsDate"
-        from dirty_equals import IsDate
         from datetime import date
+
+        from dirty_equals import IsDate
 
         y2k = date(2000, 1, 1)
         assert date(2000, 1, 1) == IsDate(approx=y2k)
@@ -284,8 +287,9 @@ class IsToday(IsDate):
             iso_string: whether to allow iso formatted strings in comparison
             format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
         ```py title="IsToday"
-        from dirty_equals import IsToday
         from datetime import date, timedelta
+
+        from dirty_equals import IsToday
 
         today = date.today()
         assert today == IsToday

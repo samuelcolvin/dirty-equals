@@ -90,7 +90,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         assert 't-123' == token_is_str
 
         print(token_is_str.value)
-        #> 't-123'
+        #> t-123
         ```
         """
         if self._was_equal:
@@ -220,7 +220,7 @@ class IsOneOf(DirtyEquals[Any]):
             *more_expected_values: More expected values for equals to return true.
 
         ```py title="IsOneOf"
-        from dirty_equals import IsOneOf, Contains
+        from dirty_equals import Contains, IsOneOf
 
         assert 1 == IsOneOf(1, 2, 3)
         assert 4 != IsOneOf(1, 2, 3)

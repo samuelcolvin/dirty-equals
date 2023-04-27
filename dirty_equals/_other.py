@@ -25,6 +25,7 @@ class IsUUID(DirtyEquals[UUID]):
 
         ```py title="IsUUID"
         import uuid
+
         from dirty_equals import IsUUID
 
         assert 'edf9f29e-45c7-431c-99db-28ea44df9785' == IsUUID
@@ -87,7 +88,7 @@ class IsJson(DirtyEquals[JsonType]):
 
 
         ```py title="IsJson"
-        from dirty_equals import IsJson, IsStrictDict, IsPositiveInt
+        from dirty_equals import IsJson, IsPositiveInt, IsStrictDict
 
         assert '{"a": 1, "b": 2}' == IsJson
         assert '{"a": 1, "b": 2}' == IsJson(a=1, b=2)
@@ -285,7 +286,9 @@ class IsHash(DirtyEquals[str]):
         assert 'f1e069787ece74531d112559945c6871' != IsHash('sha-256')
         assert 'F1E069787ECE74531D112559945C6871' == IsHash('md5')
         assert '40bd001563085fc35165329ea1ff5c5ecbdbbeef' == IsHash('sha-1')
-        assert 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3' == IsHash('sha-256')
+        assert 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3' == IsHash(
+            'sha-256'
+        )
         ```
         """
 
@@ -326,7 +329,8 @@ class IsIP(DirtyEquals[IP]):
             netmask: The netmask of the IP to check, if omitted, any netmask is accepted. Requires version.
 
         ```py title="IsIP"
-        from ipaddress import IPv4Address, IPv6Address, IPv4Network
+        from ipaddress import IPv4Address, IPv4Network, IPv6Address
+
         from dirty_equals import IsIP
 
         assert '179.27.154.96' == IsIP

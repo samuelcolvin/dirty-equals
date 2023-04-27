@@ -7,12 +7,11 @@
 Types can also be inverted using the `~` operator, this is equivalent to using `!=` instead of `==`.
 
 Example:
-```py
-title="Boolean Combination of Types"
-from dirty_equals import HasLen, Contains
+```py title="Boolean Combination of Types"
+from dirty_equals import Contains, HasLen
 
-assert ['a', 'b', 'c'] == HasLen(3) & Contains('a') #(1)!
-assert ['a', 'b', 'c'] == HasLen(3) | Contains('z') #(2)!
+assert ['a', 'b', 'c'] == HasLen(3) & Contains('a')  # (1)!
+assert ['a', 'b', 'c'] == HasLen(3) | Contains('z')  # (2)!
 
 assert ['a', 'b', 'c'] != Contains('z')
 assert ['a', 'b', 'c'] == ~Contains('z')
@@ -33,8 +32,7 @@ This saves users adding `()` in lots of places.
 
 Example:
 
-```py
-title="Initialised vs. Uninitialised"
+```py title="Initialised vs. Uninitialised"
 from dirty_equals import IsInt
 
 # these two cases are the same
@@ -51,9 +49,8 @@ assert 1 == IsInt()
 dirty-equals types have reasonable `__repr__` methods, which describe types and generally are a close match
 of how they would be created:
 
-```py
-title="__repr__"
-from dirty_equals import IsInt, IsApprox
+```py title="__repr__"
+from dirty_equals import IsApprox, IsInt
 
 assert repr(IsInt) == 'IsInt'
 assert repr(IsInt()) == 'IsInt()'
@@ -63,8 +60,7 @@ assert repr(IsApprox(42)) == 'IsApprox(approx=42)'
 However the repr method of types changes when an equals (`==`) operation on them returns a `True`, in this case
 the `__repr__` method will return `repr(other)`.
 
-```py
-title="repr() after comparison"
+```py title="repr() after comparison"
 from dirty_equals import IsInt
 
 v = IsInt()
@@ -77,14 +73,15 @@ possible to read.
 
 Consider the following unit test:
 
-```py
-title="pytest error example"
+```py title="pytest error example"
 from datetime import datetime
-from dirty_equals import IsPositiveInt, IsNow
+
+from dirty_equals import IsNow, IsPositiveInt
+
 
 def test_partial_dict():
     api_response_data = {
-        'id': 1, #(1)!
+        'id': 1,  # (1)!
         'first_name': 'John',
         'last_name': 'Doe',
         'created_at': datetime.now().isoformat(),

@@ -170,7 +170,7 @@ class HasAttributes(DirtyEquals[Any]):
 
         Example:
         ```py title="HasAttributes"
-        from dirty_equals import HasAttributes, IsInt, IsStr, AnyThing
+        from dirty_equals import AnyThing, HasAttributes, IsInt, IsStr
 
         class Foo:
             def __init__(self, a, b):

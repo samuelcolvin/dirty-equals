@@ -51,7 +51,7 @@ class IsAnyStr(DirtyEquals[T]):
         assert b'foobar' == IsAnyStr()
         assert 123 != IsAnyStr()
         assert 'foobar' == IsAnyStr(regex='foo...')
-        assert 'foobar' == IsAnyStr(regex=b'foo...') #(1)!
+        assert 'foobar' == IsAnyStr(regex=b'foo...')  # (1)!
 
         assert 'foobar' == IsAnyStr(min_length=6)
         assert 'foobar' != IsAnyStr(min_length=8)

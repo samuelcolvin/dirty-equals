@@ -21,12 +21,12 @@ based on the `enforce_tz` parameter:
 
 Example
 
-```py
-title="IsDatetime & timezones"
+```py title="IsDatetime & timezones"
 from datetime import datetime
 
-from dirty_equals import IsDatetime
 import pytz
+
+from dirty_equals import IsDatetime
 
 tz_london = pytz.timezone('Europe/London')
 new_year_london = tz_london.localize(datetime(2000, 1, 1))

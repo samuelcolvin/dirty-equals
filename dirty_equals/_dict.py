@@ -70,14 +70,18 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
         from dirty_equals import IsDict
 
         assert {'a': 1, 'b': 2, 'c': None} != IsDict(a=1, b=2)
-        assert {'a': 1, 'b': 2, 'c': None} == IsDict(a=1, b=2).settings(partial=True) #(1)!
+        assert {'a': 1, 'b': 2, 'c': None} == IsDict(a=1, b=2).settings(partial=True)  # (1)!
 
         assert {'b': 2, 'a': 1} == IsDict(a=1, b=2)
-        assert {'b': 2, 'a': 1} != IsDict(a=1, b=2).settings(strict=True) #(2)!
+        assert {'b': 2, 'a': 1} != IsDict(a=1, b=2).settings(strict=True)  # (2)!
 
         # combining partial and strict
-        assert {'a': 1, 'b': None, 'c': 3} == IsDict(a=1, c=3).settings(strict=True, partial=True)
-        assert {'b': None, 'c': 3, 'a': 1} != IsDict(a=1, c=3).settings(strict=True, partial=True)
+        assert {'a': 1, 'b': None, 'c': 3} == IsDict(a=1, c=3).settings(
+            strict=True, partial=True
+        )
+        assert {'b': None, 'c': 3, 'a': 1} != IsDict(a=1, c=3).settings(
+            strict=True, partial=True
+        )
         ```
 
         1. This is the same as [`IsPartialDict(a=1, b=2)`][dirty_equals.IsPartialDict]
@@ -188,7 +192,7 @@ class IsIgnoreDict(IsDict):
     from dirty_equals import IsIgnoreDict
 
     assert {'a': 1, 'b': 2, 'c': None} == IsIgnoreDict(a=1, b=2)
-    assert {'a': 1, 'b': 2, 'c': None, 'c': 'ignore'} == (
+    assert {'a': 1, 'b': 2, 'c': 'ignore'} == (
         IsIgnoreDict(a=1, b=2).settings(ignore={None, 'ignore'})
     )
 
