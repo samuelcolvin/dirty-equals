@@ -1,67 +1,67 @@
 # Numeric Types
 
 ::: dirty_equals.IsInt
-    rendering:
+    options:
       merge_init_into_class: false
       separate_signature: false
 
 ::: dirty_equals.IsFloat
-    rendering:
+    options:
       merge_init_into_class: false
       separate_signature: false
 
 ::: dirty_equals.IsPositive
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsNegative
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsNonNegative
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsNonPositive
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsPositiveInt
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsNegativeInt
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsPositiveFloat
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsNegativeFloat
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsFloatInf
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsFloatInfPos
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsFloatInfNeg
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsFloatNan
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsApprox
 
 ::: dirty_equals.IsNumber
-    rendering:
+    options:
       merge_init_into_class: false
 
 ::: dirty_equals.IsNumeric

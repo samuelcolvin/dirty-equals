@@ -1,7 +1,7 @@
 # Custom Types
 
 ::: dirty_equals._base.DirtyEquals
-    rendering:
+    options:
       merge_init_into_class: false
 
 ## Custom Type Example
