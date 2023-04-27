@@ -41,6 +41,7 @@ class IsNumeric(DirtyEquals[N]):
     def __init__(
         self,
         *,
+        exactly: Optional[N] = None,
         approx: Optional[N] = None,
         delta: Optional[N] = None,
         gt: Optional[N] = None,
@@ -50,6 +51,8 @@ class IsNumeric(DirtyEquals[N]):
     ):
         """
         Args:
+            exactly: A value to exactly compare to - useful when you want to make sure a value is an `int` or `float`,
+                while also checking its value.
             approx: A value to approximately compare to.
             delta: The allowable different when comparing to the value to `approx`,
                 if omitted `value / 100` is used except for datetimes where 2 seconds is used.
@@ -74,16 +77,22 @@ class IsNumeric(DirtyEquals[N]):
         assert d == IsNumeric(approx=datetime(2020, 1, 1, 12, 0, 1))
         ```
         """
+        self.exactly: Optional[N] = exactly
+        if self.exactly is not None and (gt, lt, ge, le) != (None, None, None, None):
+            raise TypeError('"exactly" cannot be combined with "gt", "lt", "ge", or "le"')
+        if self.exactly is not None and approx is not None:
+            raise TypeError('"exactly" cannot be combined with "approx"')
         self.approx: Optional[N] = approx
-        self.delta: Optional[N] = delta
         if self.approx is not None and (gt, lt, ge, le) != (None, None, None, None):
             raise TypeError('"approx" cannot be combined with "gt", "lt", "ge", or "le"')
+        self.delta: Optional[N] = delta
         self.gt: Optional[N] = gt
         self.lt: Optional[N] = lt
         self.ge: Optional[N] = ge
         self.le: Optional[N] = le
-        self.has_bounds_checks = not all(f is None for f in (approx, delta, gt, lt, ge, le))
+        self.has_bounds_checks = not all(f is None for f in (exactly, approx, delta, gt, lt, ge, le))
         kwargs = {
+            'exactly': Omit if exactly is None else exactly,
             'approx': Omit if approx is None else approx,
             'delta': Omit if delta is None else delta,
             'gt': Omit if gt is None else gt,
@@ -110,7 +119,9 @@ class IsNumeric(DirtyEquals[N]):
             return True
 
     def bounds_checks(self, other: N) -> bool:
-        if self.approx is not None:
+        if self.exactly is not None:
+            return self.exactly == other
+        elif self.approx is not None:
             if self.delta is None:
                 if isinstance(other, date):
                     delta: Any = timedelta(seconds=2)
@@ -278,6 +289,8 @@ class IsInt(IsNumeric[int]):
     assert 1.0 != IsInt
     assert 'foobar' != IsInt
     assert True != IsInt
+    assert 1 == IsInt(exactly=1)
+    assert -2 != IsInt(exactly=1)
     ```
     """
 
@@ -341,6 +354,8 @@ class IsFloat(IsNumeric[float]):
 
     assert 1.0 == IsFloat
     assert 1 != IsFloat
+    assert 1.0 == IsFloat(exactly=1.0)
+    assert 1.001 != IsFloat(exactly=1.0)
     ```
     """
 
