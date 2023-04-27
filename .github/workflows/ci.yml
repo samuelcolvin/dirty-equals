@@ -134,9 +134,9 @@ jobs:
         run: pip install git+https://github.com/jimporter/mike.git
 
       - name: Set git credentials
-      - run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - run: mike deploy -b docs-site dev --push
 #        if: github.ref == 'refs/heads/main'
