@@ -4,9 +4,9 @@
 #
 #    pip-compile --extra=pydantic --output-file=requirements/pyproject.txt pyproject.toml
 #
-pydantic==1.10.2
+pydantic==1.10.7
     # via dirty-equals (pyproject.toml)
 pytz==2022.2.1
     # via dirty-equals (pyproject.toml)
-typing-extensions==4.3.0
+typing-extensions==4.5.0
     # via pydantic

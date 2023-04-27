@@ -49,6 +49,14 @@ Funding = 'https://github.com/sponsors/samuelcolvin'
 Source = 'https://github.com/samuelcolvin/dirty-equals'
 Changelog = 'https://github.com/samuelcolvin/dirty-equals/releases'
 
+[tool.ruff]
+line-length = 120
+extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
+flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+mccabe = { max-complexity = 14 }
+isort = { known-first-party = ['tests'] }
+target-version = 'py37'
+
 [tool.pytest.ini_options]
 testpaths = "tests"
 filterwarnings = "error"

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Container, Dict, Optional, Union, overload
+from typing import Any, Callable, Container, Dict, overload
 
 from ._base import DirtyEquals, DirtyEqualsMeta
 from ._utils import get_dict_arg
@@ -17,14 +17,14 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
     """
 
     @overload
-    def __init__(self, expected: Dict[Any, Any]):
+    def __init__(self, expected: dict[Any, Any]):
         ...
 
     @overload
     def __init__(self, **expected: Any):
         ...
 
-    def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any):
+    def __init__(self, *expected_args: dict[Any, Any], **expected_kwargs: Any):
         """
         Can be created from either keyword arguments or an existing dictionary (same as `dict()`).
 
@@ -42,7 +42,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
 
         self.strict = False
         self.partial = False
-        self.ignore: Union[None, Container[Any], Callable[[Any], bool]] = None
+        self.ignore: None | Container[Any] | Callable[[Any], bool] = None
         self._post_init()
         super().__init__()
 
@@ -52,9 +52,9 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
     def settings(
         self,
         *,
-        strict: Optional[bool] = None,
-        partial: Optional[bool] = None,
-        ignore: Union[None, Container[Any], Callable[[Any], bool]] = NotGiven,  # type: ignore[assignment]
+        strict: bool | None = None,
+        partial: bool | None = None,
+        ignore: None | Container[Any] | Callable[[Any], bool] = NotGiven,  # type: ignore[assignment]
     ) -> IsDict:
         """
         Allows you to customise the behaviour of `IsDict`, technically a new `IsDict` is required to allow chaining.
@@ -97,7 +97,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
 
         return new_cls
 
-    def equals(self, other: Dict[Any, Any]) -> bool:
+    def equals(self, other: dict[Any, Any]) -> bool:
         if not isinstance(other, dict):
             return False
 
@@ -117,7 +117,7 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
 
         return True
 
-    def _filter_dict(self, d: Dict[Any, Any]) -> Dict[Any, Any]:
+    def _filter_dict(self, d: dict[Any, Any]) -> dict[Any, Any]:
         return {k: v for k, v in d.items() if not self._ignore_value(v)}
 
     def _ignore_value(self, v: Any) -> bool:

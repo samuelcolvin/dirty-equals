@@ -1,6 +1,5 @@
 .DEFAULT_GOAL := all
-isort = isort dirty_equals tests
-black = black dirty_equals tests
+sources = dirty_equals tests
 
 .PHONY: install
 install:
@@ -9,14 +8,13 @@ install:
 
 .PHONY: format
 format:
-	$(isort)
-	$(black)
+	black $(sources)
+	ruff --fix $(sources)
 
 .PHONY: lint
 lint:
-	flake8 --max-complexity 10 --max-line-length 120 --ignore E203,W503 dirty_equals tests
-	$(isort) --check-only --df
-	$(black) --check
+	ruff $(sources)
+	black $(sources) --check --diff
 
 .PHONY: test
 test:

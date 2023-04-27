@@ -7,7 +7,7 @@ from ._utils import Omit, plain_repr
 try:
     from typing import Literal
 except ImportError:
-    from typing_extensions import Literal  # type: ignore[misc]
+    from typing_extensions import Literal  # type: ignore[assignment]
 
 T = TypeVar('T', str, bytes)
 
