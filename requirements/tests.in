@@ -2,4 +2,4 @@ coverage[toml]
 packaging
 pytest
 pytest-mock
-pytest-sugar
+pytest-pretty

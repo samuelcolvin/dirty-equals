@@ -185,7 +185,6 @@ class IsNow(IsDatetime):
             return datetime.utcnow().replace(tzinfo=timezone.utc).astimezone(self.tz)
 
     def prepare(self, other: Any) -> datetime:
-
         # update approx for every comparing, to check if other value is dirty equal
         # to current moment of time
         self.approx = self._get_now()
@@ -212,7 +211,6 @@ class IsDate(IsNumeric[date]):
         iso_string: bool = False,
         format_string: Optional[str] = None,
     ):
-
         """
         Args:
             approx: A value to approximately compare to.

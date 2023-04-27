@@ -433,7 +433,6 @@ class IsFloatInfPos(IsFloatInf):
         self._repr_kwargs = {}
 
     def equals(self, other: Any) -> bool:
-
         return self.bounds_checks(other) and super().equals(other)
 
 
@@ -458,7 +457,6 @@ class IsFloatInfNeg(IsFloatInf):
         self._repr_kwargs = {}
 
     def equals(self, other: Any) -> bool:
-
         return self.bounds_checks(other) and super().equals(other)
 
 

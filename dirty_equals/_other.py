@@ -10,7 +10,7 @@ from ._utils import Omit, plain_repr
 try:
     from typing import Literal
 except ImportError:
-    from typing_extensions import Literal  # type: ignore[misc]
+    from typing_extensions import Literal  # type: ignore[assignment]
 
 
 class IsUUID(DirtyEquals[UUID]):
@@ -251,7 +251,6 @@ class IsUrl(DirtyEquals[str]):
         super().__init__(url_type)
 
     def equals(self, other: Any) -> bool:
-
         try:
             parsed = self.parse_obj_as(self.url_type, other)
         except self.ValidationError:
@@ -349,7 +348,6 @@ class IsIP(DirtyEquals[IP]):
         super().__init__(version=version or Omit, netmask=netmask or Omit)
 
     def equals(self, other: Any) -> bool:
-
         if isinstance(other, (IPv4Network, IPv6Network)):
             ip = other
         elif isinstance(other, (str, bytes, int, IPv4Address, IPv6Address)):

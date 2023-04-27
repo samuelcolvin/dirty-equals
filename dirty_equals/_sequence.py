@@ -184,7 +184,7 @@ class IsListOrTuple(DirtyEquals[T]):
             check_order=self.check_order and Omit,
         )
 
-    def equals(self, other: Any) -> bool:  # noqa: C901
+    def equals(self, other: Any) -> bool:
         if not isinstance(other, self.allowed_type):
             return False
 
