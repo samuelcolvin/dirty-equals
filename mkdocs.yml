@@ -63,6 +63,8 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
 extra:
+  version:
+    provider: mike
   analytics:
     provider: google
     property: G-FLP20728CW
