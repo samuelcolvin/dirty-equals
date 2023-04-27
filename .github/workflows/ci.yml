@@ -89,6 +89,12 @@ jobs:
     - name: build site
       run: mkdocs build --strict
 
+    - name: store docs site
+      uses: actions/upload-artifact@v3
+      with:
+        name: docs
+        path: site
+
   check:  # This job does nothing and is only used for the branch protection
     if: always()
     needs: [lint, test, docs]
@@ -126,6 +132,11 @@ jobs:
       - name: install
         # waiting for https://github.com/jimporter/mike/issues/154
         run: pip install git+https://github.com/jimporter/mike.git
+
+      - name: Set git credentials
+      - run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       - run: mike deploy -b docs-site dev --push
 #        if: github.ref == 'refs/heads/main'
