@@ -68,8 +68,9 @@ class IsNumeric(DirtyEquals[N]):
         Example of direct usage:
 
         ```py title="IsNumeric"
-        from dirty_equals import IsNumeric
         from datetime import datetime
+
+        from dirty_equals import IsNumeric
 
         assert 1.0 == IsNumeric
         assert 4 == IsNumeric(gt=3)
@@ -191,6 +192,7 @@ class IsPositive(IsNumber):
 
     ```py title="IsPositive"
     from decimal import Decimal
+
     from dirty_equals import IsPositive
 
     assert 1.0 == IsPositive
@@ -213,6 +215,7 @@ class IsNegative(IsNumber):
 
     ```py title="IsNegative"
     from decimal import Decimal
+
     from dirty_equals import IsNegative
 
     assert -1.0 == IsNegative
@@ -235,6 +238,7 @@ class IsNonNegative(IsNumber):
 
     ```py title="IsNonNegative"
     from decimal import Decimal
+
     from dirty_equals import IsNonNegative
 
     assert 1.0 == IsNonNegative
@@ -258,6 +262,7 @@ class IsNonPositive(IsNumber):
 
     ```py title="IsNonPositive"
     from decimal import Decimal
+
     from dirty_equals import IsNonPositive
 
     assert -1.0 == IsNonPositive
@@ -307,6 +312,7 @@ class IsPositiveInt(IsInt):
 
     ```py title="IsPositiveInt"
     from decimal import Decimal
+
     from dirty_equals import IsPositiveInt
 
     assert 1 == IsPositiveInt
@@ -328,6 +334,7 @@ class IsNegativeInt(IsInt):
 
     ```py title="IsNegativeInt"
     from decimal import Decimal
+
     from dirty_equals import IsNegativeInt
 
     assert -1 == IsNegativeInt
@@ -371,6 +378,7 @@ class IsPositiveFloat(IsFloat):
 
     ```py title="IsPositiveFloat"
     from decimal import Decimal
+
     from dirty_equals import IsPositiveFloat
 
     assert 1.0 == IsPositiveFloat
@@ -392,6 +400,7 @@ class IsNegativeFloat(IsFloat):
 
     ```py title="IsNegativeFloat"
     from decimal import Decimal
+
     from dirty_equals import IsNegativeFloat
 
     assert -1.0 == IsNegativeFloat

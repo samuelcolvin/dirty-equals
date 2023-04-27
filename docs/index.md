@@ -36,10 +36,10 @@ applications where you're commonly checking the response to API calls and the co
 
 Here's a trivial example of what *dirty-equals* can do:
 
-```{.py title="Trival Usage" test="false"}
+```{.py title="Trival Usage" test="skip"}
 from dirty_equals import IsPositive
 
-assert 1 == IsPositive #(1)!
+assert 1 == IsPositive  # (1)!
 assert -2 == IsPositive  # this will fail! (2)
 ```
 
@@ -49,21 +49,21 @@ assert -2 == IsPositive  # this will fail! (2)
 
 **Not that interesting yet!**, but consider the following unit test code using **dirty-equals**:
 
-```py
-title="More Powerful Usage"
+```{.py title="More Powerful Usage" lint="skip"}
 from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
 
-def test_user_endpoint(client: 'HttpClient', db_conn: 'Database'):
-   client.pust('/users/create/', data=...)
 
-   user_data = db_conn.fetchrow('select * from users')
-   assert user_data == {
-       'id': IsPositiveInt, #(1)!
-       'username': 'samuelcolvin', #(2)!
-       'avatar_file': IsStr(regex=r'/[a-z0-9\-]{10}/example\.png'), #(3)!
-       'settings_json': IsJson({'theme': 'dark', 'language': 'en'}), #(4)!
-       'created_ts': IsNow(delta=3), #(5)!
-   }
+def test_user_endpoint(client: 'HttpClient', db_conn: 'Database'):
+    client.pust('/users/create/', data=...)
+
+    user_data = db_conn.fetchrow('select * from users')
+    assert user_data == {
+        'id': IsPositiveInt,  # (1)!
+        'username': 'samuelcolvin',  # (2)!
+        'avatar_file': IsStr(regex=r'/[a-z0-9\-]{10}/example\.png'),  # (3)!
+        'settings_json': IsJson({'theme': 'dark', 'language': 'en'}),  # (4)!
+        'created_ts': IsNow(delta=3),  # (5)!
+    }
 ```
 
 1. We don't actually care what the `id` is, just that it's present, it's an `int` and it's positive.

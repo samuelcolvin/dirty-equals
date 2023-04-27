@@ -10,16 +10,17 @@ To demonstrate the use of custom types, we'll create a custom type that matches 
 
 We won't inherit from [`IsNumeric`][dirty_equals.IsNumeric] in this case to keep the example simple.
 
-```py
-title="IsEven"
+```py title="IsEven"
 from decimal import Decimal
 from typing import Any, Union
-from dirty_equals import IsOneOf
-from dirty_equals import DirtyEquals
+
+from dirty_equals import DirtyEquals, IsOneOf
+
 
 class IsEven(DirtyEquals[Union[int, float, Decimal]]):
     def equals(self, other: Any) -> bool:
         return other % 2 == 0
+
 
 assert 2 == IsEven
 assert 3 != IsEven
