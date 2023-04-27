@@ -32,8 +32,6 @@ more declarative and therefore easier to read and write.
 *dirty-equals* can be used in whatever context you like, but it comes into its own when writing unit tests for
 applications where you're commonly checking the response to API calls and the contents of a database.
 
-(testing changes)
-
 ## Usage
 
 Here's a trivial example of what *dirty-equals* can do:
