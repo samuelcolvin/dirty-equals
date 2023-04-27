@@ -109,7 +109,7 @@ jobs:
 
   publish_docs:
     needs: [check]
-#    if: "success() && github.ref == 'refs/heads/main'"
+#    if: "success() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')("
     runs-on: ubuntu-latest
 
     steps:
@@ -124,19 +124,15 @@ jobs:
         run: pip install -r requirements/docs.txt
 
       - name: install mkdocs-material-insiders
-#        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs-material/mkdocs_material-8.2.8+insiders.4.12.0-py3-none-any.whl
         env:
           MKDOCS_TOKEN: ${{ secrets.mkdocs_token }}
-
-      - name: install
-        # waiting for https://github.com/jimporter/mike/issues/154
-        run: pip install git+https://github.com/jimporter/mike.git
 
       - name: Set git credentials
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git pull origin docs-site
 
       - run: mike deploy -b docs-site dev --push
 #        if: github.ref == 'refs/heads/main'
