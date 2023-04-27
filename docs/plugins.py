@@ -15,23 +15,7 @@ logger = logging.getLogger('mkdocs.test_examples')
 
 
 def on_pre_build(config: Config):
-    test_examples()
-
-
-def test_examples():
-    """
-    Run the examples tests.
-    """
-    try:
-        run_pytest = getattr('pytest', 'main')
-    except AttributeError:
-        logger.info('pytest not installed, skipping examples tests')
-    else:
-        logger.info('running examples tests...')
-        return_code = run_pytest(['-q', '-p', 'no:sugar', 'tests/test_docs.py'])
-        if return_code != 0:
-            logger.warning('examples tests failed')
-
+    pass
 
 def on_files(files: Files, config: Config) -> Files:
     return remove_files(files)
@@ -53,21 +37,13 @@ def remove_files(files: Files) -> Files:
 
 
 def on_page_markdown(markdown: str, page: Page, config: Config, files: Files) -> str:
-    markdown = reinstate_code_titles(markdown)
     return add_version(markdown, page)
 
 
-def reinstate_code_titles(markdown: str) -> str:
-    """
-    Fix titles in code blocks, see https://youtrack.jetbrains.com/issue/PY-53246.
-    """
-    return re.sub(r'^(```py)\s*\ntitle=', r'\1 title=', markdown, flags=re.M)
-
-
 def add_version(markdown: str, page: Page) -> str:
-    if page.abs_url == '/':
+    if page.file.src_uri == 'index.md':
         version_ref = os.getenv('GITHUB_REF')
-        if version_ref:
+        if version_ref and version_ref.startswith('refs/tags/'):
             version = re.sub('^refs/tags/', '', version_ref.lower())
             version_str = f'Documentation for version: **{version}**'
         else:

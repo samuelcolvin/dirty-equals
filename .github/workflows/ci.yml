@@ -82,7 +82,7 @@ jobs:
 
     - name: install mkdocs-material-insiders
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-      run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs-material/mkdocs_material-8.2.8+insiders.4.12.0-py3-none-any.whl
+      run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs-material/mkdocs_material-9.1.5+insiders.4.32.4-py3-none-any.whl
       env:
         MKDOCS_TOKEN: ${{ secrets.mkdocs_token }}
 
@@ -107,9 +107,9 @@ jobs:
         with:
           jobs: ${{ toJSON(needs) }}
 
-  deploy:
+  publish_docs:
     needs: [check]
-    if: "success() && startsWith(github.ref, 'refs/tags/')"
+    if: "success() && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))"
     runs-on: ubuntu-latest
 
     steps:
@@ -120,35 +120,62 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: get docs
-        uses: actions/download-artifact@v3
+      - name: install
+        run: pip install -r requirements/docs.txt
+
+      - name: install mkdocs-material-insiders
+        run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs-material/mkdocs_material-9.1.5+insiders.4.32.4-py3-none-any.whl
+        env:
+          MKDOCS_TOKEN: ${{ secrets.mkdocs_token }}
+
+      - name: Set git credentials
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global pull.rebase true
+          git pull origin docs-site
+
+      - run: mike deploy -b docs-site dev --push
+        if: github.ref == 'refs/heads/main'
+
+      - name: check version
+        if: "startsWith(github.ref, 'refs/tags/')"
+        id: check-version
+        uses: samuelcolvin/check-python-version@v3.2
         with:
-          name: docs
-          path: site
+          version_file_path: 'dirty_equals/version.py'
+
+      - run: mike deploy -b docs-site ${{ steps.check-version.outputs.VERSION_MAJOR_MINOR }} --push
+        if: "startsWith(github.ref, 'refs/tags/') && !fromJSON(steps.check-version.outputs.IS_PRERELEASE)"
+
+  deploy:
+    needs: [check]
+    if: "success() && startsWith(github.ref, 'refs/tags/')"
+    runs-on: ubuntu-latest
+    environment: release
+
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
       - name: install
-        run: pip install -U twine build packaging
+        run: pip install -U build
 
       - name: check version
         id: check-version
-        run: python <(curl -Ls https://gist.githubusercontent.com/samuelcolvin/4e1ad439c5489e8d6478cdee3eb952ef/raw/check_version.py)
-        env:
-          VERSION_PATH: 'dirty_equals/version.py'
+        uses: samuelcolvin/check-python-version@v3.2
+        with:
+          version_file_path: 'dirty_equals/version.py'
 
       - name: build
         run: python -m build
 
-      - run: twine check dist/*
-
-      - name: upload to pypi
-        run: twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.pypi_token }}
-
-      - name: publish docs
-        uses: JamesIves/github-pages-deploy-action@v4
-        if: '!fromJSON(steps.check-version.outputs.IS_PRERELEASE)'
-        with:
-          branch: gh-pages
-          folder: site
+      - name: Upload package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
