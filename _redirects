@@ -1,12 +1,12 @@
-/ /latest/
-/internals/ /latest/internals/
-/usage/ /latest/usage/
-/types/boolean/ /latest/types/boolean/
-/types/custom/ /latest/types/custom/
-/types/datetime/ /latest/types/datetime/
-/types/dict/ /latest/types/dict/
-/types/inspection/ /latest/types/inspection/
-/types/numeric/ /latest/types/numeric/
-/types/other/ /latest/types/other/
-/types/sequence/ /latest/types/sequence/
-/types/string/ /latest/types/string/
+/ /latest/ 301
+/internals/ /latest/internals/ 301
+/usage/ /latest/usage/ 301
+/types/boolean/ /latest/types/boolean/ 301
+/types/custom/ /latest/types/custom/ 301
+/types/datetime/ /latest/types/datetime/ 301
+/types/dict/ /latest/types/dict/ 301
+/types/inspection/ /latest/types/inspection/ 301
+/types/numeric/ /latest/types/numeric/ 301
+/types/other/ /latest/types/other/ 301
+/types/sequence/ /latest/types/sequence/ 301
+/types/string/ /latest/types/string/ 301
