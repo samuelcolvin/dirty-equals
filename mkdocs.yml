@@ -1,6 +1,6 @@
 site_name: dirty-equals
 site_description: Doing dirty (but extremely useful) things with equals.
-site_url: https://dirty-equals.helpmanual.io
+site_url: https://dirty-equals.helpmanual.io/latest/
 
 theme:
   name: material
