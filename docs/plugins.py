@@ -53,19 +53,11 @@ def remove_files(files: Files) -> Files:
 
 
 def on_page_markdown(markdown: str, page: Page, config: Config, files: Files) -> str:
-    markdown = reinstate_code_titles(markdown)
     return add_version(markdown, page)
 
 
-def reinstate_code_titles(markdown: str) -> str:
-    """
-    Fix titles in code blocks, see https://youtrack.jetbrains.com/issue/PY-53246.
-    """
-    return re.sub(r'^(```py)\s*\ntitle=', r'\1 title=', markdown, flags=re.M)
-
-
 def add_version(markdown: str, page: Page) -> str:
-    if page.abs_url == '/':
+    if page.abs_url == '/latest/':
         version_ref = os.getenv('GITHUB_REF')
         if version_ref:
             version = re.sub('^refs/tags/', '', version_ref.lower())

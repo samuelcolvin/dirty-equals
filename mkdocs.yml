@@ -78,6 +78,9 @@ watch:
   - dirty_equals
 
 plugins:
+  - mike:
+      alias_type: symlink
+      canonical_version: latest
   - search
   - mkdocstrings:
       handlers:
