@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/img/logo-text.svg" alt="dirty-equals">
+  <img src="./img/logo-text.svg" alt="dirty-equals">
 </p>
 <p align="center">
   <em>Doing dirty (but extremely useful) things with equals.</em>
