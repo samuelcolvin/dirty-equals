@@ -128,7 +128,7 @@ jobs:
         run: pip install git+https://github.com/jimporter/mike.git
 
       - run: mike deploy -b docs-site dev --push
-        if: github.ref == 'refs/heads/main'
+#        if: github.ref == 'refs/heads/main'
 
   deploy:
     needs: [check]
