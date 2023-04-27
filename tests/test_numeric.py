@@ -24,9 +24,11 @@ from dirty_equals import (
     [
         (1, IsInt),
         (1, IsInt()),
+        (1, IsInt(exactly=1)),
         (1, IsPositiveInt),
         (-1, IsNegativeInt),
         (-1.0, IsFloat),
+        (-1.0, IsFloat(exactly=-1.0)),
         (1.0, IsPositiveFloat),
         (-1.0, IsNegativeFloat),
         (1, IsPositive),
@@ -72,6 +74,7 @@ def test_dirty_equals(other, dirty):
     [
         (1.0, IsInt),
         (1.2, IsInt),
+        (1, IsInt(exactly=2)),
         (True, IsInt),
         (False, IsInt),
         (1.0, IsInt()),
@@ -80,6 +83,8 @@ def test_dirty_equals(other, dirty):
         (1, IsNegativeInt),
         (0, IsNegativeInt),
         (1, IsFloat),
+        (1, IsFloat(exactly=1.0)),
+        (1.1234, IsFloat(exactly=1.0)),
         (-1.0, IsPositiveFloat),
         (0.0, IsPositiveFloat),
         (1.0, IsNegativeFloat),
@@ -105,14 +110,25 @@ def test_dirty_equals(other, dirty):
         (-float('-inf'), IsFloatInfNeg),
         (-float('-inf'), IsFloatInfNeg),
     ],
+    ids=repr,
 )
 def test_dirty_not_equals(other, dirty):
     assert other != dirty
 
 
-def test_invalid():
+def test_invalid_approx_gt():
     with pytest.raises(TypeError, match='"approx" cannot be combined with "gt", "lt", "ge", or "le"'):
         IsInt(approx=1, gt=1)
+
+
+def test_invalid_exactly_approx():
+    with pytest.raises(TypeError, match='"exactly" cannot be combined with "approx"'):
+        IsInt(exactly=1, approx=1)
+
+
+def test_invalid_exactly_gt():
+    with pytest.raises(TypeError, match='"exactly" cannot be combined with "gt", "lt", "ge", or "le"'):
+        IsInt(exactly=1, gt=1)
 
 
 def test_not_int():
