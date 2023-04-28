@@ -375,7 +375,26 @@ class IsIP(DirtyEquals[IP]):
 
 class IsDataclassType(DirtyEquals[Any]):
     """
-    A class that checks if an object is a dataclass type.
+    Checks that an object is a dataclass type.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals].
+
+    ```py title="IsDataclassType"
+    from dataclasses import dataclass
+    from dirty_equals import IsDataclassType
+
+    @dataclass
+    class Foo:
+        a: int
+        b: int
+
+    foo = Foo(1, 2)
+
+    assert Foo == IsDataclassType
+    assert Foo == IsDataclassType()
+    assert foo != IsDataclassType
+    assert foo != IsDataclassType()
+    ```
     """
 
     def equals(self, other: Any) -> bool:
@@ -384,35 +403,76 @@ class IsDataclassType(DirtyEquals[Any]):
 
 class IsDataclass(DirtyEquals[Any]):
     """
-    A class that checks if an object is an instance of a dataclass.
+    Checks that an object is an instance of a dataclass.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
+    check exactness of instance attributes by comparing the instance `__dict__`  with [`IsDict`][dirty_equals.IsDict].
+
+    ```py title="IsDataclass"
+    from dataclasses import dataclass
+    from dirty_equals import IsDataclass, IsInt
+
+    @dataclass
+    class Foo:
+        a: int
+        b: int
+
+    foo = Foo(1, 2)
+
+    assert foo == IsDataclass
+    assert foo == IsDataclass()
+    assert foo == IsDataclass(a=1, b=2)
+    assert foo == IsDataclass(a=IsInt, b=2)
+    assert foo != IsDataclass(a=1)
+    assert Foo != IsDataclass
+    ```
     """
 
     def __init__(self, **kwargs: Any):
         super().__init__(**kwargs)
 
     def equals(self, other: Any) -> bool:
-        if self._repr_kwargs:
-            return is_dataclass(other) and not isinstance(other, type) and self.attrs_checks(other)
-        else:
-            return is_dataclass(other) and not isinstance(other, type)
+        valid_attrs = self.attrs_checks(other) if self._repr_kwargs else True
+        return is_dataclass(other) and not isinstance(other, type) and valid_attrs
 
     def attrs_checks(self, other: Any) -> bool:
+        """Checks exactness of attributes using [`IsDict`][dirty_equals.IsDict]."""
         return other.__dict__ == IsDict(self._repr_kwargs)
 
 
 class IsPartialDataclass(DirtyEquals[Any]):
     """
-    A class that checks if an object is an instance of a dataclass.
+    Checks that an object is an instance of a dataclass.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
+    check partial exactness of instance attributes by comparing the instance `__dict__`  with
+    [`IsPartialDict`][dirty_equals.IsPartialDict].
+
+    ```py title="IsPartialDataclass"
+    from dataclasses import dataclass
+    from dirty_equals import IsPartialDataclass, IsInt
+
+    @dataclass
+    class Foo:
+        a: int
+        b: int
+
+    foo = Foo(1, 2)
+
+    assert foo == IsPartialDataclass
+    assert foo == IsPartialDataclass()
+    assert foo == IsPartialDataclass(a=1)
+    assert foo == IsPartialDataclass(a=IsInt)
+    assert not (Foo == IsPartialDataclass)
     """
 
     def __init__(self, **kwargs: Any):
         super().__init__(**kwargs)
 
     def equals(self, other: Any) -> bool:
-        if self._repr_kwargs:
-            return is_dataclass(other) and not isinstance(other, type) and self.attrs_checks(other)
-        else:
-            return is_dataclass(other) and not isinstance(other, type)
+        valid_attrs = self.attrs_checks(other) if self._repr_kwargs else True
+        return is_dataclass(other) and not isinstance(other, type) and valid_attrs
 
     def attrs_checks(self, other: Any) -> bool:
+        """Checks partial exactness of attributes using [`IsPartialDict`][dirty_equals.IsPartialDict]."""
         return other.__dict__ == IsPartialDict(self._repr_kwargs)

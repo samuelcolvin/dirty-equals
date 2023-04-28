@@ -22,7 +22,7 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
+from ._other import FunctionCheck, IsDataclass, IsDataclassType, IsHash, IsIP, IsJson, IsPartialDataclass, IsUrl, IsUUID
 from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
 from .version import VERSION
@@ -35,6 +35,10 @@ __all__ = (
     # boolean
     'IsTrueLike',
     'IsFalseLike',
+    # dataclass
+    'IsDataclass',
+    'IsDataclassType',
+    'IsPartialDataclass',
     # datetime
     'IsDatetime',
     'IsNow',
