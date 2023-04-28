@@ -1,10 +1,12 @@
 import json
 import re
+from dataclasses import is_dataclass
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
 from typing import Any, Callable, Optional, Set, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
+from ._dict import IsDict, IsPartialDict
 from ._utils import Omit, plain_repr
 
 try:
@@ -369,3 +371,48 @@ class IsIP(DirtyEquals[IP]):
                 return False
 
         return True
+
+
+class IsDataclassType(DirtyEquals[Any]):
+    """
+    A class that checks if an object is a dataclass type.
+    """
+
+    def equals(self, other: Any) -> bool:
+        return is_dataclass(other) and isinstance(other, type)
+
+
+class IsDataclass(DirtyEquals[Any]):
+    """
+    A class that checks if an object is an instance of a dataclass.
+    """
+
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+
+    def equals(self, other: Any) -> bool:
+        if self._repr_kwargs:
+            return is_dataclass(other) and not isinstance(other, type) and self.attrs_checks(other)
+        else:
+            return is_dataclass(other) and not isinstance(other, type)
+
+    def attrs_checks(self, other: Any) -> bool:
+        return other.__dict__ == IsDict(self._repr_kwargs)
+
+
+class IsPartialDataclass(DirtyEquals[Any]):
+    """
+    A class that checks if an object is an instance of a dataclass.
+    """
+
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+
+    def equals(self, other: Any) -> bool:
+        if self._repr_kwargs:
+            return is_dataclass(other) and not isinstance(other, type) and self.attrs_checks(other)
+        else:
+            return is_dataclass(other) and not isinstance(other, type)
+
+    def attrs_checks(self, other: Any) -> bool:
+        return other.__dict__ == IsPartialDict(self._repr_kwargs)
