@@ -1,10 +1,32 @@
 import uuid
+from dataclasses import dataclass
 from hashlib import md5, sha1, sha256
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
+from dirty_equals import (
+    FunctionCheck,
+    IsDataclass,
+    IsDataclassType,
+    IsHash,
+    IsInt,
+    IsIP,
+    IsJson,
+    IsPartialDataclass,
+    IsStr,
+    IsUrl,
+    IsUUID,
+)
+
+
+@dataclass
+class Foo:
+    a: int
+    b: int
+
+
+foo = Foo(1, 2)
 
 
 @pytest.mark.parametrize(
@@ -280,3 +302,69 @@ def test_is_url_too_many_url_types():
         match='You can only check against one Pydantic url type at a time',
     ):
         assert 'https://example.com' == IsUrl(any_url=True, http_url=True, postgres_dsn=True)
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (Foo, IsDataclassType),
+        (Foo, IsDataclassType()),
+    ],
+)
+def test_is_dataclass_type_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsDataclassType),
+        (foo, IsDataclassType()),
+        (Foo, IsDataclass),
+    ],
+)
+def test_is_dataclass_type_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [(foo, IsDataclass), (foo, IsDataclass()), (foo, IsDataclass(a=1, b=2)), (foo, IsDataclass(a=IsInt, b=2))],
+)
+def test_is_dataclass_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsDataclassType),
+        (foo, IsDataclass(a=1)),
+    ],
+)
+def test_is_dataclass_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsPartialDataclass),
+        (foo, IsPartialDataclass()),
+        (foo, IsPartialDataclass(a=1)),
+        (foo, IsPartialDataclass(a=IsInt)),
+    ],
+)
+def test_is_partial_dataclass_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsPartialDataclass(a=IsStr)),
+        (foo, IsPartialDataclass(a=2)),
+    ],
+)
+def test_is_partial_dataclass_false(other, dirty):
+    assert other != dirty
