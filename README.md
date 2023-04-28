@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://dirty-equals.helpmanual.io">
-    <img src="https://dirty-equals.helpmanual.io/img/logo-text.svg" alt="dirty-equals">
+    <img src="https://dirty-equals.helpmanual.io/latest/img/logo-text.svg" alt="dirty-equals">
   </a>
 </p>
 <p align="center">
