@@ -391,9 +391,7 @@ class IsDataclassType(DirtyEquals[Any]):
     foo = Foo(1, 2)
 
     assert Foo == IsDataclassType
-    assert Foo == IsDataclassType()
     assert foo != IsDataclassType
-    assert foo != IsDataclassType()
     ```
     """
 
@@ -420,7 +418,6 @@ class IsDataclass(DirtyEquals[Any]):
     foo = Foo(1, 2)
 
     assert foo == IsDataclass
-    assert foo == IsDataclass()
     assert foo == IsDataclass(a=1, b=2)
     assert foo == IsDataclass(a=IsInt, b=2)
     assert foo != IsDataclass(a=1)
@@ -462,10 +459,9 @@ class IsPartialDataclass(DirtyEquals[Any]):
     foo = Foo(1, 2)
 
     assert foo == IsPartialDataclass
-    assert foo == IsPartialDataclass()
     assert foo == IsPartialDataclass(a=1)
     assert foo == IsPartialDataclass(a=IsInt)
-    assert not (Foo == IsPartialDataclass)
+    assert Foo != IsPartialDataclass
     """
 
     def __init__(self, **repr_kwargs: Any):
