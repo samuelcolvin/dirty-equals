@@ -16,5 +16,6 @@ yarn-debug.log*
 yarn-error.log*
 /TODO.md
 /.mypy_cache/
+/.ruff_cache/
 /scratch/
 /site/
