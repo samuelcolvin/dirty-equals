@@ -428,10 +428,12 @@ class IsDataclass(DirtyEquals[Any]):
     ```
     """
 
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
+    def __init__(self, **repr_kwargs: Any):
+        """key-value pairs are used to check exactness of instance attributes."""
+        super().__init__(**repr_kwargs)
 
     def equals(self, other: Any) -> bool:
+        """Checks attributes only if any keyword argument is passed during initialization."""
         valid_attrs = self.attrs_checks(other) if self._repr_kwargs else True
         return is_dataclass(other) and not isinstance(other, type) and valid_attrs
 
@@ -466,10 +468,12 @@ class IsPartialDataclass(DirtyEquals[Any]):
     assert not (Foo == IsPartialDataclass)
     """
 
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
+    def __init__(self, **repr_kwargs: Any):
+        """key-value pairs are used to check partial exactness of instance attributes."""
+        super().__init__(**repr_kwargs)
 
     def equals(self, other: Any) -> bool:
+        """Checks attributes only if any keyword argument is passed during initialization."""
         valid_attrs = self.attrs_checks(other) if self._repr_kwargs else True
         return is_dataclass(other) and not isinstance(other, type) and valid_attrs
 
