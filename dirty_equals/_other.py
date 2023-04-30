@@ -1,10 +1,12 @@
 import json
 import re
+from enum import Enum
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, Optional, Set, TypeVar, Union, overload
+from typing import Any, Callable, Optional, Set, Type, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
+from ._dict import IsPartialDict, IsStrictDict
 from ._utils import Omit, plain_repr
 
 try:
@@ -369,3 +371,125 @@ class IsIP(DirtyEquals[IP]):
                 return False
 
         return True
+
+
+class IsEnum(DirtyEquals[Enum]):
+    """
+    Checks if an instance is an Enum.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals].
+
+    ```py title="IsEnum"
+    from enum import Enum, auto
+    from dirty_equals import IsEnum
+
+    class ExampleEnum(Enum):
+        a = auto()
+        b = auto()
+
+    a = ExampleEnum.a
+
+    assert a == IsEnum
+    assert a == IsEnum(ExampleEnum)
+    ```
+    """
+
+    def __init__(self, enum_cls: Type[Enum] = Enum):
+        """
+        Args:
+            enum_cls: Enum class to check against.
+        """
+        self._enum_cls = enum_cls
+
+    def equals(self, other: Any) -> bool:
+        return isinstance(other, self._enum_cls)
+
+
+class IsEnumType(DirtyEquals[Enum]):
+    """
+    Checks if a class definition is subclass of Enum.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
+    check exactness of enum members by comparing with `other.__members__` using
+    [`IsStrictDict`][dirty_equals.IsStrictDict].
+
+    ```py title="IsEnumType"
+    from enum import Enum, auto
+    from dirty_equals import IsEnumType
+
+    class ExampleEnum(Enum):
+        a = auto()
+        b = auto()
+
+    assert ExampleEnum == IsEnumType
+    assert ExampleEnum == IsEnumType(a=1, b=2)
+    assert ExampleEnum != IsEnumType(a=1)
+    assert ExampleEnum.a != IsEnumType
+    ```
+    """
+
+    def __init__(self, **repr_kwargs: Any):
+        """
+        Args:
+            **repr_kwargs: Keyword arguments to check against.
+        """
+        super().__init__(**repr_kwargs)
+
+    def equals(self, other: Any) -> bool:
+        valid_members = self.members_check(other) if self._repr_kwargs else True
+        return issubclass(other, Enum) and valid_members
+
+    def members_check(self, other: Any) -> bool:
+        """
+        Checks that `other` has the same members as the ones specified in the constructor.
+        """
+        try:
+            members = {i.name: i.value for i in other}
+            return members == IsStrictDict(self._repr_kwargs)
+        except AttributeError:
+            return False
+
+
+class IsPartialEnumType(DirtyEquals[Enum]):
+    """
+    Checks if a class definition is subclass of Enum.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
+    check partial exactness of enum members by comparing with `other.__members__` using
+    [`IsSPartialDict`][dirty_equals.IsPartialDict].
+
+    ```py title="IsEnumType"
+    from enum import Enum, auto
+    from dirty_equals import IsPartialEnumType
+
+    class ExampleEnum(Enum):
+        a = auto()
+        b = auto()
+
+    assert ExampleEnum == IsPartialEnumType
+    assert ExampleEnum == IsPartialEnumType(a=1, b=2)
+    assert ExampleEnum == IsPartialEnumType(a=1)
+    assert ExampleEnum.a != IsPartialEnumType
+    ```
+    """
+
+    def __init__(self, **repr_kwargs: Any):
+        """
+        Args:
+            **repr_kwargs: Keyword arguments to check against.
+        """
+        super().__init__(**repr_kwargs)
+
+    def equals(self, other: Any) -> bool:
+        valid_members = self.members_check(other) if self._repr_kwargs else True
+        return issubclass(other, Enum) and valid_members
+
+    def members_check(self, other: Any) -> bool:
+        """
+        Checks that `other` has the same members as the ones specified in the constructor.
+        """
+        try:
+            members = {i.name: i.value for i in other}
+            return members == IsPartialDict(self._repr_kwargs)
+        except AttributeError:
+            return False
