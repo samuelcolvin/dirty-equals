@@ -528,8 +528,14 @@ class IsStrictDataclass(IsDataclass):
     foo = Foo(1, 2, 'c')
 
     assert foo == IsStrictDataclass
-    assert foo == IsStrictDataclass(a=IsInt, b=2,).settings(partial=True)
-    assert foo != IsStrictDataclass(a=IsInt, b=2,).settings(partial=False)
+    assert foo == IsStrictDataclass(
+        a=IsInt,
+        b=2,
+    ).settings(partial=True)
+    assert foo != IsStrictDataclass(
+        a=IsInt,
+        b=2,
+    ).settings(partial=False)
     assert foo != IsStrictDataclass(b=2, a=IsInt, c='c')
     ```
     """
