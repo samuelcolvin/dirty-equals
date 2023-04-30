@@ -5,7 +5,19 @@ from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsEnum, IsEnumType, IsHash, IsIP, IsJson, IsPartialEnumType, IsUrl, IsUUID
+from dirty_equals import (
+    FunctionCheck,
+    IsEnum,
+    IsEnumType,
+    IsHash,
+    IsInt,
+    IsIP,
+    IsJson,
+    IsPartialEnumType,
+    IsStr,
+    IsUrl,
+    IsUUID,
+)
 
 
 class ExampleEnum(Enum):
@@ -320,6 +332,7 @@ def test_is_enum_false(other, dirty):
     [
         (ExampleEnum, IsEnumType),
         (ExampleEnum, IsEnumType(a=1, b=2, c='c')),
+        (ExampleEnum, IsEnumType(a=IsInt, b=IsInt, c=IsStr)),
     ],
 )
 def test_is_enum_type_true(other, dirty):
@@ -344,6 +357,7 @@ def test_is_enum_type_false(other, dirty):
         (ExampleEnum, IsPartialEnumType),
         (ExampleEnum, IsPartialEnumType(a=1, b=2, c='c')),
         (ExampleEnum, IsPartialEnumType(a=1, b=2)),
+        (ExampleEnum, IsPartialEnumType(a=IsInt, c=IsStr)),
     ],
 )
 def test_is_partial_enum_type_true(other, dirty):
