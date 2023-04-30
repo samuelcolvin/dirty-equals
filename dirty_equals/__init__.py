@@ -22,7 +22,18 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import FunctionCheck, IsDataclass, IsDataclassType, IsHash, IsIP, IsJson, IsPartialDataclass, IsUrl, IsUUID
+from ._other import (
+    FunctionCheck,
+    IsDataclass,
+    IsDataclassType,
+    IsHash,
+    IsIP,
+    IsJson,
+    IsPartialDataclass,
+    IsStrictDataclass,
+    IsUrl,
+    IsUUID,
+)
 from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
 from .version import VERSION
@@ -39,6 +50,7 @@ __all__ = (
     'IsDataclass',
     'IsDataclassType',
     'IsPartialDataclass',
+    'IsStrictDataclass',
     # datetime
     'IsDatetime',
     'IsNow',

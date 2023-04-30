@@ -18,8 +18,10 @@
 
 ::: dirty_equals.IsIP
 
+::: dirty_equals.IsDataclassType
+
 ::: dirty_equals.IsDataclass
 
 ::: dirty_equals.IsPartialDataclass
 
-::: dirty_equals.IsDataclassType
+::: dirty_equals.IsStrictDataclass
