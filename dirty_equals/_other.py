@@ -6,7 +6,7 @@ from typing import Any, Callable, Optional, Set, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
-from ._dict import IsDict, IsPartialDict
+from ._dict import IsPartialDict, IsStrictDict
 from ._utils import Omit, plain_repr
 
 try:
@@ -404,7 +404,8 @@ class IsDataclass(DirtyEquals[Any]):
     Checks that an object is an instance of a dataclass.
 
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
-    check exactness of instance attributes by comparing the instance `__dict__`  with [`IsDict`][dirty_equals.IsDict].
+    check exactness of instance attributes by comparing the instance `__dict__`  with
+    [`IsStrictDict`][dirty_equals.IsStrictDict].
 
     ```py title="IsDataclass"
     from dataclasses import dataclass
@@ -436,7 +437,7 @@ class IsDataclass(DirtyEquals[Any]):
 
     def attrs_checks(self, other: Any) -> bool:
         """Checks exactness of attributes using [`IsDict`][dirty_equals.IsDict]."""
-        return other.__dict__ == IsDict(self._repr_kwargs)
+        return other.__dict__ == IsStrictDict(self._repr_kwargs)
 
 
 class IsPartialDataclass(DirtyEquals[Any]):
