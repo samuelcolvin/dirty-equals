@@ -415,7 +415,7 @@ class IsDataclass(DirtyEquals[Any]):
 
     ```py title="IsDataclass"
     from dataclasses import dataclass
-    from dirty_equals import IsDataclass, IsInt
+    from dirty_equals import IsInt, IsDataclass
 
     @dataclass
     class Foo:
@@ -489,7 +489,7 @@ class IsPartialDataclass(IsDataclass):
 
     ```py title="IsPartialDataclass"
     from dataclasses import dataclass
-    from dirty_equals import IsPartialDataclass, IsInt
+    from dirty_equals import IsInt, IsPartialDataclass
 
     @dataclass
     class Foo:
@@ -502,7 +502,7 @@ class IsPartialDataclass(IsDataclass):
     assert foo == IsPartialDataclass
     assert foo == IsPartialDataclass(a=1)
     assert foo == IsPartialDataclass(b=2, a=IsInt)
-    assert foo == IsPartialDataclass(b=2, a=IsInt).settings(strict=True)
+    assert foo != IsPartialDataclass(b=2, a=IsInt).settings(strict=True)
     assert Foo != IsPartialDataclass
     ```
     """
@@ -517,7 +517,7 @@ class IsStrictDataclass(IsDataclass):
 
     ```py title="IsStrictDataclass"
     from dataclasses import dataclass
-    from dirty_equals import IsStrictDataclass, IsInt
+    from dirty_equals import IsInt, IsStrictDataclass
 
     @dataclass
     class Foo:
@@ -525,7 +525,7 @@ class IsStrictDataclass(IsDataclass):
         b: int
         c: str = 'c'
 
-    foo = Foo(a=1, b=2)
+    foo = Foo(1, 2, 'c')
 
     assert foo == IsStrictDataclass
     assert foo == IsStrictDataclass(a=IsInt, b=2,).settings(partial=True)
