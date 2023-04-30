@@ -1,10 +1,17 @@
 import uuid
+from enum import Enum, auto
 from hashlib import md5, sha1, sha256
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
+from dirty_equals import FunctionCheck, IsEnum, IsEnumType, IsHash, IsIP, IsJson, IsPartialEnumType, IsUrl, IsUUID
+
+
+class ExampleEnum(Enum):
+    a = auto()
+    b = auto()
+    c = 'c'
 
 
 @pytest.mark.parametrize(
@@ -280,3 +287,74 @@ def test_is_url_too_many_url_types():
         match='You can only check against one Pydantic url type at a time',
     ):
         assert 'https://example.com' == IsUrl(any_url=True, http_url=True, postgres_dsn=True)
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (ExampleEnum.a, IsEnum),
+        (ExampleEnum.a, IsEnum(ExampleEnum)),
+        (ExampleEnum.c, IsEnum),
+        (ExampleEnum.c, IsEnum(ExampleEnum)),
+    ],
+)
+def test_is_enum_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (ExampleEnum, IsEnum),
+        (ExampleEnum, IsEnum(ExampleEnum)),
+        (ExampleEnum.a, IsEnumType),
+        (ExampleEnum.c, IsEnumType),
+    ],
+)
+def test_is_enum_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (ExampleEnum, IsEnumType),
+        (ExampleEnum, IsEnumType(a=1, b=2, c='c')),
+    ],
+)
+def test_is_enum_type_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (ExampleEnum, IsEnum),
+        (ExampleEnum, IsEnumType(a=1, b=2)),
+        (ExampleEnum.a, IsEnumType),
+    ],
+)
+def test_is_enum_type_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (ExampleEnum, IsPartialEnumType),
+        (ExampleEnum, IsPartialEnumType(a=1, b=2, c='c')),
+        (ExampleEnum, IsPartialEnumType(a=1, b=2)),
+    ],
+)
+def test_is_partial_enum_type_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (ExampleEnum.a, IsPartialEnumType),
+    ],
+)
+def test_is_partial_enum_type_false(other, dirty):
+    assert other != dirty
