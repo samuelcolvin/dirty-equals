@@ -17,3 +17,9 @@
 ::: dirty_equals.IsHash
 
 ::: dirty_equals.IsIP
+
+::: dirty_equals.IsEnum
+
+::: dirty_equals.IsEnumType
+
+::: dirty_equals.IsPartialEnumType
