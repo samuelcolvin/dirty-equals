@@ -368,6 +368,9 @@ def test_is_partial_enum_type_true(other, dirty):
     'other,dirty',
     [
         (ExampleEnum.a, IsPartialEnumType),
+        (ExampleEnum, IsPartialEnumType(a=IsStr)),
+        (ExampleEnum, IsPartialEnumType(c=IsInt)),
+        (ExampleEnum, IsPartialEnumType(d=3)),
     ],
 )
 def test_is_partial_enum_type_false(other, dirty):
