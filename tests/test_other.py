@@ -24,9 +24,10 @@ from dirty_equals import (
 class Foo:
     a: int
     b: int
+    c: str
 
 
-foo = Foo(1, 2)
+foo = Foo(1, 2, 'c')
 
 
 @pytest.mark.parametrize(
@@ -329,7 +330,13 @@ def test_is_dataclass_type_false(other, dirty):
 
 @pytest.mark.parametrize(
     'other,dirty',
-    [(foo, IsDataclass), (foo, IsDataclass()), (foo, IsDataclass(a=1, b=2)), (foo, IsDataclass(a=IsInt, b=2))],
+    [
+        (foo, IsDataclass),
+        (foo, IsDataclass()),
+        (foo, IsDataclass(a=1, b=2, c='c')),
+        (foo, IsDataclass(b=2, c='c', a=1, strict=False)),
+        (foo, IsDataclass(a=IsInt, b=2, c=IsStr)),
+    ],
 )
 def test_is_dataclass_true(other, dirty):
     assert other == dirty
@@ -340,6 +347,8 @@ def test_is_dataclass_true(other, dirty):
     [
         (foo, IsDataclassType),
         (foo, IsDataclass(a=1)),
+        (foo, IsDataclass(a=IsStr, b=IsInt, c=IsStr)),
+        (foo, IsDataclass(b=2, a=1, c='c', strict=True)),
     ],
 )
 def test_is_dataclass_false(other, dirty):
@@ -351,8 +360,8 @@ def test_is_dataclass_false(other, dirty):
     [
         (foo, IsPartialDataclass),
         (foo, IsPartialDataclass()),
-        (foo, IsPartialDataclass(a=1)),
-        (foo, IsPartialDataclass(a=IsInt)),
+        (foo, IsPartialDataclass(a=1, b=2)),
+        (foo, IsPartialDataclass(c=IsStr, a=IsInt, strict=False)),
     ],
 )
 def test_is_partial_dataclass_true(other, dirty):
@@ -363,7 +372,7 @@ def test_is_partial_dataclass_true(other, dirty):
     'other,dirty',
     [
         (foo, IsPartialDataclass(a=IsStr)),
-        (foo, IsPartialDataclass(a=2)),
+        (foo, IsPartialDataclass(c='c', a=1, b=2, strict=True)),
     ],
 )
 def test_is_partial_dataclass_false(other, dirty):

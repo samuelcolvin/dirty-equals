@@ -1,12 +1,12 @@
 import json
 import re
-from dataclasses import is_dataclass
+from dataclasses import asdict, is_dataclass
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
 from typing import Any, Callable, Optional, Set, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
-from ._dict import IsPartialDict, IsStrictDict
+from ._dict import IsDict
 from ._utils import Omit, plain_repr
 
 try:
@@ -404,8 +404,11 @@ class IsDataclass(DirtyEquals[Any]):
     Checks that an object is an instance of a dataclass.
 
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
-    check exactness of instance attributes by comparing the instance `__dict__`  with
-    [`IsStrictDict`][dirty_equals.IsStrictDict].
+    check exactness of instance attributes, possibly with order enforced, by comparing the instance `__dict__`  with
+    [`IsDict`][dirty_equals.IsDict].
+
+    Remark that passing no kwargs to `IsDataclass` initialization means fields are not checked, not that the dataclass
+    is empty, namely `IsDataclass()` is the same as `IsDataclass`.
 
     ```py title="IsDataclass"
     from dataclasses import dataclass
@@ -419,25 +422,43 @@ class IsDataclass(DirtyEquals[Any]):
     foo = Foo(1, 2)
 
     assert foo == IsDataclass
-    assert foo == IsDataclass(a=1, b=2)
     assert foo == IsDataclass(a=IsInt, b=2)
+    assert foo == IsDataclass(b=2, a=1, strict=False)
     assert foo != IsDataclass(a=1)
-    assert Foo != IsDataclass
+    assert foo != IsDataclass(b=2, a=1, strict=True,)
     ```
     """
 
-    def __init__(self, **repr_kwargs: Any):
-        """key-value pairs are used to check exactness of instance attributes."""
-        super().__init__(**repr_kwargs)
+    def __init__(self, strict: bool = True, **fields: Any):
+        """
+        Args:
+            strict: If `True` the instance fields are checked for exactness with order enforced.
+            fields: key-value pairs of field-value to check for.
+        """
+        self._strict = strict
+        super().__init__(**fields)
 
     def equals(self, other: Any) -> bool:
         """Checks attributes only if any keyword argument is passed during initialization."""
-        valid_attrs = self.attrs_checks(other) if self._repr_kwargs else True
-        return is_dataclass(other) and not isinstance(other, type) and valid_attrs
+        if is_dataclass(other) and not isinstance(other, type):
+            if self._repr_kwargs:
+                return self.attrs_checks(other)
+            else:
+                return True
+        else:
+            return False
 
     def attrs_checks(self, other: Any) -> bool:
-        """Checks exactness of attributes using [`IsDict`][dirty_equals.IsDict]."""
-        return other.__dict__ == IsStrictDict(self._repr_kwargs)
+        """
+        Checks exactness of attributes/fields using [`IsDict`][dirty_equals.IsDict].
+
+        Remark that:
+
+        - If `strict` is `True` we check exactness of attributes with order enforced.
+        - If this method is called, then `other` is an instance of a dataclass, therefore we can call
+            `dataclasses.asdict` to convert to a dict.
+        """
+        return asdict(other) == IsDict(self._repr_kwargs).settings(strict=self._strict)
 
 
 class IsPartialDataclass(DirtyEquals[Any]):
@@ -445,8 +466,11 @@ class IsPartialDataclass(DirtyEquals[Any]):
     Checks that an object is an instance of a dataclass.
 
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
-    check partial exactness of instance attributes by comparing the instance `__dict__`  with
-    [`IsPartialDict`][dirty_equals.IsPartialDict].
+    check partial exactness of instance attributes, possibly with order enforced, by comparing the instance `__dict__` 
+    with [`IsDict(...).settings(partial=True, ...)`][dirty_equals.IsDict] .
+
+    Remark that passing no kwargs to `IsPartialDataclass` initialization means fields are not checked, not that the
+    dataclass is empty, namely `IsPartialDataclass()` is the same as `IsPartialDataclass`.
 
     ```py title="IsPartialDataclass"
     from dataclasses import dataclass
@@ -461,19 +485,37 @@ class IsPartialDataclass(DirtyEquals[Any]):
 
     assert foo == IsPartialDataclass
     assert foo == IsPartialDataclass(a=1)
-    assert foo == IsPartialDataclass(a=IsInt)
+    assert foo == IsPartialDataclass(b=2, a=IsInt, strict=False)
     assert Foo != IsPartialDataclass
     """
 
-    def __init__(self, **repr_kwargs: Any):
-        """key-value pairs are used to check partial exactness of instance attributes."""
-        super().__init__(**repr_kwargs)
+    def __init__(self, strict: bool = True, **fields: Any):
+        """
+        Args:
+            strict: If `True` the instance fields are checked for partial exactness with order enforced.
+            fields: key-value pairs of field-value to check for.
+        """
+        self._strict = strict
+        super().__init__(**fields)
 
     def equals(self, other: Any) -> bool:
         """Checks attributes only if any keyword argument is passed during initialization."""
-        valid_attrs = self.attrs_checks(other) if self._repr_kwargs else True
-        return is_dataclass(other) and not isinstance(other, type) and valid_attrs
+        if is_dataclass(other) and not isinstance(other, type):
+            if self._repr_kwargs:
+                return self.partial_attrs_checks(other)
+            else:
+                return True
+        else:
+            return False
 
-    def attrs_checks(self, other: Any) -> bool:
-        """Checks partial exactness of attributes using [`IsPartialDict`][dirty_equals.IsPartialDict]."""
-        return other.__dict__ == IsPartialDict(self._repr_kwargs)
+    def partial_attrs_checks(self, other: Any) -> bool:
+        """
+        Checks partial exactness of attributes/fields using [`IsDict`][dirty_equals.IsDict] with `partial=True`argument.
+
+        Remark that:
+
+        - If `strict` is `True` we check partial exactness of attributes with order enforced.
+        - If this method is called, then `other` is an instance of a dataclass, therefore we can call
+            `dataclasses.asdict` to convert to a dict.
+        """
+        return asdict(other) == IsDict(self._repr_kwargs).settings(strict=self._strict, partial=True)
