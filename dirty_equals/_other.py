@@ -1,12 +1,14 @@
+from __future__ import annotations
+
 import json
 import re
 from enum import Enum
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, Optional, Set, Type, TypeVar, Union, overload
+from typing import Any, Callable, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
-from ._dict import IsPartialDict, IsStrictDict
+from ._dict import IsDict
 from ._utils import Omit, plain_repr
 
 try:
@@ -111,7 +113,7 @@ class IsJson(DirtyEquals[JsonType]):
             self.expected_value = expected_value
         super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)
 
-    def __class_getitem__(cls, expected_type: JsonType) -> 'IsJson[JsonType]':
+    def __class_getitem__(cls, expected_type: JsonType) -> IsJson[JsonType]:
         return cls(expected_type)
 
     def equals(self, other: Any) -> bool:
@@ -158,7 +160,7 @@ class IsUrl(DirtyEquals[str]):
     [Pydantic](https://pydantic-docs.helpmanual.io/usage/types/#urls).
     """
 
-    allowed_attribute_checks: Set[str] = {
+    allowed_attribute_checks: set[str] = {
         'scheme',
         'host',
         'host_type',
@@ -324,7 +326,7 @@ class IsIP(DirtyEquals[IP]):
     A class that checks if a value is a valid IP address, optionally checking IP version, netmask.
     """
 
-    def __init__(self, *, version: Literal[None, 4, 6] = None, netmask: Optional[str] = None):
+    def __init__(self, *, version: Literal[None, 4, 6] = None, netmask: str | None = None):
         """
         Args:
             version: The version of the IP to check, if omitted, versions 4 and 6 are both accepted.
@@ -394,7 +396,7 @@ class IsEnum(DirtyEquals[Enum]):
     ```
     """
 
-    def __init__(self, enum_cls: Type[Enum] = Enum):
+    def __init__(self, enum_cls: type[Enum] = Enum):
         """
         Args:
             enum_cls: Enum class to check against.
@@ -407,89 +409,131 @@ class IsEnum(DirtyEquals[Enum]):
 
 class IsEnumType(DirtyEquals[Enum]):
     """
-    Checks if a class definition is subclass of Enum.
+    Checks that a class definition is subclass of Enum.
 
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
-    check exactness of enum members by comparing with `other.__members__` using
-    [`IsStrictDict`][dirty_equals.IsStrictDict].
+    check exactness of enum members by comparing `other.__members__` with [`IsStrictDict`][dirty_equals.IsStrictDict].
+
+    Moreover it is possible to check for strictness and partialness of the enum, by setting the `strict` and
+    `partial` attributes using the `.settings(strict=..., partial=...)` method.
+
+    Remark that passing no kwargs to `IsEnumType` initialization means members are not checked, not that the class
+    is empty, namely `IsEnumType()` is the same as `IsEnumType`.
 
     ```py title="IsEnumType"
     from enum import Enum, auto
     from dirty_equals import IsEnumType
 
-    class ExampleEnum(Enum):
+    class FooEnum(Enum):
         a = auto()
         b = auto()
+        c = 'c'
 
-    assert ExampleEnum == IsEnumType
-    assert ExampleEnum == IsEnumType(a=1, b=2)
-    assert ExampleEnum != IsEnumType(a=1)
-    assert ExampleEnum.a != IsEnumType
+    assert FooEnum == IsEnumType
+    assert FooEnum == IsEnumType(a=1, b=2, c='c')
+    assert FooEnum != IsEnumType(b=2, a=1, c='c').settings(strict=True)
+    assert FooEnum != IsEnumType(a=1)
+    assert FooEnum == IsEnumType(a=1).settings(partial=True)
+    assert FooEnum == IsEnumType(c='c', b=2).settings(partial=True, strict=False)
+    assert FooEnum.a != IsEnumType
     ```
     """
 
-    def __init__(self, **repr_kwargs: Any):
+    def __init__(self, **members: Any):
         """
         Args:
-            **repr_kwargs: Keyword arguments to check against.
+            **members: key-value pairs to check against enum members.
         """
-        super().__init__(**repr_kwargs)
+        self.strict = False
+        self.partial = False
+        self._post_init()
+        super().__init__(**members)
+
+    def _post_init(self) -> None:
+        pass
 
     def equals(self, other: Any) -> bool:
-        valid_members = self.members_check(other) if self._repr_kwargs else True
-        return issubclass(other, Enum) and valid_members
-
-    def members_check(self, other: Any) -> bool:
-        """
-        Checks that `other` has the same members as the ones specified in the constructor.
-        """
-        try:
-            members = {i.name: i.value for i in other}
-            return members == IsStrictDict(self._repr_kwargs)
-        except AttributeError:
+        if issubclass(other, Enum):
+            if self._repr_kwargs:
+                return self._members_check(other)
+            else:
+                return True
+        else:
             return False
 
+    def settings(
+        self,
+        *,
+        strict: bool | None = None,
+        partial: bool | None = None,
+    ) -> IsEnumType:
+        """Allows to customise the behaviour of `IsEnumType`, technically a new `IsEnumType` to allow chaining."""
+        new_cls = self.__class__(**self._repr_kwargs)
+        new_cls.__dict__ = self.__dict__.copy()
 
-class IsPartialEnumType(DirtyEquals[Enum]):
+        if strict is not None:
+            new_cls.strict = strict
+        if partial is not None:
+            new_cls.partial = partial
+
+        return new_cls
+
+    def _members_check(self, other: Any) -> bool:
+        """
+        Checks exactness of fields using [`IsDict`][dirty_equals.IsDict] with given settings.
+
+        Remark that if this method is called, then `other` is a subclass of Enum, therefore we can iterate over it to
+        get its member names and values.
+        """
+        members = {i.name: i.value for i in other}
+        return members == IsDict(self._repr_kwargs).settings(strict=self.strict, partial=self.partial)
+
+
+class IsPartialEnumType(IsEnumType):
     """
-    Checks if a class definition is subclass of Enum.
+    Inherits from [`IsEnumType`][dirty_equals.IsEnumType] with `partial=True` by default.
 
-    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
-    check partial exactness of enum members by comparing with `other.__members__` using
-    [`IsSPartialDict`][dirty_equals.IsPartialDict].
-
-    ```py title="IsEnumType"
+    ```py title="IsPartialEnumType"
     from enum import Enum, auto
     from dirty_equals import IsPartialEnumType
 
-    class ExampleEnum(Enum):
+    class FooEnum(Enum):
         a = auto()
         b = auto()
+        c = 'c'
 
-    assert ExampleEnum == IsPartialEnumType
-    assert ExampleEnum == IsPartialEnumType(a=1, b=2)
-    assert ExampleEnum == IsPartialEnumType(a=1)
-    assert ExampleEnum.a != IsPartialEnumType
+    assert FooEnum == IsPartialEnumType
+    assert FooEnum == IsPartialEnumType(a=1, b=2)
+    assert FooEnum == IsPartialEnumType(c='c', b=2).settings(strict=False)
+    assert FooEnum != IsPartialEnumType(c='c', b=2).settings(strict=True)
+    assert FooEnum.a != IsPartialEnumType
     ```
     """
 
-    def __init__(self, **repr_kwargs: Any):
-        """
-        Args:
-            **repr_kwargs: Keyword arguments to check against.
-        """
-        super().__init__(**repr_kwargs)
+    def _post_init(self) -> None:
+        self.partial = True
 
-    def equals(self, other: Any) -> bool:
-        valid_members = self.members_check(other) if self._repr_kwargs else True
-        return issubclass(other, Enum) and valid_members
 
-    def members_check(self, other: Any) -> bool:
-        """
-        Checks that `other` has the same members as the ones specified in the constructor.
-        """
-        try:
-            members = {i.name: i.value for i in other}
-            return members == IsPartialDict(self._repr_kwargs)
-        except AttributeError:
-            return False
+class IsStrictEnumType(IsEnumType):
+    """
+    Inherits from [`IsEnumType`][dirty_equals.IsEnumType] with `strict=True` by default.
+
+    ```py title="IsStrictEnumType"
+    from enum import Enum, auto
+    from dirty_equals import IsStrictEnumType
+
+    class FooEnum(Enum):
+        a = auto()
+        b = auto()
+        c = 'c'
+
+    assert FooEnum == IsStrictEnumType
+    assert FooEnum == IsStrictEnumType(a=1, b=2, c='c')
+    assert FooEnum == IsStrictEnumType(b=2, c='c').settings(partial=True)
+    assert FooEnum != IsStrictEnumType(b=2, c='c', a=1)
+    assert FooEnum.a != IsStrictEnumType
+     ```
+    """
+
+    def _post_init(self) -> None:
+        self.strict = True

@@ -22,7 +22,18 @@ from ._numeric import (
     IsPositiveFloat,
     IsPositiveInt,
 )
-from ._other import FunctionCheck, IsEnum, IsEnumType, IsHash, IsIP, IsJson, IsPartialEnumType, IsUrl, IsUUID
+from ._other import (
+    FunctionCheck,
+    IsEnum,
+    IsEnumType,
+    IsHash,
+    IsIP,
+    IsJson,
+    IsPartialEnumType,
+    IsStrictEnumType,
+    IsUrl,
+    IsUUID,
+)
 from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
 from ._strings import IsAnyStr, IsBytes, IsStr
 from .version import VERSION
@@ -49,6 +60,7 @@ __all__ = (
     'IsEnum',
     'IsEnumType',
     'IsPartialEnumType',
+    'IsStrictEnumType',
     # sequence
     'Contains',
     'HasLen',
