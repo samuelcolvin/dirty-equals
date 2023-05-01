@@ -326,8 +326,8 @@ def test_is_enum_true(other, dirty):
 )
 def test_is_enum_false(other, dirty):
     assert other != dirty
-   
-    
+
+
 @pytest.mark.parametrize(
     'other,dirty',
     [
