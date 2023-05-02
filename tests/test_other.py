@@ -1,10 +1,34 @@
 import uuid
+from dataclasses import dataclass
 from hashlib import md5, sha1, sha256
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
 import pytest
 
-from dirty_equals import FunctionCheck, IsHash, IsIP, IsJson, IsUrl, IsUUID
+from dirty_equals import (
+    FunctionCheck,
+    IsDataclass,
+    IsDataclassType,
+    IsHash,
+    IsInt,
+    IsIP,
+    IsJson,
+    IsPartialDataclass,
+    IsStr,
+    IsStrictDataclass,
+    IsUrl,
+    IsUUID,
+)
+
+
+@dataclass
+class Foo:
+    a: int
+    b: int
+    c: str
+
+
+foo = Foo(1, 2, 'c')
 
 
 @pytest.mark.parametrize(
@@ -280,3 +304,62 @@ def test_is_url_too_many_url_types():
         match='You can only check against one Pydantic url type at a time',
     ):
         assert 'https://example.com' == IsUrl(any_url=True, http_url=True, postgres_dsn=True)
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (Foo, IsDataclassType),
+        (Foo, IsDataclassType()),
+    ],
+)
+def test_is_dataclass_type_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsDataclassType),
+        (foo, IsDataclassType()),
+        (Foo, IsDataclass),
+    ],
+)
+def test_is_dataclass_type_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsDataclass),
+        (foo, IsDataclass()),
+        (foo, IsDataclass(a=IsInt, b=2, c=IsStr)),
+        (foo, IsDataclass(a=1, c='c', b=2).settings(strict=False, partial=False)),
+        (foo, IsDataclass(a=1, b=2, c='c').settings(strict=True, partial=False)),
+        (foo, IsStrictDataclass(a=1, b=2, c='c')),
+        (foo, IsDataclass(c='c', a=1).settings(strict=False, partial=True)),
+        (foo, IsPartialDataclass(c='c', a=1)),
+        (foo, IsDataclass(b=2, c='c').settings(strict=True, partial=True)),
+        (foo, IsStrictDataclass(b=2, c='c').settings(partial=True)),
+        (foo, IsPartialDataclass(b=2, c='c').settings(strict=True)),
+    ],
+)
+def test_is_dataclass_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (foo, IsDataclassType),
+        (Foo, IsDataclass),
+        (foo, IsDataclass(a=1)),
+        (foo, IsDataclass(a=IsStr, b=IsInt, c=IsStr)),
+        (foo, IsDataclass(b=2, a=1, c='c').settings(strict=True)),
+        (foo, IsStrictDataclass(b=2, a=1, c='c')),
+        (foo, IsDataclass(b=2, a=1).settings(partial=False)),
+    ],
+)
+def test_is_dataclass_false(other, dirty):
+    assert other != dirty

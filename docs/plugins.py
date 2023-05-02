@@ -17,6 +17,7 @@ logger = logging.getLogger('mkdocs.test_examples')
 def on_pre_build(config: Config):
     pass
 
+
 def on_files(files: Files, config: Config) -> Files:
     return remove_files(files)
 
