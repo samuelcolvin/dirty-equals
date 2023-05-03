@@ -18,6 +18,14 @@
 
 ::: dirty_equals.IsIP
 
+::: dirty_equals.IsDataclassType
+
+::: dirty_equals.IsDataclass
+
+::: dirty_equals.IsPartialDataclass
+
+::: dirty_equals.IsStrictDataclass
+
 ::: dirty_equals.IsEnum
 
 ::: dirty_equals.IsEnumType

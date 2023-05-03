@@ -24,12 +24,16 @@ from ._numeric import (
 )
 from ._other import (
     FunctionCheck,
+    IsDataclass,
+    IsDataclassType,
     IsEnum,
     IsEnumType,
     IsHash,
     IsIP,
     IsJson,
+    IsPartialDataclass,
     IsPartialEnumType,
+    IsStrictDataclass,
     IsStrictEnumType,
     IsUrl,
     IsUUID,
@@ -46,6 +50,11 @@ __all__ = (
     # boolean
     'IsTrueLike',
     'IsFalseLike',
+    # dataclass
+    'IsDataclass',
+    'IsDataclassType',
+    'IsPartialDataclass',
+    'IsStrictDataclass',
     # datetime
     'IsDatetime',
     'IsNow',
