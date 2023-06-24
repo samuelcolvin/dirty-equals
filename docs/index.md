@@ -54,7 +54,7 @@ from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
 
 
 def test_user_endpoint(client: 'HttpClient', db_conn: 'Database'):
-    client.pust('/users/create/', data=...)
+    client.post('/users/create/', data=...)
 
     user_data = db_conn.fetchrow('select * from users')
     assert user_data == {
