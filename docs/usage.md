@@ -57,7 +57,7 @@ assert repr(IsInt()) == 'IsInt()'
 assert repr(IsApprox(42)) == 'IsApprox(approx=42)'
 ```
 
-However the repr method of types changes when an equals (`==`) operation on them returns a `True`, in this case
+However, the repr method of types changes when an equals (`==`) operation on them returns a `True`, in this case
 the `__repr__` method will return `repr(other)`.
 
 ```py title="repr() after comparison"
