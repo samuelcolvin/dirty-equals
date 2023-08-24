@@ -26,11 +26,15 @@ from ._other import (
     FunctionCheck,
     IsDataclass,
     IsDataclassType,
+    IsEnum,
+    IsEnumType,
     IsHash,
     IsIP,
     IsJson,
     IsPartialDataclass,
+    IsPartialEnumType,
     IsStrictDataclass,
+    IsStrictEnumType,
     IsUrl,
     IsUUID,
 )
@@ -61,6 +65,11 @@ __all__ = (
     'IsPartialDict',
     'IsIgnoreDict',
     'IsStrictDict',
+    # enum
+    'IsEnum',
+    'IsEnumType',
+    'IsPartialEnumType',
+    'IsStrictEnumType',
     # sequence
     'Contains',
     'HasLen',
