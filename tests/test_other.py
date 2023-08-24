@@ -375,6 +375,7 @@ def test_is_dataclass_true(other, dirty):
 def test_is_dataclass_false(other, dirty):
     assert other != dirty
 
+
 @pytest.mark.parametrize(
     'other,dirty',
     [

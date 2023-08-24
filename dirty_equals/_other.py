@@ -550,15 +550,15 @@ class IsEnum(DirtyEquals[Enum]):
     Checks if an instance is an Enum.
 
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals].
-    
+
     ```py title="IsEnum"
     from enum import Enum, auto
     from dirty_equals import IsEnum
-    
+
     class ExampleEnum(Enum):
         a = auto()
         b = auto()
-    
+
     a = ExampleEnum.a
     assert a == IsEnum
     assert a == IsEnum(ExampleEnum)
