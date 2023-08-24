@@ -548,13 +548,17 @@ class IsStrictDataclass(IsDataclass):
 class IsEnum(DirtyEquals[Enum]):
     """
     Checks if an instance is an Enum.
+
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals].
+    
     ```py title="IsEnum"
     from enum import Enum, auto
     from dirty_equals import IsEnum
+    
     class ExampleEnum(Enum):
         a = auto()
         b = auto()
+    
     a = ExampleEnum.a
     assert a == IsEnum
     assert a == IsEnum(ExampleEnum)
@@ -575,19 +579,25 @@ class IsEnum(DirtyEquals[Enum]):
 class IsEnumType(DirtyEquals[Enum]):
     """
     Checks that a class definition is subclass of Enum.
+
     Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals] and it can be initialised with specific keyword arguments to
     check exactness of enum members by comparing `other.__members__` with [`IsStrictDict`][dirty_equals.IsStrictDict].
+
     Moreover it is possible to check for strictness and partialness of the enum, by setting the `strict` and
     `partial` attributes using the `.settings(strict=..., partial=...)` method.
+
     Remark that passing no kwargs to `IsEnumType` initialization means members are not checked, not that the class
     is empty, namely `IsEnumType()` is the same as `IsEnumType`.
+
     ```py title="IsEnumType"
     from enum import Enum, auto
     from dirty_equals import IsEnumType
+
     class FooEnum(Enum):
         a = auto()
         b = auto()
         c = 'c'
+
     assert FooEnum == IsEnumType
     assert FooEnum == IsEnumType(a=1, b=2, c='c')
     assert FooEnum != IsEnumType(b=2, a=1, c='c').settings(strict=True)
@@ -640,6 +650,7 @@ class IsEnumType(DirtyEquals[Enum]):
     def _members_check(self, other: Any) -> bool:
         """
         Checks exactness of fields using [`IsDict`][dirty_equals.IsDict] with given settings.
+
         Remark that if this method is called, then `other` is a subclass of Enum, therefore we can iterate over it to
         get its member names and values.
         """
@@ -650,13 +661,16 @@ class IsEnumType(DirtyEquals[Enum]):
 class IsPartialEnumType(IsEnumType):
     """
     Inherits from [`IsEnumType`][dirty_equals.IsEnumType] with `partial=True` by default.
+
     ```py title="IsPartialEnumType"
     from enum import Enum, auto
     from dirty_equals import IsPartialEnumType
+
     class FooEnum(Enum):
         a = auto()
         b = auto()
         c = 'c'
+
     assert FooEnum == IsPartialEnumType
     assert FooEnum == IsPartialEnumType(a=1, b=2)
     assert FooEnum == IsPartialEnumType(c='c', b=2).settings(strict=False)
@@ -672,13 +686,16 @@ class IsPartialEnumType(IsEnumType):
 class IsStrictEnumType(IsEnumType):
     """
     Inherits from [`IsEnumType`][dirty_equals.IsEnumType] with `strict=True` by default.
+
     ```py title="IsStrictEnumType"
     from enum import Enum, auto
     from dirty_equals import IsStrictEnumType
+
     class FooEnum(Enum):
         a = auto()
         b = auto()
         c = 'c'
+
     assert FooEnum == IsStrictEnumType
     assert FooEnum == IsStrictEnumType(a=1, b=2, c='c')
     assert FooEnum == IsStrictEnumType(b=2, c='c').settings(partial=True)
