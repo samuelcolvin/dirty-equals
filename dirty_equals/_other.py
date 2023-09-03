@@ -216,6 +216,7 @@ class IsUrl(DirtyEquals[str]):
                 RedisDsn,
                 ValidationError,
                 parse_obj_as,
+                version,
             )
 
             self.AmqpDsn = AmqpDsn
@@ -227,6 +228,7 @@ class IsUrl(DirtyEquals[str]):
             self.RedisDsn = RedisDsn
             self.parse_obj_as = parse_obj_as
             self.ValidationError = ValidationError
+            self.pydantic_version = version.VERSION
         except ImportError as e:
             raise ImportError('pydantic is not installed, run `pip install dirty-equals[pydantic]`') from e
         url_type_mappings = {
@@ -260,13 +262,15 @@ class IsUrl(DirtyEquals[str]):
             parsed = self.parse_obj_as(self.url_type, other)
         except self.ValidationError:
             raise ValueError('Invalid URL')
+
+        equal = parsed == other if self.pydantic_version < '2' else parsed.unicode_string() == other
         if not self.attribute_checks:
-            return parsed == other
+            return equal
 
         for attribute, expected in self.attribute_checks.items():
             if getattr(parsed, attribute) != expected:
                 return False
-        return parsed == other
+        return equal
 
 
 HashTypes = Literal['md5', 'sha-1', 'sha-256']
