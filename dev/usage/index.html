@@ -811,7 +811,7 @@ of how they would be created:</p>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">assert</span> <span class="nb">repr</span><span class="p">(</span><span class="n">IsInt</span><span class="p">())</span> <span class="o">==</span> <span class="s1">&#39;IsInt()&#39;</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">assert</span> <span class="nb">repr</span><span class="p">(</span><span class="n">IsApprox</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span> <span class="o">==</span> <span class="s1">&#39;IsApprox(approx=42)&#39;</span>
 </code></pre></div>
-<p>However the repr method of types changes when an equals (<code>==</code>) operation on them returns a <code>True</code>, in this case
+<p>However, the repr method of types changes when an equals (<code>==</code>) operation on them returns a <code>True</code>, in this case
 the <code>__repr__</code> method will return <code>repr(other)</code>.</p>
 <div class="highlight"><span class="filename">repr() after comparison</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsInt</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
