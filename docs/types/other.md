@@ -27,9 +27,3 @@
 ::: dirty_equals.IsStrictDataclass
 
 ::: dirty_equals.IsEnum
-
-::: dirty_equals.IsEnumType
-
-::: dirty_equals.IsPartialEnumType
-
-::: dirty_equals.IsStrictEnumType

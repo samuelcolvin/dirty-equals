@@ -11,16 +11,13 @@ from dirty_equals import (
     IsDataclass,
     IsDataclassType,
     IsEnum,
-    IsEnumType,
     IsHash,
     IsInt,
     IsIP,
     IsJson,
     IsPartialDataclass,
-    IsPartialEnumType,
     IsStr,
     IsStrictDataclass,
-    IsStrictEnumType,
     IsUrl,
     IsUUID,
 )
@@ -380,9 +377,9 @@ def test_is_dataclass_false(other, dirty):
     'other,dirty',
     [
         (FooEnum.a, IsEnum),
-        (FooEnum.a, IsEnum(FooEnum)),
-        (FooEnum.c, IsEnum),
-        (FooEnum.c, IsEnum(FooEnum)),
+        (FooEnum.b, IsEnum(FooEnum)),
+        (2, IsEnum(FooEnum)),
+        ('c', IsEnum(FooEnum)),
     ],
 )
 def test_is_enum_true(other, dirty):
@@ -394,44 +391,8 @@ def test_is_enum_true(other, dirty):
     [
         (FooEnum, IsEnum),
         (FooEnum, IsEnum(FooEnum)),
-        (FooEnum.a, IsEnumType),
-        (FooEnum.c, IsEnumType),
+        (4, IsEnum(FooEnum)),
     ],
 )
 def test_is_enum_false(other, dirty):
-    assert other != dirty
-
-
-@pytest.mark.parametrize(
-    'other,dirty',
-    [
-        (FooEnum, IsEnumType),
-        (FooEnum, IsEnumType(a=1, b=IsInt, c='c')),
-        (FooEnum, IsEnumType(a=1).settings(partial=True)),
-        (FooEnum, IsEnumType(c=IsStr, b=2).settings(partial=True, strict=False)),
-        (FooEnum, IsPartialEnumType),
-        (FooEnum, IsPartialEnumType(a=1, b=2)),
-        (FooEnum, IsPartialEnumType(c='c', b=2).settings(strict=False)),
-        (FooEnum, IsStrictEnumType),
-        (FooEnum, IsStrictEnumType(a=1, b=2, c=IsStr)),
-        (FooEnum, IsStrictEnumType(b=IsInt, c='c').settings(partial=True)),
-    ],
-)
-def test_is_enum_type_true(other, dirty):
-    assert other == dirty
-
-
-@pytest.mark.parametrize(
-    'other,dirty',
-    [
-        (FooEnum.a, IsEnumType),
-        (FooEnum, IsEnumType(b=2, a=1, c='c').settings(strict=True)),
-        (FooEnum, IsEnumType(a=1)),
-        (FooEnum, IsPartialEnumType(c='c', b=2).settings(strict=True)),
-        (FooEnum.a, IsPartialEnumType),
-        (FooEnum, IsStrictEnumType(b=2, c='c', a=1)),
-        (FooEnum.a, IsStrictEnumType),
-    ],
-)
-def test_is_enum_type_false(other, dirty):
     assert other != dirty
