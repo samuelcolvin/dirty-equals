@@ -36,7 +36,7 @@ applications where you're commonly checking the response to API calls and the co
 
 Here's a trivial example of what *dirty-equals* can do:
 
-```{.py title="Trival Usage" test="skip"}
+```{.py title="Trivial Usage" test="skip"}
 from dirty_equals import IsPositive
 
 assert 1 == IsPositive  # (1)!
