@@ -766,14 +766,14 @@
 </p>
 
 <hr />
-<p>Documentation for development version: <a href="https://github.com/samuelcolvin/dirty-equals/commit/87d4552">87d4552</a></p>
+<p>Documentation for development version: <a href="https://github.com/samuelcolvin/dirty-equals/commit/e7f1940">e7f1940</a></p>
 <p><strong>dirty-equals</strong> is a python library that (mis)uses the <code>__eq__</code> method to make python code (generally unit tests)
 more declarative and therefore easier to read and write.</p>
 <p><em>dirty-equals</em> can be used in whatever context you like, but it comes into its own when writing unit tests for
 applications where you're commonly checking the response to API calls and the contents of a database.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>Here's a trivial example of what <em>dirty-equals</em> can do:</p>
-<div class="highlight"><span class="filename">Trival Usage</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsPositive</span>
+<div class="highlight"><span class="filename">Trivial Usage</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsPositive</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">IsPositive</span>  <span class="c1"># (1)!</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="o">-</span><span class="mi">2</span> <span class="o">==</span> <span class="n">IsPositive</span>  <span class="c1"># this will fail! (2)</span>
