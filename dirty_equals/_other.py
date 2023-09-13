@@ -4,7 +4,7 @@ import json
 import re
 from dataclasses import asdict, is_dataclass
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, TypeVar, Union, overload
+from typing import Any, Callable, NamedTuple, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
@@ -15,6 +15,12 @@ try:
     from typing import Literal
 except ImportError:
     from typing_extensions import Literal  # type: ignore[assignment]
+
+
+class _Version(NamedTuple):
+    major: int
+    minor: int
+    patch: int
 
 
 class IsUUID(DirtyEquals[UUID]):
@@ -228,7 +234,8 @@ class IsUrl(DirtyEquals[str]):
             self.RedisDsn = RedisDsn
             self.parse_obj_as = parse_obj_as
             self.ValidationError = ValidationError
-            self.pydantic_version = version.VERSION
+            self.pydantic_version = _Version(*map(int, version.VERSION.split('.')))
+
         except ImportError as e:
             raise ImportError('pydantic is not installed, run `pip install dirty-equals[pydantic]`') from e
         url_type_mappings = {
@@ -263,7 +270,11 @@ class IsUrl(DirtyEquals[str]):
         except self.ValidationError:
             raise ValueError('Invalid URL')
 
-        equal = parsed == other if self.pydantic_version < '2' else parsed.unicode_string() == other
+        if self.pydantic_version.major == 1:
+            equal = parsed == other
+        else:
+            equal = parsed.unicode_string() == other
+
         if not self.attribute_checks:
             return equal
 
