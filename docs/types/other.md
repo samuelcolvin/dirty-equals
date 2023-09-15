@@ -25,3 +25,5 @@
 ::: dirty_equals.IsPartialDataclass
 
 ::: dirty_equals.IsStrictDataclass
+
+::: dirty_equals.IsEnum

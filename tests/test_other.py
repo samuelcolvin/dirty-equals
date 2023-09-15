@@ -1,5 +1,6 @@
 import uuid
 from dataclasses import dataclass
+from enum import Enum, auto
 from hashlib import md5, sha1, sha256
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network
 
@@ -9,6 +10,7 @@ from dirty_equals import (
     FunctionCheck,
     IsDataclass,
     IsDataclassType,
+    IsEnum,
     IsHash,
     IsInt,
     IsIP,
@@ -19,6 +21,12 @@ from dirty_equals import (
     IsUrl,
     IsUUID,
 )
+
+
+class FooEnum(Enum):
+    a = auto()
+    b = auto()
+    c = 'c'
 
 
 @dataclass
@@ -362,4 +370,29 @@ def test_is_dataclass_true(other, dirty):
     ],
 )
 def test_is_dataclass_false(other, dirty):
+    assert other != dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (FooEnum.a, IsEnum),
+        (FooEnum.b, IsEnum(FooEnum)),
+        (2, IsEnum(FooEnum)),
+        ('c', IsEnum(FooEnum)),
+    ],
+)
+def test_is_enum_true(other, dirty):
+    assert other == dirty
+
+
+@pytest.mark.parametrize(
+    'other,dirty',
+    [
+        (FooEnum, IsEnum),
+        (FooEnum, IsEnum(FooEnum)),
+        (4, IsEnum(FooEnum)),
+    ],
+)
+def test_is_enum_false(other, dirty):
     assert other != dirty
