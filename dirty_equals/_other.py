@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import asdict, is_dataclass
+from enum import Enum
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
 from typing import Any, Callable, NamedTuple, TypeVar, Union, overload
 from uuid import UUID
@@ -557,3 +558,38 @@ class IsStrictDataclass(IsDataclass):
 
     def _post_init(self) -> None:
         self.strict = True
+
+
+class IsEnum(DirtyEquals[Enum]):
+    """
+    Checks if an instance is an Enum.
+
+    Inherits from [`DirtyEquals`][dirty_equals.DirtyEquals].
+
+    ```py title="IsEnum"
+    from enum import Enum, auto
+    from dirty_equals import IsEnum
+
+    class ExampleEnum(Enum):
+        a = auto()
+        b = auto()
+
+    a = ExampleEnum.a
+    assert a == IsEnum
+    assert a == IsEnum(ExampleEnum)
+    ```
+    """
+
+    def __init__(self, enum_cls: type[Enum] = Enum):
+        """
+        Args:
+            enum_cls: Enum class to check against.
+        """
+        self._enum_cls = enum_cls
+        self._enum_values = {i.value for i in enum_cls}
+
+    def equals(self, other: Any) -> bool:
+        if isinstance(other, Enum):
+            return isinstance(other, self._enum_cls)
+        else:
+            return other in self._enum_values
