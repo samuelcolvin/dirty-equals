@@ -139,12 +139,20 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
             return self._repr_ne()
 
     def _pprint_format(self, pprinter: PrettyPrinter, *args: Any, **kwargs: Any) -> str:
+        # pytest diffs use pprint to format objects, so we patch pprint to call this method
+        # for DirtyEquals objects. So this method needs to follow the same pattern as __repr__.
+        # We check that the protected _format method actually exists
+        # to be safe and to make linters happy.
         if self._was_equal and hasattr(pprinter, '_format'):
             return pprinter._format(self._other, *args, **kwargs)
         else:
-            return repr(self)
+            return repr(self)  # i.e. self._repr_ne() (for now)
 
 
+# Patch pprint to call _pprint_format for DirtyEquals objects
+# Check that the protected attribute _dispatch exists to be safe and to make linters happy.
+# The reason we modify _dispatch rather than _format
+# is that pytest sometimes uses a subclass of PrettyPrinter which overrides _format.
 if hasattr(PrettyPrinter, '_dispatch'):
     PrettyPrinter._dispatch[DirtyEquals.__repr__] = lambda pprinter, obj, *args, **kwargs: obj._pprint_format(
         pprinter, *args, **kwargs
