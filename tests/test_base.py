@@ -1,10 +1,15 @@
 import platform
+import pprint
 
 import packaging.version
 import pytest
 
-from dirty_equals import Contains, IsApprox, IsInt, IsNegative, IsOneOf, IsPositive, IsStr
+from dirty_equals import Contains, IsApprox, IsInt, IsList, IsNegative, IsOneOf, IsPositive, IsStr
 from dirty_equals.version import VERSION
+
+
+def check_repr_pformat(v, v_repr):
+    assert repr(v) == str(v) == v_repr == pprint.pformat(v)
 
 
 def test_or():
@@ -40,7 +45,7 @@ def test_value_eq():
 
     assert 'foo' == v
     assert str(v) == "'foo'"
-    assert repr(v) == "'foo'"
+    check_repr_pformat(v, "'foo'")
     assert v.value == 'foo'
 
 
@@ -51,7 +56,7 @@ def test_value_ne():
         assert 1 == v
 
     assert str(v) == 'IsStr()'
-    assert repr(v) == 'IsStr()'
+    check_repr_pformat(v, 'IsStr()')
     with pytest.raises(AttributeError, match='value is not available until __eq__ has been called'):
         v.value
 
@@ -110,7 +115,7 @@ def test_repr():
     ],
 )
 def test_repr_class(v, v_repr):
-    assert repr(v) == v_repr
+    check_repr_pformat(v, v_repr)
 
 
 def test_is_approx_without_init():
@@ -119,11 +124,46 @@ def test_is_approx_without_init():
 
 def test_ne_repr():
     v = IsInt
-    assert repr(v) == 'IsInt'
+    check_repr_pformat(v, 'IsInt')
 
     assert 'x' != v
 
-    assert repr(v) == 'IsInt'
+    check_repr_pformat(v, 'IsInt')
+
+
+def test_pprint():
+    v = [IsList(length=...), 1, [IsList(length=...), 2], 3, IsInt()]
+    lorem = ['lorem', 'ipsum', 'dolor', 'sit', 'amet'] * 2
+    with pytest.raises(AssertionError):
+        assert [lorem, 1, [lorem, 2], 3, '4'] == v
+
+    assert repr(v) == (f'[{lorem}, 1, [{lorem}, 2], 3, IsInt()]')
+    assert pprint.pformat(v) == (
+        "[['lorem',\n"
+        "  'ipsum',\n"
+        "  'dolor',\n"
+        "  'sit',\n"
+        "  'amet',\n"
+        "  'lorem',\n"
+        "  'ipsum',\n"
+        "  'dolor',\n"
+        "  'sit',\n"
+        "  'amet'],\n"
+        ' 1,\n'
+        " [['lorem',\n"
+        "   'ipsum',\n"
+        "   'dolor',\n"
+        "   'sit',\n"
+        "   'amet',\n"
+        "   'lorem',\n"
+        "   'ipsum',\n"
+        "   'dolor',\n"
+        "   'sit',\n"
+        "   'amet'],\n"
+        '  2],\n'
+        ' 3,\n'
+        ' IsInt()]'
+    )
 
 
 @pytest.mark.parametrize(

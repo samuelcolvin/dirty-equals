@@ -1,4 +1,5 @@
 from abc import ABCMeta
+from pprint import PrettyPrinter
 from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar
 
 try:
@@ -136,6 +137,18 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         else:
             # else return something which explains what's going on.
             return self._repr_ne()
+
+    def _pprint_format(self, pprinter: PrettyPrinter, *args: Any, **kwargs: Any) -> str:
+        if self._was_equal and hasattr(pprinter, '_format'):
+            return pprinter._format(self._other, *args, **kwargs)
+        else:
+            return repr(self)
+
+
+if hasattr(PrettyPrinter, '_dispatch'):
+    PrettyPrinter._dispatch[DirtyEquals.__repr__] = lambda pprinter, obj, *args, **kwargs: obj._pprint_format(
+        pprinter, *args, **kwargs
+    )
 
 
 InstanceOrType: 'TypeAlias' = 'Union[DirtyEquals[Any], DirtyEqualsMeta]'
