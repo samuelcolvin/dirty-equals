@@ -79,7 +79,7 @@ packaging==23.1
     #   mkdocs
 pathspec==0.11.1
     # via black
-platformdirs==3.4.0
+platformdirs==3.5.0
     # via black
 pygments==2.15.1
     # via mkdocs-material
