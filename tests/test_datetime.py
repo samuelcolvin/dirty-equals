@@ -11,10 +11,18 @@ from dirty_equals import IsDate, IsDatetime, IsNow, IsToday
     'value,dirty,expect_match',
     [
         pytest.param(datetime(2000, 1, 1), IsDatetime(approx=datetime(2000, 1, 1)), True, id='same'),
-        # Note: this requires the system timezone to be UTC
-        pytest.param(946684800, IsDatetime(approx=datetime(2000, 1, 1), unix_number=True), True, id='unix-int'),
-        # Note: this requires the system timezone to be UTC
-        pytest.param(946684800.123, IsDatetime(approx=datetime(2000, 1, 1), unix_number=True), True, id='unix-float'),
+        pytest.param(
+            946684800,
+            IsDatetime(approx=datetime(2000, 1, 1, tzinfo=timezone.utc), unix_number=True),
+            True,
+            id='unix-int',
+        ),
+        pytest.param(
+            946684800.123,
+            IsDatetime(approx=datetime(2000, 1, 1, tzinfo=timezone.utc), unix_number=True),
+            True,
+            id='unix-float',
+        ),
         pytest.param(946684800, IsDatetime(approx=datetime(2000, 1, 1)), False, id='unix-different'),
         pytest.param(
             '2000-01-01T00:00', IsDatetime(approx=datetime(2000, 1, 1), iso_string=True), True, id='iso-string-true'
