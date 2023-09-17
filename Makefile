@@ -18,7 +18,7 @@ lint:
 
 .PHONY: test
 test:
-	coverage run -m pytest
+	TZ=utc coverage run -m pytest
 	python tests/mypy_checks.py
 
 .PHONY: testcov
