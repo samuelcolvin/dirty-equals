@@ -43,15 +43,14 @@ class IsDatetime(IsNumeric[datetime]):
         Examples of basic usage:
 
         ```py title="IsDatetime"
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         from dirty_equals import IsDatetime
 
         y2k = datetime(2000, 1, 1)
         assert datetime(2000, 1, 1) == IsDatetime(approx=y2k)
-        assert 946684800.123 == IsDatetime(
-            approx=datetime(2000, 1, 1, tzinfo=timezone.utc), unix_number=True
-        )
+        # Note: this requires the system timezone to be UTC
+        assert 946684800.123 == IsDatetime(approx=y2k, unix_number=True)
         assert datetime(2000, 1, 1, 0, 0, 9) == IsDatetime(approx=y2k, delta=10)
         assert '2000-01-01T00:00' == IsDatetime(approx=y2k, iso_string=True)
 
@@ -86,11 +85,7 @@ class IsDatetime(IsNumeric[datetime]):
             dt = other
         elif isinstance(other, (float, int)):
             if self.unix_number:
-                if self.approx is not None and self.approx.tzinfo is not None:
-                    tz = self.approx.tzinfo
-                else:
-                    tz = None
-                dt = datetime.fromtimestamp(other, tz=tz)
+                dt = datetime.fromtimestamp(other)
             else:
                 raise TypeError('numbers not allowed')
         elif isinstance(other, str):
