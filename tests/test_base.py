@@ -8,10 +8,6 @@ from dirty_equals import Contains, IsApprox, IsInt, IsList, IsNegative, IsOneOf,
 from dirty_equals.version import VERSION
 
 
-def check_repr_pformat(v, v_repr):
-    assert repr(v) == str(v) == v_repr == pprint.pformat(v)
-
-
 def test_or():
     assert 'foo' == IsStr | IsInt
     assert 1 == IsStr | IsInt
@@ -44,8 +40,7 @@ def test_value_eq():
         v.value
 
     assert 'foo' == v
-    assert str(v) == "'foo'"
-    check_repr_pformat(v, "'foo'")
+    assert repr(v) == str(v) == "'foo'" == pprint.pformat(v)
     assert v.value == 'foo'
 
 
@@ -55,8 +50,7 @@ def test_value_ne():
     with pytest.raises(AssertionError):
         assert 1 == v
 
-    assert str(v) == 'IsStr()'
-    check_repr_pformat(v, 'IsStr()')
+    assert repr(v) == str(v) == 'IsStr()' == pprint.pformat(v)
     with pytest.raises(AttributeError, match='value is not available until __eq__ has been called'):
         v.value
 
@@ -115,7 +109,7 @@ def test_repr():
     ],
 )
 def test_repr_class(v, v_repr):
-    check_repr_pformat(v, v_repr)
+    assert repr(v) == str(v) == v_repr == pprint.pformat(v)
 
 
 def test_is_approx_without_init():
@@ -124,11 +118,11 @@ def test_is_approx_without_init():
 
 def test_ne_repr():
     v = IsInt
-    check_repr_pformat(v, 'IsInt')
+    assert repr(v) == str(v) == 'IsInt' == pprint.pformat(v)
 
     assert 'x' != v
 
-    check_repr_pformat(v, 'IsInt')
+    assert repr(v) == str(v) == 'IsInt' == pprint.pformat(v)
 
 
 def test_pprint():
