@@ -7,8 +7,8 @@ from pytest_examples import CodeExample, EvalExample, find_examples
 root_dir = Path(__file__).parent.parent
 
 examples = find_examples(
-    str(root_dir / 'dirty_equals'),
-    str(root_dir / 'docs'),
+    root_dir / 'dirty_equals',
+    root_dir / 'docs',
 )
 
 
