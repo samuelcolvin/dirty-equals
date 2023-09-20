@@ -20,14 +20,14 @@ def test_docstrings(example: CodeExample, eval_example: EvalExample):
     # I001 refers is a problem with black and ruff disagreeing about blank lines :shrug:
     eval_example.set_config(ruff_ignore=['E711', 'E712', 'I001'])
 
-    if prefix_settings.get('lint') != 'skip':
-        if eval_example.update_examples:
-            eval_example.format(example)
-        else:
-            eval_example.lint(example)
-
     if prefix_settings.get('test') != 'skip':
         if eval_example.update_examples:
             eval_example.run_print_update(example)
         else:
             eval_example.run_print_check(example)
+
+    if prefix_settings.get('lint') != 'skip':
+        if eval_example.update_examples:
+            eval_example.format(example)
+        else:
+            eval_example.lint(example)
