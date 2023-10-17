@@ -186,6 +186,7 @@ class IsNow(IsDatetime):
         else:
             try:
                 from datetime import UTC
+
                 utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
             except ImportError:
                 utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
