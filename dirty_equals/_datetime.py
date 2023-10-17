@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta, timezone, tzinfo, UTC
+from datetime import date, datetime, timedelta, timezone, tzinfo
 from typing import Any, Optional, Union
 
 from ._numeric import IsNumeric
@@ -156,7 +156,7 @@ class IsNow(IsDatetime):
         assert now.isoformat() == IsNow(iso_string=True)
         assert now.isoformat() != IsNow
 
-        utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
+        utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
         assert utc_now == IsNow(tz=timezone.utc)
         ```
         """
@@ -184,7 +184,12 @@ class IsNow(IsDatetime):
         if self.tz is None:
             return datetime.now()
         else:
-            return datetime.now(UTC).replace(tzinfo=timezone.utc).astimezone(self.tz)
+            try:
+                from datetime import UTC
+                utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
+            except ImportError:
+                utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+            return utc_now.astimezone(self.tz)
 
     def prepare(self, other: Any) -> datetime:
         # update approx for every comparing, to check if other value is dirty equal

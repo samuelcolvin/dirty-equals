@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta, timezone, UTC
+from datetime import date, datetime, timedelta, timezone
 from unittest.mock import Mock
 
 import pytest
@@ -99,7 +99,12 @@ def test_repr():
 
 
 def test_is_now_tz():
-    now_ny = datetime.now(UTC).replace(tzinfo=timezone.utc).astimezone(pytz.timezone('America/New_York'))
+    try:
+        from datetime import UTC
+        utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
+    except ImportError:
+        utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+    now_ny = utc_now.astimezone(pytz.timezone('America/New_York'))
     assert now_ny == IsNow(tz='America/New_York')
     # depends on the time of year and DST
     assert now_ny == IsNow(tz=timezone(timedelta(hours=-5))) | IsNow(tz=timezone(timedelta(hours=-4)))
@@ -111,7 +116,6 @@ def test_is_now_tz():
     assert now.isoformat() == IsNow(iso_string=True)
     assert now.isoformat() != IsNow
 
-    utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
     assert utc_now == IsNow(tz=timezone.utc)
 
 
