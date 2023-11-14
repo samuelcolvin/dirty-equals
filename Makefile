@@ -17,9 +17,12 @@ refresh-lockfiles:
 update-lockfiles:
 	@echo "Updating requirements/*.txt files using pip-compile"
 	pip-compile -q -o requirements/linting.txt requirements/linting.in
-	pip-compile -q -o requirements/tests.txt requirements/tests.in
-	pip-compile -q -o requirements/docs.txt requirements/docs.in
-	pip-compile -q -o requirements/pyproject.txt --extra pydantic pyproject.toml
+	pip-compile -q -o requirements/tests.txt -c requirements/linting.txt requirements/tests.in
+	pip-compile -q -o requirements/docs.txt -c requirements/linting.txt -c requirements/tests.txt requirements/docs.in
+	pip-compile -q -o requirements/pyproject.txt \
+		--extra pydantic \
+		-c requirements/linting.txt -c requirements/tests.txt -c requirements/docs.txt \
+		pyproject.toml
 	pip install --dry-run -r requirements/all.txt
 
 .PHONY: format
