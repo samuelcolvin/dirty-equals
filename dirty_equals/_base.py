@@ -1,11 +1,5 @@
 from abc import ABCMeta
-from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Tuple, TypeVar
-
-try:
-    from typing import Protocol
-except ImportError:
-    # Python 3.7 doesn't have Protocol
-    Protocol = object  # type: ignore[assignment]
+from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Protocol, Tuple, TypeVar
 
 from ._utils import Omit
 

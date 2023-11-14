@@ -6,18 +6,12 @@ from dataclasses import asdict, is_dataclass
 from enum import Enum
 from functools import lru_cache
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
 from ._dict import IsDict
 from ._utils import Omit, plain_repr
-
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal  # type: ignore[assignment]
-
 
 if TYPE_CHECKING:
     from pydantic import TypeAdapter
@@ -233,7 +227,7 @@ class IsUrl(DirtyEquals[Any]):
             )
 
             self.ValidationError = ValidationError
-        except ImportError as e:
+        except ImportError as e:  # pragma: no cover
             raise ImportError('Pydantic V2 is not installed, run `pip install dirty-equals[pydantic]`') from e
         url_type_mappings = {
             AnyUrl: any_url,
