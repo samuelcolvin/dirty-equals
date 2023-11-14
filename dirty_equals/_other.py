@@ -4,18 +4,17 @@ import json
 import re
 from dataclasses import asdict, is_dataclass
 from enum import Enum
+from functools import lru_cache
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Callable, Literal, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
 from ._dict import IsDict
 from ._utils import Omit, plain_repr
 
-try:
-    from typing import Literal
-except ImportError:
-    from typing_extensions import Literal  # type: ignore[assignment]
+if TYPE_CHECKING:
+    from pydantic import TypeAdapter
 
 
 class IsUUID(DirtyEquals[UUID]):
@@ -155,24 +154,32 @@ class FunctionCheck(DirtyEquals[Any]):
         return self.func(other)
 
 
-class IsUrl(DirtyEquals[str]):
+T = TypeVar('T')
+
+
+@lru_cache()
+def _build_type_adapter(ta: type[TypeAdapter[T]], schema: T) -> TypeAdapter[T]:
+    return ta(schema)
+
+
+_allowed_url_attribute_checks: set[str] = {
+    'scheme',
+    'host',
+    'host_type',
+    'user',
+    'password',
+    'port',
+    'path',
+    'query',
+    'fragment',
+}
+
+
+class IsUrl(DirtyEquals[Any]):
     """
     A class that checks if a value is a valid URL, optionally checking different URL types and attributes with
     [Pydantic](https://pydantic-docs.helpmanual.io/usage/types/#urls).
     """
-
-    allowed_attribute_checks: set[str] = {
-        'scheme',
-        'host',
-        'host_type',
-        'user',
-        'password',
-        'tld',
-        'port',
-        'path',
-        'query',
-        'fragment',
-    }
 
     def __init__(
         self,
@@ -187,19 +194,19 @@ class IsUrl(DirtyEquals[str]):
     ):
         """
         Args:
-            any_url: any scheme allowed, TLD not required, host required
-            any_http_url: scheme http or https, TLD not required, host required
-            http_url: scheme http or https, TLD required, host required, max length 2083
+            any_url: any scheme allowed, host required
+            any_http_url: scheme http or https, host required
+            http_url: scheme http or https, host required, max length 2083
             file_url: scheme file, host not required
-            postgres_dsn: user info required, TLD not required
-            ampqp_dsn: schema amqp or amqps, user info not required, TLD not required, host not required
-            redis_dsn: scheme redis or rediss, user info not required, tld not required, host not required
+            postgres_dsn: user info required
+            ampqp_dsn: schema amqp or amqps, user info not required, host not required
+            redis_dsn: scheme redis or rediss, user info not required, host not required
             **expected_attributes: Expected values for url attributes
         ```py title="IsUrl"
         from dirty_equals import IsUrl
 
         assert 'https://example.com' == IsUrl
-        assert 'https://example.com' == IsUrl(tld='com')
+        assert 'https://example.com' == IsUrl(host='example.com')
         assert 'https://example.com' == IsUrl(scheme='https')
         assert 'https://example.com' != IsUrl(scheme='http')
         assert 'postgres://user:pass@localhost:5432/app' == IsUrl(postgres_dsn=True)
@@ -215,66 +222,60 @@ class IsUrl(DirtyEquals[str]):
                 HttpUrl,
                 PostgresDsn,
                 RedisDsn,
+                TypeAdapter,
                 ValidationError,
-                parse_obj_as,
-                version,
             )
 
-            self.AmqpDsn = AmqpDsn
-            self.AnyHttpUrl = AnyHttpUrl
-            self.AnyUrl = AnyUrl
-            self.FileUrl = FileUrl
-            self.HttpUrl = HttpUrl
-            self.PostgresDsn = PostgresDsn
-            self.RedisDsn = RedisDsn
-            self.parse_obj_as = parse_obj_as
             self.ValidationError = ValidationError
-            self.pydantic_version = tuple(map(int, version.VERSION.split('.')))
-
-        except ImportError as e:
-            raise ImportError('pydantic is not installed, run `pip install dirty-equals[pydantic]`') from e
+        except ImportError as e:  # pragma: no cover
+            raise ImportError('Pydantic V2 is not installed, run `pip install dirty-equals[pydantic]`') from e
         url_type_mappings = {
-            self.AnyUrl: any_url,
-            self.AnyHttpUrl: any_http_url,
-            self.HttpUrl: http_url,
-            self.FileUrl: file_url,
-            self.PostgresDsn: postgres_dsn,
-            self.AmqpDsn: ampqp_dsn,
-            self.RedisDsn: redis_dsn,
+            AnyUrl: any_url,
+            AnyHttpUrl: any_http_url,
+            HttpUrl: http_url,
+            FileUrl: file_url,
+            PostgresDsn: postgres_dsn,
+            AmqpDsn: ampqp_dsn,
+            RedisDsn: redis_dsn,
         }
         url_types_sum = sum(url_type_mappings.values())
-        if url_types_sum > 1:
+        if url_types_sum == 0:
+            url_type: Any = AnyUrl
+        elif url_types_sum == 1:
+            url_type = max(url_type_mappings, key=url_type_mappings.get)  # type: ignore[arg-type]
+        else:
             raise ValueError('You can only check against one Pydantic url type at a time')
+
+        self.type_adapter = _build_type_adapter(TypeAdapter, url_type)
+
         for item in expected_attributes:
-            if item not in self.allowed_attribute_checks:
+            if item not in _allowed_url_attribute_checks:
                 raise TypeError(
-                    'IsURL only checks these attributes: scheme, host, host_type, user, password, tld, '
+                    'IsURL only checks these attributes: scheme, host, host_type, user, password, '
                     'port, path, query, fragment'
                 )
         self.attribute_checks = expected_attributes
-        if url_types_sum == 0:
-            url_type = AnyUrl
-        else:
-            url_type = max(url_type_mappings, key=url_type_mappings.get)  # type: ignore[arg-type]
-        self.url_type = url_type
-        super().__init__(url_type)
+        super().__init__()
 
     def equals(self, other: Any) -> bool:
         try:
-            parsed = self.parse_obj_as(self.url_type, other)
+            other_url = self.type_adapter.validate_python(other)
         except self.ValidationError:
             raise ValueError('Invalid URL')
 
-        if self.pydantic_version[0] == 1:  # checking major version
-            equal = parsed == other
-        else:
-            equal = parsed.unicode_string() == other
+        # we now check that str() of the parsed URL equals its original value
+        # so that invalid encodings fail
+        # we remove trailing slashes since they're added by pydantic's URL parsing, but don't mean `other` is invalid
+        other_url_str = str(other_url)
+        if not other.endswith('/') and other_url_str.endswith('/'):
+            other_url_str = other_url_str[:-1]
+        equal = other_url_str == other
 
         if not self.attribute_checks:
             return equal
 
         for attribute, expected in self.attribute_checks.items():
-            if getattr(parsed, attribute) != expected:
+            if getattr(other_url, attribute) != expected:
                 return False
         return equal
 

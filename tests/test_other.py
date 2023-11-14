@@ -300,7 +300,7 @@ def test_is_url_false(other, dirty):
 def test_is_url_invalid_kwargs():
     with pytest.raises(
         TypeError,
-        match='IsURL only checks these attributes: scheme, host, host_type, user, password, tld, port, path, query, '
+        match='IsURL only checks these attributes: scheme, host, host_type, user, password, port, path, query, '
         'fragment',
     ):
         IsUrl(https=True)

@@ -1,6 +1,4 @@
-black
-# waiting for https://github.com/jimporter/mike/issues/154
-git+https://github.com/jimporter/mike.git
+mike
 mkdocs
 mkdocs-material
 mkdocs-simple-hooks
