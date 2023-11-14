@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu, macos]
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
         # test pypy on ubuntu only to speed up CI, no reason why macos X pypy should fail separately
         include:
           - os: 'ubuntu'
