@@ -1,3 +1,4 @@
+import io
 from abc import ABCMeta
 from pprint import PrettyPrinter
 from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Protocol, Tuple, TypeVar
@@ -132,15 +133,15 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
             # else return something which explains what's going on.
             return self._repr_ne()
 
-    def _pprint_format(self, pprinter: PrettyPrinter, *args: Any, **kwargs: Any) -> str:
+    def _pprint_format(self, pprinter: PrettyPrinter, stream: io.StringIO, *args: Any, **kwargs: Any) -> None:
         # pytest diffs use pprint to format objects, so we patch pprint to call this method
         # for DirtyEquals objects. So this method needs to follow the same pattern as __repr__.
         # We check that the protected _format method actually exists
         # to be safe and to make linters happy.
         if self._was_equal and hasattr(pprinter, '_format'):
-            return pprinter._format(self._other, *args, **kwargs)
+            pprinter._format(self._other, stream, *args, **kwargs)
         else:
-            return repr(self)  # i.e. self._repr_ne() (for now)
+            stream.write(repr(self))  # i.e. self._repr_ne() (for now)
 
 
 # Patch pprint to call _pprint_format for DirtyEquals objects
