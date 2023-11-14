@@ -1,4 +1,5 @@
 import platform
+import sys
 from pathlib import Path
 
 import pytest
@@ -13,6 +14,7 @@ examples = find_examples(
 
 
 @pytest.mark.skipif(platform.python_implementation() == 'PyPy', reason='PyPy does not allow metaclass dunder methods')
+@pytest.mark.skipif(sys.version_info >= (3, 12), reason="pytest-examples doesn't yet support 3.12")
 @pytest.mark.parametrize('example', examples, ids=str)
 def test_docstrings(example: CodeExample, eval_example: EvalExample):
     prefix_settings = example.prefix_settings()
