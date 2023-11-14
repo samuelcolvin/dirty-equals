@@ -6,7 +6,7 @@ from dataclasses import asdict, is_dataclass
 from enum import Enum
 from functools import lru_cache
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
-from typing import Any, Callable, TypeVar, Union, overload
+from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union, overload
 from uuid import UUID
 
 from ._base import DirtyEquals
@@ -18,20 +18,9 @@ try:
 except ImportError:
     from typing_extensions import Literal  # type: ignore[assignment]
 
-try:
-    from pydantic import (
-        AmqpDsn,
-        AnyHttpUrl,
-        AnyUrl,
-        FileUrl,
-        HttpUrl,
-        PostgresDsn,
-        RedisDsn,
-        TypeAdapter,
-        ValidationError,
-    )
-except ImportError as e:
-    raise ImportError('Pydantic V2 is not installed, run `pip install dirty-equals[pydantic]`') from e
+
+if TYPE_CHECKING:
+    from pydantic import TypeAdapter
 
 
 class IsUUID(DirtyEquals[UUID]):
@@ -175,8 +164,8 @@ T = TypeVar('T')
 
 
 @lru_cache()
-def _build_type_adapter(schema: T) -> TypeAdapter[T]:
-    return TypeAdapter(schema)
+def _build_type_adapter(ta: type[TypeAdapter[T]], schema: T) -> TypeAdapter[T]:
+    return ta(schema)
 
 
 _allowed_url_attribute_checks: set[str] = {
@@ -230,6 +219,22 @@ class IsUrl(DirtyEquals[Any]):
         assert 'postgres://user:pass@localhost:5432/app' != IsUrl(http_url=True)
         ```
         """
+        try:
+            from pydantic import (
+                AmqpDsn,
+                AnyHttpUrl,
+                AnyUrl,
+                FileUrl,
+                HttpUrl,
+                PostgresDsn,
+                RedisDsn,
+                TypeAdapter,
+                ValidationError,
+            )
+
+            self.ValidationError = ValidationError
+        except ImportError as e:
+            raise ImportError('Pydantic V2 is not installed, run `pip install dirty-equals[pydantic]`') from e
         url_type_mappings = {
             AnyUrl: any_url,
             AnyHttpUrl: any_http_url,
@@ -240,8 +245,15 @@ class IsUrl(DirtyEquals[Any]):
             RedisDsn: redis_dsn,
         }
         url_types_sum = sum(url_type_mappings.values())
-        if url_types_sum > 1:
+        if url_types_sum == 0:
+            url_type: Any = AnyUrl
+        elif url_types_sum == 1:
+            url_type = max(url_type_mappings, key=url_type_mappings.get)  # type: ignore[arg-type]
+        else:
             raise ValueError('You can only check against one Pydantic url type at a time')
+
+        self.type_adapter = _build_type_adapter(TypeAdapter, url_type)
+
         for item in expected_attributes:
             if item not in _allowed_url_attribute_checks:
                 raise TypeError(
@@ -249,17 +261,12 @@ class IsUrl(DirtyEquals[Any]):
                     'port, path, query, fragment'
                 )
         self.attribute_checks = expected_attributes
-        if url_types_sum == 0:
-            self.url_type: Any = AnyUrl
-        else:
-            self.url_type = max(url_type_mappings, key=url_type_mappings.get)  # type: ignore[arg-type]
         super().__init__()
 
     def equals(self, other: Any) -> bool:
-        type_adapter = _build_type_adapter(self.url_type)
         try:
-            other_url = type_adapter.validate_python(other)
-        except ValidationError:
+            other_url = self.type_adapter.validate_python(other)
+        except self.ValidationError:
             raise ValueError('Invalid URL')
 
         # we now check that str() of the parsed URL equals its original value
