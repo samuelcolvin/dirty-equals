@@ -148,7 +148,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
 # Check that the protected attribute _dispatch exists to be safe and to make linters happy.
 # The reason we modify _dispatch rather than _format
 # is that pytest sometimes uses a subclass of PrettyPrinter which overrides _format.
-if hasattr(PrettyPrinter, '_dispatch'):
+if hasattr(PrettyPrinter, '_dispatch'):  # pragma: no branch
     PrettyPrinter._dispatch[DirtyEquals.__repr__] = lambda pprinter, obj, *args, **kwargs: obj._pprint_format(
         pprinter, *args, **kwargs
     )
