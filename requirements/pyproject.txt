@@ -6,9 +6,9 @@
 #
 annotated-types==0.6.0
     # via pydantic
-pydantic==2.5.0
+pydantic==2.4.2
     # via dirty-equals (pyproject.toml)
-pydantic-core==2.14.1
+pydantic-core==2.10.1
     # via pydantic
 pytz==2023.3.post1
     # via dirty-equals (pyproject.toml)

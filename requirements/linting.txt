@@ -10,9 +10,9 @@ mypy==1.7.0
     # via -r requirements/linting.in
 mypy-extensions==1.0.0
     # via mypy
-pydantic==2.5.0
+pydantic==2.4.2
     # via -r requirements/linting.in
-pydantic-core==2.14.1
+pydantic-core==2.10.1
     # via pydantic
 ruff==0.1.5
     # via -r requirements/linting.in
