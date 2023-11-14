@@ -1,6 +1,4 @@
-black
 mypy
-pre-commit
 pydantic
 ruff
 types-pytz

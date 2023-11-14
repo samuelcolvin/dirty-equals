@@ -25,7 +25,6 @@ classifiers = [
     'Environment :: MacOS X',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3 :: Only',
-    'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
@@ -39,7 +38,7 @@ dependencies = [
     'typing-extensions>=4.0.1;python_version<"3.8"',
     'pytz>=2021.3',
 ]
-optional-dependencies = {pydantic = ['pydantic>=1.9.1'] }
+optional-dependencies = {pydantic = ['pydantic>=2.4.2'] }
 dynamic = ['version']
 
 [project.urls]
@@ -55,6 +54,7 @@ extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
 flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
 mccabe = { max-complexity = 14 }
 isort = { known-first-party = ['tests'] }
+format.quote-style = 'single'
 target-version = 'py37'
 
 [tool.pytest.ini_options]
@@ -74,20 +74,6 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "@overload",
 ]
-
-[tool.black]
-color = true
-line-length = 120
-target-version = ["py39"]
-skip-string-normalization = true
-
-[tool.isort]
-line_length = 120
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-combine_as_imports = true
-color_output = true
 
 [tool.mypy]
 strict = true
