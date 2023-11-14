@@ -39,7 +39,7 @@ pytest==7.3.1
     #   pytest-examples
     #   pytest-mock
     #   pytest-pretty
-pytest-examples==0.0.8
+pytest-examples==0.0.10
     # via -r requirements/tests.in
 pytest-mock==3.10.0
     # via -r requirements/tests.in

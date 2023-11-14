@@ -184,7 +184,13 @@ class IsNow(IsDatetime):
         if self.tz is None:
             return datetime.now()
         else:
-            return datetime.utcnow().replace(tzinfo=timezone.utc).astimezone(self.tz)
+            try:
+                from datetime import UTC
+
+                utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
+            except ImportError:
+                utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+            return utc_now.astimezone(self.tz)
 
     def prepare(self, other: Any) -> datetime:
         # update approx for every comparing, to check if other value is dirty equal
