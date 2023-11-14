@@ -9,7 +9,7 @@ path = 'dirty_equals/version.py'
 name = 'dirty-equals'
 description = 'Doing dirty (but extremely useful) things with equals.'
 authors = [{name = 'Samuel Colvin', email = 's@muelcolvin.com'}]
-license = {file = 'LICENSE'}
+license = 'MIT'
 readme = 'README.md'
 classifiers = [
     'Development Status :: 4 - Beta',
