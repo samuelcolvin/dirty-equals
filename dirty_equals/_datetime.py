@@ -1,8 +1,13 @@
+from __future__ import annotations as _annotations
+
 from datetime import date, datetime, timedelta, timezone, tzinfo
-from typing import Any, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 from ._numeric import IsNumeric
 from ._utils import Omit
+
+if TYPE_CHECKING:
+    from zoneinfo import ZoneInfo
 
 
 class IsDatetime(IsNumeric[datetime]):
@@ -15,15 +20,15 @@ class IsDatetime(IsNumeric[datetime]):
     def __init__(
         self,
         *,
-        approx: Optional[datetime] = None,
-        delta: Optional[Union[timedelta, int, float]] = None,
-        gt: Optional[datetime] = None,
-        lt: Optional[datetime] = None,
-        ge: Optional[datetime] = None,
-        le: Optional[datetime] = None,
+        approx: datetime | None = None,
+        delta: timedelta | (int | float) | None = None,
+        gt: datetime | None = None,
+        lt: datetime | None = None,
+        ge: datetime | None = None,
+        le: datetime | None = None,
         unix_number: bool = False,
         iso_string: bool = False,
-        format_string: Optional[str] = None,
+        format_string: str | None = None,
         enforce_tz: bool = True,
     ):
         """
@@ -117,6 +122,24 @@ class IsDatetime(IsNumeric[datetime]):
             return True
 
 
+def _zoneinfo(tz: str) -> ZoneInfo:
+    """
+    Instantiate a `ZoneInfo` object from a string, falling back to `pytz.timezone` when `ZoneInfo` is not available
+    (most likely on Python < 3.8).
+    """
+    try:
+        from zoneinfo import ZoneInfo
+    except ImportError:
+        try:
+            import pytz
+        except ImportError as e:
+            raise ImportError('`pytz` or `zoneinfo` required for tz handling') from e
+        else:
+            return pytz.timezone(tz)  # type: ignore[return-value]
+    else:
+        return ZoneInfo(tz)
+
+
 class IsNow(IsDatetime):
     """
     Check if a datetime is close to now, this is similar to `IsDatetime(approx=datetime.now())`,
@@ -126,12 +149,12 @@ class IsNow(IsDatetime):
     def __init__(
         self,
         *,
-        delta: Union[timedelta, int, float] = 2,
+        delta: timedelta | (int | float) = 2,
         unix_number: bool = False,
         iso_string: bool = False,
-        format_string: Optional[str] = None,
+        format_string: str | None = None,
         enforce_tz: bool = True,
-        tz: Union[None, str, tzinfo] = None,
+        tz: None | (str | tzinfo) = None,
     ):
         """
         Args:
@@ -141,7 +164,8 @@ class IsNow(IsDatetime):
             iso_string: whether to allow iso formatted strings in comparison
             format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
             enforce_tz: whether timezone should be enforced in comparison, see below for more details
-            tz: either a `pytz.timezone`, a `datetime.timezone` or a string which will be passed to `pytz.timezone`,
+            tz: either a `ZoneInfo`, a `datetime.timezone` or a string which will be passed to `ZoneInfo`,
+                (or `pytz.timezone` on 3.8) to get a timezone,
                 if provided now will be converted to this timezone.
 
         ```py title="IsNow"
@@ -161,9 +185,7 @@ class IsNow(IsDatetime):
         ```
         """
         if isinstance(tz, str):
-            import pytz
-
-            tz = pytz.timezone(tz)
+            tz = _zoneinfo(tz)
 
         self.tz = tz
 
@@ -184,12 +206,7 @@ class IsNow(IsDatetime):
         if self.tz is None:
             return datetime.now()
         else:
-            try:
-                from datetime import UTC
-
-                utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
-            except ImportError:
-                utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
+            utc_now = datetime.now(tz=timezone.utc).replace(tzinfo=timezone.utc)
             return utc_now.astimezone(self.tz)
 
     def prepare(self, other: Any) -> datetime:
@@ -210,14 +227,14 @@ class IsDate(IsNumeric[date]):
     def __init__(
         self,
         *,
-        approx: Optional[date] = None,
-        delta: Optional[Union[timedelta, int, float]] = None,
-        gt: Optional[date] = None,
-        lt: Optional[date] = None,
-        ge: Optional[date] = None,
-        le: Optional[date] = None,
+        approx: date | None = None,
+        delta: timedelta | (int | float) | None = None,
+        gt: date | None = None,
+        lt: date | None = None,
+        ge: date | None = None,
+        le: date | None = None,
         iso_string: bool = False,
-        format_string: Optional[str] = None,
+        format_string: str | None = None,
     ):
         """
         Args:
@@ -286,7 +303,7 @@ class IsToday(IsDate):
         self,
         *,
         iso_string: bool = False,
-        format_string: Optional[str] = None,
+        format_string: str | None = None,
     ):
         """
         Args:
