@@ -22,6 +22,12 @@ def test_docstrings(example: CodeExample, eval_example: EvalExample):
     # I001 refers is a problem with black and ruff disagreeing about blank lines :shrug:
     eval_example.set_config(ruff_ignore=['E711', 'E712', 'I001'])
 
+    requires = prefix_settings.get('requires')
+    if requires:
+        requires_version = tuple(int(v) for v in requires.split('.'))
+        if sys.version_info < requires_version:
+            pytest.skip(f'requires python {requires}')
+
     if prefix_settings.get('test') != 'skip':
         if eval_example.update_examples:
             eval_example.run_print_update(example)

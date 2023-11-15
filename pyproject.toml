@@ -55,7 +55,10 @@ flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
 mccabe = { max-complexity = 14 }
 isort = { known-first-party = ['tests'] }
 format.quote-style = 'single'
-target-version = 'py37'
+target-version = 'py38'
+
+[tool.ruff.pydocstyle]
+convention = 'google'
 
 [tool.pytest.ini_options]
 testpaths = "tests"

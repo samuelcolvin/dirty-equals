@@ -16,6 +16,8 @@ pydantic-core==2.10.1
     # via pydantic
 ruff==0.1.5
     # via -r requirements/linting.in
+types-pytz==2023.3.1.1
+    # via -r requirements/linting.in
 typing-extensions==4.8.0
     # via
     #   mypy
