@@ -127,7 +127,7 @@ jobs:
         run: pip install -r requirements/docs.txt
 
       - name: install mkdocs-material-insiders
-        run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs-material/mkdocs_material-9.1.5+insiders.4.32.4-py3-none-any.whl
+        run: pip install https://files.scolvin.com/${MKDOCS_TOKEN}/mkdocs_material-9.4.2+insiders.4.42.0-py3-none-any.whl
         env:
           MKDOCS_TOKEN: ${{ secrets.mkdocs_token }}
 
