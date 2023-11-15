@@ -853,7 +853,7 @@
 
 
 <a href="#dirty_equals.IsDatetime" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsDatetime</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">timedelta</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unix_number</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsDatetime</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unix_number</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents first">
@@ -880,7 +880,7 @@
         <tr>
           <td><code>approx</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.datetime">datetime</span>]</code>
+                <code><span title="datetime.datetime">datetime</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -894,7 +894,7 @@
         <tr>
           <td><code>delta</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="datetime.timedelta">timedelta</span>, int, float]]</code>
+                <code><span title="datetime.timedelta">timedelta</span> | int | float | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -909,7 +909,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>gt</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.datetime">datetime</span>]</code>
+                <code><span title="datetime.datetime">datetime</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -923,7 +923,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>lt</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.datetime">datetime</span>]</code>
+                <code><span title="datetime.datetime">datetime</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -937,7 +937,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>ge</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.datetime">datetime</span>]</code>
+                <code><span title="datetime.datetime">datetime</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -951,7 +951,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>le</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.datetime">datetime</span>]</code>
+                <code><span title="datetime.datetime">datetime</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -993,7 +993,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>format_string</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
+                <code>str | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1076,26 +1076,25 @@ based on the <code>enforce_tz</code> parameter:</p>
 </ul>
 <p>Example</p>
 <div class="highlight"><span class="filename">IsDatetime & timezones</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span> <span class="nn">pytz</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsDatetime</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">tz_london</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">new_year_london</span> <span class="o">=</span> <span class="n">tz_london</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">tz_nyc</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s1">&#39;America/New_York&#39;</span><span class="p">)</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">new_year_eve_nyc</span> <span class="o">=</span> <span class="n">tz_nyc</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1999</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">assert</span> <span class="n">new_year_eve_nyc</span> <span class="o">==</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_london</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">assert</span> <span class="n">new_year_eve_nyc</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_london</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">new_year_naive</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="k">assert</span> <span class="n">new_year_naive</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_london</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">assert</span> <span class="n">new_year_naive</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_eve_nyc</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">assert</span> <span class="n">new_year_london</span> <span class="o">==</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_naive</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">assert</span> <span class="n">new_year_eve_nyc</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_naive</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">zoneinfo</span> <span class="kn">import</span> <span class="n">ZoneInfo</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsDatetime</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">tz_london</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">new_year_london</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tz_london</span><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">tz_nyc</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s1">&#39;America/New_York&#39;</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">new_year_eve_nyc</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1999</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tz_nyc</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">assert</span> <span class="n">new_year_eve_nyc</span> <span class="o">==</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_london</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="k">assert</span> <span class="n">new_year_eve_nyc</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_london</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">new_year_naive</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">assert</span> <span class="n">new_year_naive</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_london</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="k">assert</span> <span class="n">new_year_naive</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_eve_nyc</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="k">assert</span> <span class="n">new_year_london</span> <span class="o">==</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_naive</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">assert</span> <span class="n">new_year_eve_nyc</span> <span class="o">!=</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">new_year_naive</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
 
@@ -1109,7 +1108,7 @@ based on the <code>enforce_tz</code> parameter:</p>
 
 
 <a href="#dirty_equals.IsNow" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsNow</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">timedelta</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">unix_number</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">tz</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tzinfo</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsNow</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">unix_number</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">tz</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">tzinfo</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents first">
@@ -1137,7 +1136,7 @@ but slightly more powerful.</p>
         <tr>
           <td><code>delta</code></td>
           <td>
-                <code><span title="typing.Union">Union</span>[<span title="datetime.timedelta">timedelta</span>, int, float]</code>
+                <code><span title="datetime.timedelta">timedelta</span> | int | float</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1180,7 +1179,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>format_string</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
+                <code>str | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1208,11 +1207,12 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>tz</code></td>
           <td>
-                <code><span title="typing.Union">Union</span>[None, str, <span title="datetime.tzinfo">tzinfo</span>]</code>
+                <code>str | <span title="datetime.tzinfo">tzinfo</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>either a <code>pytz.timezone</code>, a <code>datetime.timezone</code> or a string which will be passed to <code>pytz.timezone</code>,
+              <p>either a <code>ZoneInfo</code>, a <code>datetime.timezone</code> or a string which will be passed to <code>ZoneInfo</code>,
+(or <code>pytz.timezone</code> on 3.8) to get a timezone,
 if provided now will be converted to this timezone.</p>
             </div>
           </td>
@@ -1268,7 +1268,7 @@ if provided now will be converted to this timezone.</p>
 
 
 <a href="#dirty_equals.IsDate" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsDate</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">timedelta</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsDate</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n">timedelta</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n">date</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents first">
@@ -1295,7 +1295,7 @@ if provided now will be converted to this timezone.</p>
         <tr>
           <td><code>approx</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.date">date</span>]</code>
+                <code><span title="datetime.date">date</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1309,7 +1309,7 @@ if provided now will be converted to this timezone.</p>
         <tr>
           <td><code>delta</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="datetime.timedelta">timedelta</span>, int, float]]</code>
+                <code><span title="datetime.timedelta">timedelta</span> | int | float | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1324,7 +1324,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>gt</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.date">date</span>]</code>
+                <code><span title="datetime.date">date</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1338,7 +1338,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>lt</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.date">date</span>]</code>
+                <code><span title="datetime.date">date</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1352,7 +1352,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>ge</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.date">date</span>]</code>
+                <code><span title="datetime.date">date</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1366,7 +1366,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>le</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[<span title="datetime.date">date</span>]</code>
+                <code><span title="datetime.date">date</span> | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1394,7 +1394,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>format_string</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
+                <code>str | None</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1451,7 +1451,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
 
 
 <a href="#dirty_equals.IsToday" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsToday</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsToday</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
   <div class="doc doc-contents first">
@@ -1492,7 +1492,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
         <tr>
           <td><code>format_string</code></td>
           <td>
-                <code><span title="typing.Optional">Optional</span>[str]</code>
+                <code>str | None</code>
           </td>
           <td>
             <div class="doc-md-description">
