@@ -157,7 +157,7 @@ class FunctionCheck(DirtyEquals[Any]):
 T = TypeVar('T')
 
 
-@lru_cache()
+@lru_cache
 def _build_type_adapter(ta: type[TypeAdapter[T]], schema: T) -> TypeAdapter[T]:
     return ta(schema)
 

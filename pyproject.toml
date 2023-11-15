@@ -36,7 +36,7 @@ classifiers = [
 ]
 requires-python = '>=3.8'
 dependencies = [
-    'pytz>=2021.3',
+    'pytz>=2021.3;python_version<"3.9"',
 ]
 optional-dependencies = {pydantic = ['pydantic>=2.4.2'] }
 dynamic = ['version']
@@ -55,7 +55,10 @@ flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
 mccabe = { max-complexity = 14 }
 isort = { known-first-party = ['tests'] }
 format.quote-style = 'single'
-target-version = 'py37'
+target-version = 'py38'
+
+[tool.ruff.pydocstyle]
+convention = 'google'
 
 [tool.pytest.ini_options]
 testpaths = "tests"

@@ -4,3 +4,4 @@ pytest
 pytest-mock
 pytest-pretty
 pytest-examples
+pytz

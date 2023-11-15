@@ -45,6 +45,8 @@ pytest-mock==3.12.0
     # via -r requirements/tests.in
 pytest-pretty==1.2.0
     # via -r requirements/tests.in
+pytz==2023.3.post1
+    # via -r requirements/tests.in
 rich==13.6.0
     # via pytest-pretty
 ruff==0.1.5
