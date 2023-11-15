@@ -49,7 +49,7 @@ assert -2 == IsPositive  # this will fail! (2)
 
 **Not that interesting yet!**, but consider the following unit test code using **dirty-equals**:
 
-```{.py title="More Powerful Usage" lint="skip"}
+```py title="More Powerful Usage" lint="skip"
 from dirty_equals import IsJson, IsNow, IsPositiveInt, IsStr
 
 
@@ -97,4 +97,4 @@ Simply:
 pip install dirty-equals
 ```
 
-**dirty-equals** requires **Python 3.7+**.
+**dirty-equals** requires **Python 3.8+**.
