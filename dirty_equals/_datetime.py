@@ -21,7 +21,7 @@ class IsDatetime(IsNumeric[datetime]):
         self,
         *,
         approx: datetime | None = None,
-        delta: timedelta | (int | float) | None = None,
+        delta: timedelta | int | float | None = None,
         gt: datetime | None = None,
         lt: datetime | None = None,
         ge: datetime | None = None,
@@ -149,12 +149,12 @@ class IsNow(IsDatetime):
     def __init__(
         self,
         *,
-        delta: timedelta | (int | float) = 2,
+        delta: timedelta | int | float = 2,
         unix_number: bool = False,
         iso_string: bool = False,
         format_string: str | None = None,
         enforce_tz: bool = True,
-        tz: None | (str | tzinfo) = None,
+        tz: str | tzinfo | None = None,
     ):
         """
         Args:
@@ -228,7 +228,7 @@ class IsDate(IsNumeric[date]):
         self,
         *,
         approx: date | None = None,
-        delta: timedelta | (int | float) | None = None,
+        delta: timedelta | int | float | None = None,
         gt: date | None = None,
         lt: date | None = None,
         ge: date | None = None,
