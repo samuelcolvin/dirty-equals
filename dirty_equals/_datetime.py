@@ -125,7 +125,7 @@ class IsDatetime(IsNumeric[datetime]):
 def _zoneinfo(tz: str) -> ZoneInfo:
     """
     Instantiate a `ZoneInfo` object from a string, falling back to `pytz.timezone` when `ZoneInfo` is not available
-    (most likely on Python < 3.8).
+    (most likely on Python 3.8 and webassembly).
     """
     try:
         from zoneinfo import ZoneInfo

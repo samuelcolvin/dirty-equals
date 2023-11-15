@@ -16,8 +16,6 @@ pydantic-core==2.10.1
     # via
     #   -c requirements/linting.txt
     #   pydantic
-pytz==2023.3.post1
-    # via dirty-equals (pyproject.toml)
 typing-extensions==4.8.0
     # via
     #   -c requirements/linting.txt

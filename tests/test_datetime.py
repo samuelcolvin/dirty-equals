@@ -6,6 +6,11 @@ import pytz
 
 from dirty_equals import IsDate, IsDatetime, IsNow, IsToday
 
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:
+    ZoneInfo = None
+
 
 @pytest.mark.parametrize(
     'value,dirty,expect_match',
@@ -82,6 +87,14 @@ def test_is_datetime(value, dirty, expect_match):
         assert value != dirty
 
 
+@pytest.mark.skipif(ZoneInfo is None, reason='requires zoneinfo')
+def test_is_datetime_zoneinfo():
+    london = datetime(2022, 2, 15, 15, 15, tzinfo=ZoneInfo('Europe/London'))
+    ny = datetime(2022, 2, 15, 10, 15, tzinfo=ZoneInfo('America/New_York'))
+    assert london != IsDatetime(approx=ny)
+    assert london == IsDatetime(approx=ny, enforce_tz=False)
+
+
 def test_is_now_dt():
     is_now = IsNow()
     dt = datetime.now()
@@ -98,14 +111,10 @@ def test_repr():
     assert str(v) == 'IsDatetime(approx=datetime.datetime(2032, 1, 2, 3, 4, 5), iso_string=True)'
 
 
+@pytest.mark.skipif(ZoneInfo is None, reason='requires zoneinfo')
 def test_is_now_tz():
-    try:
-        from datetime import UTC
-
-        utc_now = datetime.now(UTC).replace(tzinfo=timezone.utc)
-    except ImportError:
-        utc_now = datetime.utcnow().replace(tzinfo=timezone.utc)
-    now_ny = utc_now.astimezone(pytz.timezone('America/New_York'))
+    utc_now = datetime.now(timezone.utc).replace(tzinfo=timezone.utc)
+    now_ny = utc_now.astimezone(ZoneInfo('America/New_York'))
     assert now_ny == IsNow(tz='America/New_York')
     # depends on the time of year and DST
     assert now_ny == IsNow(tz=timezone(timedelta(hours=-5))) | IsNow(tz=timezone(timedelta(hours=-4)))
@@ -132,10 +141,11 @@ def test_is_now_relative(monkeypatch):
     assert IsNow() == datetime(2020, 1, 1, 12, 13, 14)
 
 
+@pytest.mark.skipif(ZoneInfo is None, reason='requires zoneinfo')
 def test_tz():
-    new_year_london = pytz.timezone('Europe/London').localize(datetime(2000, 1, 1))
+    new_year_london = datetime(2000, 1, 1, tzinfo=ZoneInfo('Europe/London'))
 
-    new_year_eve_nyc = pytz.timezone('America/New_York').localize(datetime(1999, 12, 31, 19, 0, 0))
+    new_year_eve_nyc = datetime(1999, 12, 31, 19, 0, 0, tzinfo=ZoneInfo('America/New_York'))
 
     assert new_year_eve_nyc == IsDatetime(approx=new_year_london, enforce_tz=False)
     assert new_year_eve_nyc != IsDatetime(approx=new_year_london, enforce_tz=True)

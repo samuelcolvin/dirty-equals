@@ -21,18 +21,17 @@ based on the `enforce_tz` parameter:
 
 Example
 
-```py title="IsDatetime & timezones"
+```py title="IsDatetime & timezones" requires="3.9"
 from datetime import datetime
-
-import pytz
+from zoneinfo import ZoneInfo
 
 from dirty_equals import IsDatetime
 
-tz_london = pytz.timezone('Europe/London')
-new_year_london = tz_london.localize(datetime(2000, 1, 1))
+tz_london = ZoneInfo('Europe/London')
+new_year_london = datetime(2000, 1, 1, tzinfo=tz_london)
 
-tz_nyc = pytz.timezone('America/New_York')
-new_year_eve_nyc = tz_nyc.localize(datetime(1999, 12, 31, 19, 0, 0))
+tz_nyc = ZoneInfo('America/New_York')
+new_year_eve_nyc = datetime(1999, 12, 31, 19, 0, 0, tzinfo=tz_nyc)
 
 assert new_year_eve_nyc == IsDatetime(approx=new_year_london, enforce_tz=False)
 assert new_year_eve_nyc != IsDatetime(approx=new_year_london, enforce_tz=True)
