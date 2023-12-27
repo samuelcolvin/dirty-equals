@@ -113,7 +113,7 @@ def test_repr():
 
 @pytest.mark.skipif(ZoneInfo is None, reason='requires zoneinfo')
 def test_is_now_tz():
-    utc_now = datetime.now(timezone.utc).replace(tzinfo=timezone.utc)
+    utc_now = datetime.now(timezone.utc)
     now_ny = utc_now.astimezone(ZoneInfo('America/New_York'))
     assert now_ny == IsNow(tz='America/New_York')
     # depends on the time of year and DST
