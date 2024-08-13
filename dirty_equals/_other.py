@@ -68,10 +68,12 @@ class IsJson(DirtyEquals[JsonType]):
     """
 
     @overload
-    def __init__(self, expected_value: JsonType = AnyJson): ...
+    def __init__(self, expected_value: JsonType = AnyJson):
+        ...
 
     @overload
-    def __init__(self, **expected_kwargs: Any): ...
+    def __init__(self, **expected_kwargs: Any):
+        ...
 
     def __init__(self, expected_value: JsonType = AnyJson, **expected_kwargs: Any):
         """

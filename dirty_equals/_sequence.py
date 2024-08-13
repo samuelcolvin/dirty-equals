@@ -17,10 +17,12 @@ class HasLen(DirtyEquals[Sized]):
     """
 
     @overload
-    def __init__(self, length: int): ...
+    def __init__(self, length: int):
+        ...
 
     @overload
-    def __init__(self, min_length: int, max_length: Union[int, Any]): ...
+    def __init__(self, min_length: int, max_length: Union[int, Any]):
+        ...
 
     def __init__(self, min_length: int, max_length: Union[None, int, Any] = None):  # type: ignore[misc]
         """
@@ -43,7 +45,7 @@ class HasLen(DirtyEquals[Sized]):
         4. Length is required but can take any value.
         """
         if max_length is None:
-            self.length: LengthType = min_length
+            self.length: 'LengthType' = min_length
             super().__init__(self.length)
         else:
             self.length = (min_length, max_length)
@@ -90,10 +92,12 @@ class IsListOrTuple(DirtyEquals[T]):
     allowed_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
 
     @overload
-    def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None): ...
+    def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None):
+        ...
 
     @overload
-    def __init__(self, positions: Dict[int, Any], length: 'LengthType' = None): ...
+    def __init__(self, positions: Dict[int, Any], length: 'LengthType' = None):
+        ...
 
     def __init__(
         self,

@@ -180,7 +180,7 @@ def test_json_both():
         ('::ffff:aebf:d473/12', IsIP(version=6, netmask='fff0::')),
         ('2001:0db8:0a0b:12f0:0000:0000:0000:0001', IsIP(version=6)),
         (3232235521, IsIP()),
-        (b'\xc0\xa8\x00\x01', IsIP()),
+        (b'\xC0\xA8\x00\x01', IsIP()),
         (338288524927261089654018896845572831328, IsIP(version=6)),
         (b'\x20\x01\x06\x58\x02\x2a\xca\xfe\x02\x00\x00\x00\x00\x00\x00\x01', IsIP(version=6)),
     ],

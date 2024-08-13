@@ -157,10 +157,12 @@ class HasAttributes(DirtyEquals[Any]):
     """
 
     @overload
-    def __init__(self, expected: Dict[Any, Any]): ...
+    def __init__(self, expected: Dict[Any, Any]):
+        ...
 
     @overload
-    def __init__(self, **expected: Any): ...
+    def __init__(self, **expected: Any):
+        ...
 
     def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any):
         """
