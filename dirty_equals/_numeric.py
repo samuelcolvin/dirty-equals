@@ -396,7 +396,7 @@ class IsPositiveFloat(IsFloat):
 
 class IsNegativeFloat(IsFloat):
     """
-    Like [`IsNegative`](#isnegative) but only for `float`s.
+    Like [`IsNegative`][dirty_equals.IsNegative] but only for `float`s.
 
     ```py title="IsNegativeFloat"
     from decimal import Decimal
