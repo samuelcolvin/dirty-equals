@@ -17,12 +17,10 @@ class IsDict(DirtyEquals[Dict[Any, Any]]):
     """
 
     @overload
-    def __init__(self, expected: dict[Any, Any]):
-        ...
+    def __init__(self, expected: dict[Any, Any]): ...
 
     @overload
-    def __init__(self, **expected: Any):
-        ...
+    def __init__(self, **expected: Any): ...
 
     def __init__(self, *expected_args: dict[Any, Any], **expected_kwargs: Any):
         """
