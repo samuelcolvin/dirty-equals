@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../img/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.4.2+insiders-4.42.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2+insiders-4.42.0">
     
     
       
@@ -495,7 +495,7 @@
   <a href="#dirty_equals.IsDict.settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        settings
+        settings()
       
     </span>
   </a>
@@ -779,7 +779,7 @@
   <a href="#dirty_equals.IsDict.settings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        settings
+        settings()
       
     </span>
   </a>
@@ -847,24 +847,25 @@
 
 
 
+
 <h2 id="dirty_equals.IsDict" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">IsDict</span>
+          <span class="doc doc-object-name doc-class-name">IsDict</span>
 
 
 <a href="#dirty_equals.IsDict" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="typing.Dict">Dict</span>[<span title="typing.Any">Any</span>, <span title="typing.Any">Any</span>]]</code></p>
 
-
+  
       <p>Base class for comparing dictionaries. By default, <code>IsDict</code> isn't particularly useful on its own
 (it behaves pretty much like a normal <code>dict</code>), but it can be subclassed
 (see <a class="autorefs autorefs-internal" href="#dirty_equals.IsPartialDict"><code>IsPartialDict</code></a> and <a class="autorefs autorefs-internal" href="#dirty_equals.IsStrictDict"><code>IsStrictDict</code></a>) or modified
 with <code>.settings(...)</code> to powerful things.</p>
-
+  
       <p>Can be created from either keyword arguments or an existing dictionary (same as <code>dict()</code>).</p>
 <p><code>IsDict</code> is not particularly useful on its own, but it can be subclassed or modified with
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>.settings(...)</code></a> to facilitate powerful comparison of dictionaries.</p>
@@ -875,9 +876,10 @@ with <code>.settings(...)</code> to powerful things.</p>
 </code></pre></div>
 
 
-
+  
 
   <div class="doc doc-children">
+
 
 
 
@@ -890,76 +892,79 @@ with <code>.settings(...)</code> to powerful things.</p>
 <div class="doc doc-object doc-function">
 
 
+
+
 <h3 id="dirty_equals.IsDict.settings" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">settings</span>
+          <span class="doc doc-object-name doc-function-name">settings</span>
 
 
 <a href="#dirty_equals.IsDict.settings" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">settings</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">strict</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">partial</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ignore</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Container" href="https://docs.python.org/3/library/typing.html#typing.Container">Container</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Callable" href="https://docs.python.org/3/library/typing.html#typing.Callable">Callable</a></span><span class="p">[[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span><span class="p">]</span> <span class="o">=</span> <span class="n">NotGiven</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">settings</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">partial</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ignore</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">Container</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">NotGiven</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IsDict</span>
 </code></pre></div>
 
-    <div class="doc doc-contents ">
-
+  <div class="doc doc-contents ">
+  
       <p>Allows you to customise the behaviour of <code>IsDict</code>, technically a new <code>IsDict</code> is required to allow chaining.</p>
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
+          <td><code>strict</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If <code>True</code>, the order of key/value pairs must match.</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code>strict</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If <code>True</code>, the order of key/value pairs must match.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>partial</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>If <code>True</code>, only keys include in the wrapped dict are checked.</p>
-              </div>
-            </td>
-            <td>
-                  <code>None</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>ignore</code></td>
-            <td>
-                  <code>Union[None, <a class="autorefs autorefs-external" title="typing.Container" href="https://docs.python.org/3/library/typing.html#typing.Container">Container</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>], <a class="autorefs autorefs-external" title="typing.Callable" href="https://docs.python.org/3/library/typing.html#typing.Callable">Callable</a>[[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>], <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>]]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Values to omit from comparison.
+        <tr>
+          <td><code>partial</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If <code>True</code>, only keys include in the wrapped dict are checked.</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ignore</code></td>
+          <td>
+                <code>Union[None, <span title="typing.Container">Container</span>[<span title="typing.Any">Any</span>], <span title="typing.Callable">Callable</span>[[<span title="typing.Any">Any</span>], bool]]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Values to omit from comparison.
 Can be either a <code>Container</code> (e.g. <code>set</code> or <code>list</code>) of values to ignore, or a function that takes a
 value and should return <code>True</code> if the value should be ignored.</p>
-              </div>
-            </td>
-            <td>
-                  <code><span title="dirty_equals._dict.NotGiven">NotGiven</span></code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+            </div>
+          </td>
+          <td>
+                <code><span title="dirty_equals._dict.NotGiven">NotGiven</span></code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
       <div class="highlight"><span class="filename">IsDict.settings(...)</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsDict</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span> <span class="o">!=</span> <span class="n">IsDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -981,7 +986,7 @@ value and should return <code>True</code> if the value should be ignored.</p>
 <li>This is the same as <a class="autorefs autorefs-internal" href="#dirty_equals.IsStrictDict"><code>IsStrictDict(a=1, b=2)</code></a></li>
 </ol>
 
-    </div>
+  </div>
 
 </div>
 
@@ -989,7 +994,7 @@ value and should return <code>True</code> if the value should be ignored.</p>
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -997,19 +1002,20 @@ value and should return <code>True</code> if the value should be ignored.</p>
 
 
 
+
 <h2 id="dirty_equals.IsPartialDict" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">IsPartialDict</span>
+          <span class="doc doc-object-name doc-class-name">IsPartialDict</span>
 
 
 <a href="#dirty_equals.IsPartialDict" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsPartialDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsPartialDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></code></p>
 
-
+  
       <p>Partial dictionary comparison, this is the same as
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>IsDict(...).settings(partial=True)</code></a>.</p>
 <div class="highlight"><span class="filename">IsPartialDict</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsPartialDict</span>
@@ -1023,7 +1029,7 @@ value and should return <code>True</code> if the value should be ignored.</p>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span> <span class="o">==</span> <span class="n">IsPartialDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">!=</span> <span class="n">IsPartialDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
-
+  
       <p>Can be created from either keyword arguments or an existing dictionary (same as <code>dict()</code>).</p>
 <p><code>IsDict</code> is not particularly useful on its own, but it can be subclassed or modified with
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>.settings(...)</code></a> to facilitate powerful comparison of dictionaries.</p>
@@ -1034,7 +1040,7 @@ value and should return <code>True</code> if the value should be ignored.</p>
 </code></pre></div>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -1050,7 +1056,7 @@ value and should return <code>True</code> if the value should be ignored.</p>
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -1058,19 +1064,20 @@ value and should return <code>True</code> if the value should be ignored.</p>
 
 
 
+
 <h2 id="dirty_equals.IsIgnoreDict" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">IsIgnoreDict</span>
+          <span class="doc doc-object-name doc-class-name">IsIgnoreDict</span>
 
 
 <a href="#dirty_equals.IsIgnoreDict" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsIgnoreDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsIgnoreDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></code></p>
 
-
+  
       <p>Dictionary comparison with <code>None</code> values ignored, this is the same as
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>IsDict(...).settings(ignore={None})</code></a>.</p>
 <p><code>.settings(...)</code> can be used to customise the behaviour of <code>IsIgnoreDict</code>, in particular changing which
@@ -1093,7 +1100,7 @@ values are ignored.</p>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span> <span class="o">==</span> <span class="n">IsIgnoreDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">!=</span> <span class="n">IsIgnoreDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
-
+  
       <p>Can be created from either keyword arguments or an existing dictionary (same as <code>dict()</code>).</p>
 <p><code>IsDict</code> is not particularly useful on its own, but it can be subclassed or modified with
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>.settings(...)</code></a> to facilitate powerful comparison of dictionaries.</p>
@@ -1104,7 +1111,7 @@ values are ignored.</p>
 </code></pre></div>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -1120,7 +1127,7 @@ values are ignored.</p>
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -1128,19 +1135,20 @@ values are ignored.</p>
 
 
 
+
 <h2 id="dirty_equals.IsStrictDict" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">IsStrictDict</span>
+          <span class="doc doc-object-name doc-class-name">IsStrictDict</span>
 
 
 <a href="#dirty_equals.IsStrictDict" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsStrictDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsStrictDict</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._dict.IsDict" href="#dirty_equals.IsDict">IsDict</a></code></p>
 
-
+  
       <p>Dictionary comparison with order enforced, this is the same as
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>IsDict(...).settings(strict=True)</code></a>.</p>
 <div class="highlight"><span class="filename">IsDict.settings(...)</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsStrictDict</span>
@@ -1153,7 +1161,7 @@ values are ignored.</p>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span> <span class="o">==</span> <span class="n">IsStrictDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">partial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">assert</span> <span class="p">{</span><span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="o">!=</span> <span class="n">IsStrictDict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">settings</span><span class="p">(</span><span class="n">partial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
-
+  
       <p>Can be created from either keyword arguments or an existing dictionary (same as <code>dict()</code>).</p>
 <p><code>IsDict</code> is not particularly useful on its own, but it can be subclassed or modified with
 <a class="autorefs autorefs-internal" href="#dirty_equals.IsDict.settings"><code>.settings(...)</code></a> to facilitate powerful comparison of dictionaries.</p>
@@ -1164,7 +1172,7 @@ values are ignored.</p>
 </code></pre></div>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -1180,7 +1188,7 @@ values are ignored.</p>
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../img/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.4.2+insiders-4.42.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2+insiders-4.42.0">
     
     
       
@@ -813,64 +813,66 @@
 
 
 
+
 <h2 id="dirty_equals.IsInstance" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">IsInstance</span>
+          <span class="doc doc-object-name doc-class-name">IsInstance</span>
 
 
 <a href="#dirty_equals.IsInstance" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsInstance</span><span class="p">(</span><span class="n">expected_type</span><span class="p">:</span> <span class="n"><span title="dirty_equals._inspection.ExpectedType">ExpectedType</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">only_direct_instance</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">IsInstance</span><span class="p">(</span><span class="n">expected_type</span><span class="p">:</span> <span class="n">ExpectedType</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">only_direct_instance</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._inspection.ExpectedType">ExpectedType</span>]</code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._inspection.ExpectedType">ExpectedType</span>]</code></p>
 
-
+  
       <p>A type which checks that the value is an instance of the expected type.</p>
+  
 
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
+          <td><code>expected_type</code></td>
+          <td>
+                <code><span title="dirty_equals._inspection.ExpectedType">ExpectedType</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The type to check against.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code>expected_type</code></td>
-            <td>
-                  <code><span title="dirty_equals._inspection.ExpectedType">ExpectedType</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The type to check against.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>only_direct_instance</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>whether instances of subclasses of <code>expected_type</code> should be considered equal.</p>
-              </div>
-            </td>
-            <td>
-                  <code>False</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <tr>
+          <td><code>only_direct_instance</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>whether instances of subclasses of <code>expected_type</code> should be considered equal.</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
       <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code>IsInstance</code> can be parameterized or initialised with a type -
@@ -896,7 +898,7 @@
 </code></pre></div></p>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -912,7 +914,7 @@
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -920,65 +922,67 @@
 
 
 
+
 <h2 id="dirty_equals.HasName" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">HasName</span>
+          <span class="doc doc-object-name doc-class-name">HasName</span>
 
 
 <a href="#dirty_equals.HasName" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">HasName</span><span class="p">(</span><span class="n">expected_name</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="dirty_equals._strings.IsStr" href="../string/#dirty_equals.IsStr">IsStr</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_instances</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">HasName</span><span class="p">(</span><span class="n">expected_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">IsStr</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_instances</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._inspection.T">T</span>]</code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._inspection.T">T</span>]</code></p>
 
-
+  
       <p>A type which checks that the value has the given <code>__name__</code> attribute.</p>
+  
 
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
+          <td><code>expected_name</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="dirty_equals._strings.IsStr" href="../string/#dirty_equals.IsStr">IsStr</a>, str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The name to check against.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code>expected_name</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-internal" title="dirty_equals._strings.IsStr" href="../string/#dirty_equals.IsStr">IsStr</a>, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The name to check against.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>allow_instances</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>whether instances of classes with the given name should be considered equal,
+        <tr>
+          <td><code>allow_instances</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>whether instances of classes with the given name should be considered equal,
 (e.g. whether <code>other.__class__.__name__ == expected_name</code> should be checked).</p>
-              </div>
-            </td>
-            <td>
-                  <code>True</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
       <p>Example:
 <div class="highlight"><span class="filename">HasName</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">HasName</span><span class="p">,</span> <span class="n">IsStr</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -996,7 +1000,7 @@
 </code></pre></div></p>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -1012,7 +1016,7 @@
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -1020,50 +1024,52 @@
 
 
 
+
 <h2 id="dirty_equals.HasRepr" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">HasRepr</span>
+          <span class="doc doc-object-name doc-class-name">HasRepr</span>
 
 
 <a href="#dirty_equals.HasRepr" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">HasRepr</span><span class="p">(</span><span class="n">expected_repr</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="dirty_equals._strings.IsStr" href="../string/#dirty_equals.IsStr">IsStr</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">])</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">HasRepr</span><span class="p">(</span><span class="n">expected_repr</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">IsStr</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._inspection.T">T</span>]</code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._inspection.T">T</span>]</code></p>
 
-
+  
       <p>A type which checks that the value has the given <code>repr()</code> value.</p>
+  
 
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
+          <td><code>expected_repr</code></td>
+          <td>
+                <code><span title="typing.Union">Union</span>[<a class="autorefs autorefs-internal" title="dirty_equals._strings.IsStr" href="../string/#dirty_equals.IsStr">IsStr</a>, str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The expected repr value.</p>
+            </div>
+          </td>
+          <td>
+              <em>required</em>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code>expected_repr</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-internal" title="dirty_equals._strings.IsStr" href="../string/#dirty_equals.IsStr">IsStr</a>, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The expected repr value.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
       <p>Example:
 <div class="highlight"><span class="filename">HasRepr</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">HasRepr</span><span class="p">,</span> <span class="n">IsStr</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -1079,7 +1085,7 @@
 </code></pre></div></p>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -1095,7 +1101,7 @@
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 
@@ -1103,22 +1109,23 @@
 
 
 
+
 <h2 id="dirty_equals.HasAttributes" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">HasAttributes</span>
+          <span class="doc doc-object-name doc-class-name">HasAttributes</span>
 
 
 <a href="#dirty_equals.HasAttributes" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">HasAttributes</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">HasAttributes</span><span class="p">(</span><span class="o">*</span><span class="n">expected_args</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">expected_kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="typing.Any">Any</span>]</code></p>
 
-
+  
       <p>A type which checks that the value has the given attributes.</p>
 <p>This is a partial check - e.g. the attributes provided to check do not need to be exhaustive.</p>
-
+  
       <p>Can be created from either keyword arguments or an existing dictionary (same as <code>dict()</code>).</p>
 <p>Example:
 <div class="highlight"><span class="filename">HasAttributes</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">HasAttributes</span><span class="p">,</span> <span class="n">IsInt</span><span class="p">,</span> <span class="n">IsStr</span>
@@ -1140,7 +1147,7 @@
 </code></pre></div></p>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -1156,7 +1163,7 @@
 
   </div>
 
-    </div>
+  </div>
 
 </div>
 

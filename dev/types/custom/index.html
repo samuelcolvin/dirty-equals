@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../img/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.4.2+insiders-4.42.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2+insiders-4.42.0">
     
     
       
@@ -662,7 +662,7 @@
   <a href="#dirty_equals._base.DirtyEquals.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       
-        __init__
+        __init__()
       
     </span>
   </a>
@@ -673,7 +673,7 @@
   <a href="#dirty_equals._base.DirtyEquals.equals" class="md-nav__link">
     <span class="md-ellipsis">
       
-        equals
+        equals()
       
     </span>
   </a>
@@ -790,7 +790,7 @@
   <a href="#dirty_equals._base.DirtyEquals.__init__" class="md-nav__link">
     <span class="md-ellipsis">
       
-        __init__
+        __init__()
       
     </span>
   </a>
@@ -801,7 +801,7 @@
   <a href="#dirty_equals._base.DirtyEquals.equals" class="md-nav__link">
     <span class="md-ellipsis">
       
-        equals
+        equals()
       
     </span>
   </a>
@@ -847,22 +847,23 @@
 
 
 
+
 <h2 id="dirty_equals._base.DirtyEquals" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">DirtyEquals</span>
+          <span class="doc doc-object-name doc-class-name">DirtyEquals</span>
 
 
 <a href="#dirty_equals._base.DirtyEquals" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-external" title="typing.Generic" href="https://docs.python.org/3/library/typing.html#typing.Generic">Generic</a>[<span title="dirty_equals._base.T">T</span>]</code></p>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="typing.Generic">Generic</span>[<span title="dirty_equals._base.T">T</span>]</code></p>
 
-
+  
       <p>Base type for all <em>dirty-equals</em> types.</p>
 
 
-
+  
 
   <div class="doc doc-children">
 
@@ -876,20 +877,21 @@
 
 
 
+
 <h3 id="dirty_equals._base.DirtyEquals.value" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">value</span>
+          <span class="doc doc-object-name doc-attribute-name">value</span>
 
-
+  
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
   </span>
 
 <a href="#dirty_equals._base.DirtyEquals.value" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">value</span><span class="p">:</span> <span class="n"><span title="dirty_equals._base.T">T</span></span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">value</span><span class="p">:</span> <span class="n">T</span>
 </code></pre></div>
 
-    <div class="doc doc-contents ">
-
+  <div class="doc doc-contents ">
+  
       <p>Property to get the value last successfully compared to this object.</p>
 <p>This is seldom very useful, put it's provided for completeness.</p>
 <p>Example of usage:</p>
@@ -901,90 +903,97 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">token_is_str</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">#&gt; t-123</span>
 </code></pre></div>
-    </div>
+  </div>
 
 </div>
 
 
 
+
 <div class="doc doc-object doc-function">
+
+
 
 
 <h3 id="dirty_equals._base.DirtyEquals.__init__" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">__init__</span>
+          <span class="doc doc-object-name doc-function-name">__init__</span>
 
 
 <a href="#dirty_equals._base.DirtyEquals.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="nf">repr_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="o">**</span><span class="n">repr_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">repr_args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">repr_kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span>
 </code></pre></div>
 
-    <div class="doc doc-contents ">
+  <div class="doc doc-contents ">
+  
 
 
 
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
+          <td><code>*repr_args</code></td>
+          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>unnamed args to be used in <code>__repr__</code></p>
+            </div>
+          </td>
+          <td>
+                <code>()</code>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code>*repr_args</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>unnamed args to be used in <code>__repr__</code></p>
-              </div>
-            </td>
-            <td>
-                  <code>()</code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code>**repr_kwargs</code></td>
-            <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>named args to be used in <code>__repr__</code></p>
-              </div>
-            </td>
-            <td>
-                  <code>{}</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <tr>
+          <td><code>**repr_kwargs</code></td>
+          <td>
+                <code><span title="typing.Any">Any</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>named args to be used in <code>__repr__</code></p>
+            </div>
+          </td>
+          <td>
+                <code>{}</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
-    </div>
+  </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
+
+
 <h3 id="dirty_equals._base.DirtyEquals.equals" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">equals</span>
+          <span class="doc doc-object-name doc-function-name">equals</span>
 
 
 <a href="#dirty_equals._base.DirtyEquals.equals" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">equals</span><span class="p">(</span><span class="n">other</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">equals</span><span class="p">(</span><span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
 </code></pre></div>
 
-    <div class="doc doc-contents ">
-
+  <div class="doc doc-contents ">
+  
       <p>Abstract method, must be implemented by subclasses.</p>
 <p><code>TypeError</code> and <code>ValueError</code> are caught in <code>__eq__</code> and indicate <code>other</code> is not equals to this type.</p>
 
-    </div>
+  </div>
 
 </div>
 
@@ -992,7 +1001,7 @@
 
   </div>
 
-    </div>
+  </div>
 
 </div><h2 id="custom-type-example">Custom Type Example<a class="headerlink" href="#custom-type-example" title="Permanent link">&para;</a></h2>
 <p>To demonstrate the use of custom types, we'll create a custom type that matches any even number.</p>
