@@ -50,15 +50,13 @@ Changelog = 'https://github.com/samuelcolvin/dirty-equals/releases'
 
 [tool.ruff]
 line-length = 120
-extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
-flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
-mccabe = { max-complexity = 14 }
-isort = { known-first-party = ['tests'] }
+lint.extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
+lint.ignore = ['E721']
+lint.flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+lint.mccabe = { max-complexity = 14 }
+lint.pydocstyle = { convention = 'google' }
 format.quote-style = 'single'
 target-version = 'py38'
-
-[tool.ruff.pydocstyle]
-convention = 'google'
 
 [tool.pytest.ini_options]
 testpaths = "tests"
