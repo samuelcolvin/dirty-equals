@@ -13,6 +13,9 @@ __all__ = 'DirtyEqualsMeta', 'DirtyEquals', 'AnyThing', 'IsOneOf'
 
 class DirtyEqualsMeta(ABCMeta):
     def __eq__(self, other: Any) -> bool:
+        if self is other:
+            return True
+
         # this is required as fancy things happen when creating generics which include equals checks, without it,
         # we get some recursive errors
         if self is DirtyEquals or other is Generic or other is Protocol:
