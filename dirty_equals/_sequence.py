@@ -153,6 +153,15 @@ class IsListOrTuple(DirtyEquals[T]):
         8. If you don't care about the first few values of a list or tuple,
             you can use [`AnyThing`][dirty_equals.AnyThing] in your arguments.
         """
+        if not (items or positions or length):
+            allowed_type_names = ' or '.join(t.__name__ for t in self.allowed_type)
+            msg = (
+                f'Instantiating `{self.__class__.__name__}` without any argument is ambiguous.\n'
+                f'- For an empty {allowed_type_names}, please specify {self.__class__.__name__}(length=0)\n'
+                f'- For a {allowed_type_names} of any given length, please specify {self.__class__.__name__}(length=...)'
+                )
+            raise AssertionError(msg)
+
         if positions is not None:
             self.positions: Optional[Dict[int, Any]] = positions
             if items:
@@ -226,7 +235,7 @@ class IsList(IsListOrTuple[List[Any]]):
     ```
     """
 
-    allowed_type = list
+    allowed_type = (list, )
 
 
 class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
@@ -247,7 +256,7 @@ class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
     ```
     """
 
-    allowed_type = tuple
+    allowed_type = (tuple, )
 
 
 def _length_repr(length: 'LengthType') -> Any:
