@@ -1,10 +1,11 @@
 import platform
 import pprint
+from functools import singledispatch
 
 import packaging.version
 import pytest
 
-from dirty_equals import Contains, IsApprox, IsInt, IsList, IsNegative, IsOneOf, IsPositive, IsStr
+from dirty_equals import Contains, DirtyEquals, IsApprox, IsInt, IsList, IsNegative, IsOneOf, IsPositive, IsStr
 from dirty_equals.version import VERSION
 
 
@@ -192,3 +193,23 @@ def test_is_one_of(value, dirty):
 
 def test_version():
     packaging.version.parse(VERSION)
+
+
+def test_singledispatch():
+    @singledispatch
+    def dispatch(value):
+        return 'generic'
+
+    assert dispatch(IsStr()) == 'generic'
+
+    @dispatch.register
+    def _(value: DirtyEquals):
+        return 'DirtyEquals'
+
+    assert dispatch(IsStr()) == 'DirtyEquals'
+
+    @dispatch.register
+    def _(value: IsStr):
+        return 'IsStr'
+
+    assert dispatch(IsStr()) == 'IsStr'
