@@ -131,7 +131,7 @@ def _zoneinfo(tz: str) -> ZoneInfo:
         from zoneinfo import ZoneInfo
     except ImportError:
         from backports.zoneinfo import ZoneInfo
-    else:
+    finally:
         return ZoneInfo(tz)
 
 
