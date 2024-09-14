@@ -130,12 +130,7 @@ def _zoneinfo(tz: str) -> ZoneInfo:
     try:
         from zoneinfo import ZoneInfo
     except ImportError:
-        try:
-            import pytz
-        except ImportError as e:
-            raise ImportError('`pytz` or `zoneinfo` required for tz handling') from e
-        else:
-            return pytz.timezone(tz)  # type: ignore[return-value]
+        from backports.zoneinfo import ZoneInfo
     else:
         return ZoneInfo(tz)
 
