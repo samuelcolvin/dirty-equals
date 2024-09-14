@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/internals/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/usage/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/boolean/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/custom/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/datetime/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/dict/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/inspection/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/numeric/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/other/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/sequence/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dirty-equals.helpmanual.io/latest/types/string/</loc>
-         <lastmod>2024-08-13</lastmod>
+         <lastmod>2024-09-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
