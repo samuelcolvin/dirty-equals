@@ -87,7 +87,9 @@ class IsListOrTuple(DirtyEquals[T]):
     Check that some object is a list or tuple and optionally its values match some constraints.
     """
 
-    allowed_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
+    allowed_type: Union[
+        Tuple[Type[List[Any]]], Tuple[Type[Tuple[Any, ...]]], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]
+    ] = (list, tuple)
 
     @overload
     def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None): ...
@@ -159,7 +161,7 @@ class IsListOrTuple(DirtyEquals[T]):
                 f'Instantiating `{self.__class__.__name__}` without any argument is ambiguous.\n'
                 f'- For an empty {allowed_type_names}, please specify {self.__class__.__name__}(length=0)\n'
                 f'- For a {allowed_type_names} of any given length, please specify {self.__class__.__name__}(length=...)'
-                )
+            )
             raise TypeError(msg)
 
         if positions is not None:
@@ -235,7 +237,7 @@ class IsList(IsListOrTuple[List[Any]]):
     ```
     """
 
-    allowed_type = (list, )
+    allowed_type = (list,)
 
 
 class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
@@ -256,7 +258,7 @@ class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
     ```
     """
 
-    allowed_type = (tuple, )
+    allowed_type = (tuple,)
 
 
 def _length_repr(length: 'LengthType') -> Any:

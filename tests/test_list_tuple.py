@@ -99,26 +99,23 @@ def test_wrong_length_length():
     with pytest.raises(TypeError, match='length must be a tuple of length 2, not 3'):
         IsList(1, 2, length=(1, 2, 3))
 
+
 @pytest.mark.parametrize(
-    'dirty,allowed_type_names', [
-        (IsList, 'list'), 
-        (IsTuple, 'tuple'), 
-        (IsListOrTuple, 'list or tuple'), 
-    ]
+    'dirty,allowed_type_names',
+    [
+        (IsList, 'list'),
+        (IsTuple, 'tuple'),
+        (IsListOrTuple, 'list or tuple'),
+    ],
 )
 def test_no_args(dirty: type, allowed_type_names: str):
-    
     err_msg = re.escape(
         rf'Instantiating `{dirty.__name__}` without any argument is ambiguous.' + '\n'
         rf'- For an empty {allowed_type_names}, please specify {dirty.__name__}(length=0)' + '\n'
         rf'- For a {allowed_type_names} of any given length, please specify {dirty.__name__}(length=...)'
     )
-    with pytest.raises(
-        TypeError,
-        match=err_msg
-    ):
+    with pytest.raises(TypeError, match=err_msg):
         dirty()
-
 
 
 @pytest.mark.parametrize(
