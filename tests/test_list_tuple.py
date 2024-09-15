@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from dirty_equals import AnyThing, Contains, HasLen, IsInt, IsList, IsListOrTuple, IsNegative, IsTuple
@@ -6,11 +8,9 @@ from dirty_equals import AnyThing, Contains, HasLen, IsInt, IsList, IsListOrTupl
 @pytest.mark.parametrize(
     'other,dirty',
     [
-        ([], IsList),
-        ((), IsTuple),
-        ([], IsList()),
+        ([], IsList(length=0)),
+        ((), IsTuple(length=0)),
         ([1], IsList(length=1)),
-        ((), IsTuple()),
         ([1, 2, 3], IsList(1, 2, 3)),
         ((1, 2, 3), IsTuple(1, 2, 3)),
         ((1, 2, 3), IsListOrTuple(1, 2, 3)),
@@ -51,9 +51,9 @@ def test_dirty_equals(other, dirty):
 @pytest.mark.parametrize(
     'other,dirty',
     [
-        ([], IsTuple),
-        ((), IsList),
-        ([1], IsList),
+        ([], IsTuple(length=0)),
+        ((), IsList(length=0)),
+        ([1], IsList(length=0)),
         ([1, 2, 3], IsTuple(1, 2, 3)),
         ((1, 2, 3), IsList(1, 2, 3)),
         ([1, 2, 3, 4], IsList(1, 2, 3)),
@@ -98,6 +98,27 @@ def test_positions_with_check_order():
 def test_wrong_length_length():
     with pytest.raises(TypeError, match='length must be a tuple of length 2, not 3'):
         IsList(1, 2, length=(1, 2, 3))
+
+@pytest.mark.parametrize(
+    'dirty,allowed_type_names', [
+        (IsList, 'list'), 
+        (IsTuple, 'tuple'), 
+        (IsListOrTuple, 'list or tuple'), 
+    ]
+)
+def test_no_args(dirty: type, allowed_type_names: str):
+    
+    err_msg = re.escape(
+        rf'Instantiating `{dirty.__name__}` without any argument is ambiguous.' + '\n'
+        rf'- For an empty {allowed_type_names}, please specify {dirty.__name__}(length=0)' + '\n'
+        rf'- For a {allowed_type_names} of any given length, please specify {dirty.__name__}(length=...)'
+    )
+    with pytest.raises(
+        TypeError,
+        match=err_msg
+    ):
+        dirty()
+
 
 
 @pytest.mark.parametrize(
