@@ -40,7 +40,9 @@ jobs:
         allow-prereleases: true
 
     - run: pip install -r requirements/tests.txt -r requirements/pyproject.txt
+
     - run: make test
+
     - run: coverage xml
 
     - uses: codecov/codecov-action@v3

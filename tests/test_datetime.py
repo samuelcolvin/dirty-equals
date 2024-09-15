@@ -61,9 +61,7 @@ except ImportError:
         ),
         pytest.param(
             datetime(2022, 2, 15, 15, 15, tzinfo=ZoneInfo('Europe/London')),
-            IsDatetime(
-                approx=datetime(2022, 2, 15, 10, 15, tzinfo=ZoneInfo('America/New_York')), enforce_tz=False
-            ),
+            IsDatetime(approx=datetime(2022, 2, 15, 10, 15, tzinfo=ZoneInfo('America/New_York')), enforce_tz=False),
             True,
             id='tz-both-tz',
         ),
