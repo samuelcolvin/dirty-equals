@@ -1,15 +1,17 @@
+import sys
 from datetime import date, datetime, timedelta, timezone
 from unittest.mock import Mock
 
 import pytest
-import pytz
 
 from dirty_equals import IsDate, IsDatetime, IsNow, IsToday
 
-try:
+if sys.version_info >= (3, 9):
     from zoneinfo import ZoneInfo
-except ImportError:
-    ZoneInfo = None
+else:
+    # This code block is due to a typing issue with backports.zoneinfo package:
+    # https://github.com/pganssle/zoneinfo/issues/125
+    from backports.zoneinfo._zoneinfo import ZoneInfo
 
 
 @pytest.mark.parametrize(
@@ -61,16 +63,14 @@ except ImportError:
             id='tz-1-hour',
         ),
         pytest.param(
-            pytz.timezone('Europe/London').localize(datetime(2022, 2, 15, 15, 15)),
-            IsDatetime(
-                approx=pytz.timezone('America/New_York').localize(datetime(2022, 2, 15, 10, 15)), enforce_tz=False
-            ),
+            datetime(2022, 2, 15, 15, 15, tzinfo=ZoneInfo('Europe/London')),
+            IsDatetime(approx=datetime(2022, 2, 15, 10, 15, tzinfo=ZoneInfo('America/New_York')), enforce_tz=False),
             True,
             id='tz-both-tz',
         ),
         pytest.param(
-            pytz.timezone('Europe/London').localize(datetime(2022, 2, 15, 15, 15)),
-            IsDatetime(approx=pytz.timezone('America/New_York').localize(datetime(2022, 2, 15, 10, 15))),
+            datetime(2022, 2, 15, 15, 15, tzinfo=ZoneInfo('Europe/London')),
+            IsDatetime(approx=datetime(2022, 2, 15, 10, 15, tzinfo=ZoneInfo('America/New_York'))),
             False,
             id='tz-both-tz-different',
         ),
