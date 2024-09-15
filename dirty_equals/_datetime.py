@@ -127,14 +127,6 @@ class IsDatetime(IsNumeric[datetime]):
             return True
 
 
-def _zoneinfo(tz: str) -> ZoneInfo:
-    """
-    Instantiate a `ZoneInfo` object from a string, falling back to `pytz.timezone` when `ZoneInfo` is not available
-    (most likely on Python 3.8 and webassembly).
-    """
-    return ZoneInfo(tz)
-
-
 class IsNow(IsDatetime):
     """
     Check if a datetime is close to now, this is similar to `IsDatetime(approx=datetime.now())`,
@@ -180,7 +172,7 @@ class IsNow(IsDatetime):
         ```
         """
         if isinstance(tz, str):
-            tz = _zoneinfo(tz)
+            tz = ZoneInfo(tz)
 
         self.tz = tz
 

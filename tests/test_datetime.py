@@ -1,3 +1,4 @@
+import sys
 from datetime import date, datetime, timedelta, timezone
 from unittest.mock import Mock
 
@@ -5,10 +6,12 @@ import pytest
 
 from dirty_equals import IsDate, IsDatetime, IsNow, IsToday
 
-try:
+if sys.version_info >= (3, 9):
     from zoneinfo import ZoneInfo
-except ImportError:
-    from backports.zoneinfo import ZoneInfo
+else:
+    # This code block is due to a typing issue with backports.zoneinfo package:
+    # https://github.com/pganssle/zoneinfo/issues/125
+    from backports.zoneinfo._zoneinfo import ZoneInfo
 
 
 @pytest.mark.parametrize(
