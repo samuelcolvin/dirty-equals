@@ -40,7 +40,7 @@ class IsUUID(DirtyEquals[UUID]):
         ```
         """
         self.version = version
-        super().__init__(version or plain_repr('*'))
+        super().__init__(version or plain_repr(''))
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, UUID):
@@ -109,7 +109,7 @@ class IsJson(DirtyEquals[JsonType]):
             self.expected_value: Any = expected_kwargs
         else:
             self.expected_value = expected_value
-        super().__init__(plain_repr('*') if expected_value is AnyJson else expected_value)
+        super().__init__(plain_repr('') if expected_value is AnyJson else expected_value)
 
     def __class_getitem__(cls, expected_type: JsonType) -> IsJson[JsonType]:
         return cls(expected_type)
