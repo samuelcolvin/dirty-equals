@@ -1,13 +1,18 @@
 from __future__ import annotations as _annotations
 
+import sys
 from datetime import date, datetime, timedelta, timezone, tzinfo
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from ._numeric import IsNumeric
 from ._utils import Omit
 
-if TYPE_CHECKING:
+if sys.version_info >= (3, 9):
     from zoneinfo import ZoneInfo
+else:
+    # This code block is due to a typing issue with backports.zoneinfo package:
+    # https://github.com/pganssle/zoneinfo/issues/125
+    from backports.zoneinfo._zoneinfo import ZoneInfo
 
 
 class IsDatetime(IsNumeric[datetime]):
@@ -122,24 +127,6 @@ class IsDatetime(IsNumeric[datetime]):
             return True
 
 
-def _zoneinfo(tz: str) -> ZoneInfo:
-    """
-    Instantiate a `ZoneInfo` object from a string, falling back to `pytz.timezone` when `ZoneInfo` is not available
-    (most likely on Python 3.8 and webassembly).
-    """
-    try:
-        from zoneinfo import ZoneInfo
-    except ImportError:
-        try:
-            import pytz
-        except ImportError as e:
-            raise ImportError('`pytz` or `zoneinfo` required for tz handling') from e
-        else:
-            return pytz.timezone(tz)  # type: ignore[return-value]
-    else:
-        return ZoneInfo(tz)
-
-
 class IsNow(IsDatetime):
     """
     Check if a datetime is close to now, this is similar to `IsDatetime(approx=datetime.now())`,
@@ -185,7 +172,7 @@ class IsNow(IsDatetime):
         ```
         """
         if isinstance(tz, str):
-            tz = _zoneinfo(tz)
+            tz = ZoneInfo(tz)
 
         self.tz = tz
 
