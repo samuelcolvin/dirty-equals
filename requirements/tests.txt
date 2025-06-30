@@ -45,7 +45,7 @@ pytest-mock==3.14.0
     # via -r requirements/tests.in
 pytest-pretty==1.2.0
     # via -r requirements/tests.in
-pytz==2024.1
+backports.zoneinfo;python_version<"3.9"
     # via -r requirements/tests.in
 rich==13.7.1
     # via pytest-pretty
