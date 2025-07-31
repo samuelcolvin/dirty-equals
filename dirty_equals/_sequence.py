@@ -6,9 +6,14 @@ from ._utils import Omit, plain_repr
 if TYPE_CHECKING:
     from typing import TypeAlias
 
+if sys.version_info >= (3, 10):
+    from types import EllipsisType
+else:
+    EllipsisType = Any
+
 __all__ = 'HasLen', 'Contains', 'IsListOrTuple', 'IsList', 'IsTuple'
 T = TypeVar('T', List[Any], Tuple[Any, ...])
-LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]]]'
+LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any], EllipsisType]]'
 
 
 class HasLen(DirtyEquals[Sized]):
