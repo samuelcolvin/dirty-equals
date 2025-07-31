@@ -1,3 +1,5 @@
+import sys
+
 from typing import TYPE_CHECKING, Any, Container, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
 
 from ._base import DirtyEquals
