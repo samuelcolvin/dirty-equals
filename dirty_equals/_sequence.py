@@ -14,7 +14,7 @@ else:
 
 __all__ = 'HasLen', 'Contains', 'IsListOrTuple', 'IsList', 'IsTuple'
 T = TypeVar('T', List[Any], Tuple[Any, ...])
-LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any], EllipsisType]]'
+LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]], EllipsisType]'
 
 
 class HasLen(DirtyEquals[Sized]):
