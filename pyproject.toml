@@ -37,7 +37,7 @@ classifiers = [
 ]
 requires-python = '>=3.8'
 dependencies = [
-    'pytz>=2021.3;python_version<"3.9"',
+    'backports.zoneinfo;python_version<"3.9"',
 ]
 optional-dependencies = {pydantic = ['pydantic>=2.4.2'] }
 dynamic = ['version']

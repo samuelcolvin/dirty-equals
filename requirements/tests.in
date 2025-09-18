@@ -4,4 +4,4 @@ pytest
 pytest-mock
 pytest-pretty
 pytest-examples
-pytz
+backports.zoneinfo;python_version<"3.9"
