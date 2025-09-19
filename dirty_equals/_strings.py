@@ -1,5 +1,6 @@
 import re
-from typing import Any, Literal, Optional, Pattern, Tuple, Type, TypeVar, Union
+from re import Pattern
+from typing import Any, Literal, Optional, TypeVar, Union
 
 from ._base import DirtyEquals
 from ._utils import Omit, plain_repr
@@ -18,7 +19,7 @@ class IsAnyStr(DirtyEquals[T]):
     `str` or `bytes` respectively.
     """
 
-    expected_types: Tuple[Type[Any], ...] = (str, bytes)
+    expected_types: tuple[type[Any], ...] = (str, bytes)
 
     def __init__(
         self,
@@ -100,7 +101,7 @@ class IsAnyStr(DirtyEquals[T]):
 
         return True
 
-    def _prepare_regex(self, regex: Union[T, Pattern[T]], regex_flags: int) -> Tuple[Union[T, Pattern[T]], int]:
+    def _prepare_regex(self, regex: Union[T, Pattern[T]], regex_flags: int) -> tuple[Union[T, Pattern[T]], int]:
         if isinstance(regex, re.Pattern):
             if self._flex:
                 # less performant, but more flexible

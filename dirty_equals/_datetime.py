@@ -1,18 +1,11 @@
 from __future__ import annotations as _annotations
 
-import sys
 from datetime import date, datetime, timedelta, timezone, tzinfo
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from ._numeric import IsNumeric
 from ._utils import Omit
-
-if sys.version_info >= (3, 9):
-    from zoneinfo import ZoneInfo
-else:
-    # This code block is due to a typing issue with backports.zoneinfo package:
-    # https://github.com/pganssle/zoneinfo/issues/125
-    from backports.zoneinfo._zoneinfo import ZoneInfo
 
 
 class IsDatetime(IsNumeric[datetime]):

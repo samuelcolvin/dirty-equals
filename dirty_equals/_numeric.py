@@ -1,7 +1,7 @@
 import math
 from datetime import date, datetime, timedelta
 from decimal import Decimal
-from typing import Any, Optional, Tuple, Type, TypeVar, Union
+from typing import Any, Optional, TypeVar, Union
 
 from ._base import DirtyEquals
 
@@ -35,7 +35,7 @@ class IsNumeric(DirtyEquals[N]):
     This class can be used directly or via any of its subclasses.
     """
 
-    allowed_types: Union[Type[N], Tuple[type, ...]] = (int, float, Decimal, date, datetime)
+    allowed_types: Union[type[N], tuple[type, ...]] = (int, float, Decimal, date, datetime)
     """It allows any of the types supported in its subclasses."""
 
     def __init__(
