@@ -1,10 +1,10 @@
-from typing import Any, Dict, Tuple, TypeVar, Union, overload
+from typing import Any, TypeVar, Union, overload
 
 from ._base import DirtyEquals
 from ._strings import IsStr
 from ._utils import get_dict_arg
 
-ExpectedType = TypeVar('ExpectedType', bound=Union[type, Tuple[Union[type, Tuple[Any, ...]], ...]])
+ExpectedType = TypeVar('ExpectedType', bound=Union[type, tuple[Union[type, tuple[Any, ...]], ...]])
 
 
 class IsInstance(DirtyEquals[ExpectedType]):
@@ -157,12 +157,12 @@ class HasAttributes(DirtyEquals[Any]):
     """
 
     @overload
-    def __init__(self, expected: Dict[Any, Any]): ...
+    def __init__(self, expected: dict[Any, Any]): ...
 
     @overload
     def __init__(self, **expected: Any): ...
 
-    def __init__(self, *expected_args: Dict[Any, Any], **expected_kwargs: Any):
+    def __init__(self, *expected_args: dict[Any, Any], **expected_kwargs: Any):
         """
         Can be created from either keyword arguments or an existing dictionary (same as `dict()`).
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Container, Dict, overload
+from collections.abc import Container
+from typing import Any, Callable, overload
 
 from ._base import DirtyEquals, DirtyEqualsMeta
 from ._utils import get_dict_arg
@@ -8,7 +9,7 @@ from ._utils import get_dict_arg
 NotGiven = object()
 
 
-class IsDict(DirtyEquals[Dict[Any, Any]]):
+class IsDict(DirtyEquals[dict[Any, Any]]):
     """
     Base class for comparing dictionaries. By default, `IsDict` isn't particularly useful on its own
     (it behaves pretty much like a normal `dict`), but it can be subclassed

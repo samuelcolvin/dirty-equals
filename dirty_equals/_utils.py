@@ -1,6 +1,6 @@
 __all__ = 'plain_repr', 'PlainRepr', 'Omit', 'get_dict_arg'
 
-from typing import Any, Dict, Tuple
+from typing import Any
 
 
 class PlainRepr:
@@ -24,8 +24,8 @@ Omit = object()
 
 
 def get_dict_arg(
-    name: str, expected_args: Tuple[Dict[Any, Any], ...], expected_kwargs: Dict[str, Any]
-) -> Dict[Any, Any]:
+    name: str, expected_args: tuple[dict[Any, Any], ...], expected_kwargs: dict[str, Any]
+) -> dict[Any, Any]:
     """
     Used to enforce init logic similar to `dict(...)`.
     """

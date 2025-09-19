@@ -1,7 +1,0 @@
-coverage[toml]
-packaging
-pytest
-pytest-mock
-pytest-pretty
-pytest-examples
-backports.zoneinfo;python_version<"3.9"

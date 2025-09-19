@@ -1,7 +1,8 @@
 import io
 from abc import ABCMeta
+from collections.abc import Iterable
 from pprint import PrettyPrinter
-from typing import TYPE_CHECKING, Any, Dict, Generic, Iterable, Optional, Protocol, Tuple, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, Optional, Protocol, TypeVar
 
 from ._utils import Omit
 
@@ -63,7 +64,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         self._other: Any = None
         self._was_equal: Optional[bool] = None
         self._repr_args: Iterable[Any] = repr_args
-        self._repr_kwargs: Dict[str, Any] = repr_kwargs
+        self._repr_kwargs: dict[str, Any] = repr_kwargs
 
     def equals(self, other: Any) -> bool:
         """
@@ -248,7 +249,7 @@ class IsOneOf(DirtyEquals[Any]):
         assert [] == Contains(1) | IsOneOf([])
         ```
         """
-        self.expected_values: Tuple[Any, ...] = (expected_value,) + more_expected_values
+        self.expected_values: tuple[Any, ...] = (expected_value,) + more_expected_values
         super().__init__(*self.expected_values)
 
     def equals(self, other: Any) -> bool:

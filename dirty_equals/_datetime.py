@@ -1,18 +1,11 @@
 from __future__ import annotations as _annotations
 
-import sys
 from datetime import date, datetime, timedelta, timezone, tzinfo
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from ._numeric import IsNumeric
 from ._utils import Omit
-
-if sys.version_info >= (3, 9):
-    from zoneinfo import ZoneInfo
-else:
-    # This code block is due to a typing issue with backports.zoneinfo package:
-    # https://github.com/pganssle/zoneinfo/issues/125
-    from backports.zoneinfo._zoneinfo import ZoneInfo
 
 
 class IsDatetime(IsNumeric[datetime]):
@@ -152,8 +145,7 @@ class IsNow(IsDatetime):
             format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
             enforce_tz: whether timezone should be enforced in comparison, see below for more details
             tz: either a `ZoneInfo`, a `datetime.timezone` or a string which will be passed to `ZoneInfo`,
-                (or `pytz.timezone` on 3.8) to get a timezone,
-                if provided now will be converted to this timezone.
+                to get a timezone, if provided now will be converted to this timezone.
 
         ```py title="IsNow"
         from datetime import datetime, timezone

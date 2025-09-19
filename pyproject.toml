@@ -25,7 +25,6 @@ classifiers = [
     'Environment :: MacOS X',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3 :: Only',
-    'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
@@ -35,10 +34,7 @@ classifiers = [
     'Topic :: Internet',
     'Typing :: Typed',
 ]
-requires-python = '>=3.8'
-dependencies = [
-    'backports.zoneinfo;python_version<"3.9"',
-]
+requires-python = '>=3.9'
 optional-dependencies = {pydantic = ['pydantic>=2.4.2'] }
 dynamic = ['version']
 
@@ -49,15 +45,45 @@ Funding = 'https://github.com/sponsors/samuelcolvin'
 Source = 'https://github.com/samuelcolvin/dirty-equals'
 Changelog = 'https://github.com/samuelcolvin/dirty-equals/releases'
 
+[dependency-groups]
+dev = [
+    "coverage[toml]>=7.6.1",
+    "mypy>=1.14.1",
+    "packaging>=25.0",
+    "pydantic>=2.10.6",
+    "pytest>=8.3.5",
+    "pytest-examples>=0.0.18",
+    "pytest-pretty>=1.2.0",
+    "ruff>=0.13.1",
+    "types-pytz>=2024.2.0.20241221",
+]
+# TODO update these deps to newer versions, I just froze them while migrationg from requirements files
+docs = [
+    "mike==2.1.3",
+    "mkdocs==1.6.0",
+    "mkdocs-autorefs==1.0.1",
+    "mkdocs-material==9.5.31",
+    "mkdocs-simple-hooks==0.1.5",
+    "mkdocstrings[python]==0.25.2",
+]
+
 [tool.ruff]
 line-length = 120
-lint.extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
-lint.ignore = ['E721']
-lint.flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
-lint.mccabe = { max-complexity = 14 }
-lint.pydocstyle = { convention = 'google' }
-format.quote-style = 'single'
-target-version = 'py38'
+target-version = 'py39'
+include = ["dirty_equals/**/*.py", "tests/**/*.py"]
+
+
+[tool.ruff.lint]
+extend-select = ['Q', 'RUF100', 'C90', 'UP', 'I']
+ignore = ['E721']
+flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+[tool.ruff.format]
+# don't format python in docstrings, pytest-examples takes care of it
+docstring-code-format = false
+quote-style = "single"
 
 [tool.pytest.ini_options]
 testpaths = "tests"

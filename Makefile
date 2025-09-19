@@ -1,57 +1,45 @@
 .DEFAULT_GOAL := all
-sources = dirty_equals tests
+
+.PHONY: .uv
+.uv: ## Check that uv is installed
+	@uv --version || echo 'Please install uv: https://docs.astral.sh/uv/getting-started/installation/'
+
+.PHONY: .pre-commit
+.pre-commit: ## Check that pre-commit is installed
+	@pre-commit -V || echo 'Please install pre-commit: https://pre-commit.com/'
 
 .PHONY: install
-install:
-	pip install -U pip pre-commit pip-tools
-	pip install -r requirements/all.txt
-	pre-commit install
-
-.PHONY: refresh-lockfiles
-refresh-lockfiles:
-	@echo "Replacing requirements/*.txt files using pip-compile"
-	find requirements/ -name '*.txt' ! -name 'all.txt' -type f -delete
-	make update-lockfiles
-
-.PHONY: update-lockfiles
-update-lockfiles:
-	@echo "Updating requirements/*.txt files using pip-compile"
-	pip-compile -q -o requirements/linting.txt requirements/linting.in
-	pip-compile -q -o requirements/tests.txt -c requirements/linting.txt requirements/tests.in
-	pip-compile -q -o requirements/docs.txt -c requirements/linting.txt -c requirements/tests.txt requirements/docs.in
-	pip-compile -q -o requirements/pyproject.txt \
-		--extra pydantic \
-		-c requirements/linting.txt -c requirements/tests.txt -c requirements/docs.txt \
-		pyproject.toml
-	pip install --dry-run -r requirements/all.txt
+install: .uv .pre-commit ## Install the package, dependencies, and pre-commit for local development
+	uv sync --frozen --all-groups
+	pre-commit install --install-hooks
 
 .PHONY: format
-format:
-	ruff check --fix-only $(sources)
-	ruff format $(sources)
+format: ## Format the code
+	uv run ruff format
+	uv run ruff check --fix --fix-only
 
 .PHONY: lint
-lint:
-	ruff check $(sources)
-	ruff format --check $(sources)
+lint: ## Lint the code
+	uv run ruff format --check
+	uv run ruff check
 
 .PHONY: test
 test:
-	TZ=utc coverage run -m pytest
-	python tests/mypy_checks.py
+	TZ=utc uv run coverage run -m pytest
+	uv run tests/mypy_checks.py
 
 .PHONY: testcov
 testcov: test
-	@coverage report --show-missing
-	@coverage html
+	@uv run coverage report --show-missing
+	@uv run coverage html
 
 .PHONY: mypy
 mypy:
-	mypy dirty_equals tests/mypy_checks.py
+	uv run mypy dirty_equals tests/mypy_checks.py
 
 .PHONY: docs
 docs:
-	mkdocs build --strict
+	uv run --group docs mkdocs build --strict
 
 .PHONY: all
 all: lint mypy testcov docs
@@ -70,3 +58,16 @@ clean:
 	rm -f .coverage
 	rm -f .coverage.*
 	rm -rf build
+
+.PHONY: help
+help: ## Show this help (usage: make help)
+	@echo "Usage: make [recipe]"
+	@echo "Recipes:"
+	@awk '/^[a-zA-Z0-9_-]+:.*?##/ { \
+	    helpMessage = match($$0, /## (.*)/); \
+	    if (helpMessage) { \
+	        recipe = $$1; \
+	        sub(/:/, "", recipe); \
+	        printf "  \033[36m%-20s\033[0m %s\n", recipe, substr($$0, RSTART + 3, RLENGTH); \
+	    } \
+	}' $(MAKEFILE_LIST)

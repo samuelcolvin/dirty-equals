@@ -1,5 +1,6 @@
 import sys
-from typing import TYPE_CHECKING, Any, Container, Dict, List, Optional, Sized, Tuple, Type, TypeVar, Union, overload
+from collections.abc import Container, Sized
+from typing import TYPE_CHECKING, Any, Optional, TypeVar, Union, overload
 
 from ._base import DirtyEquals
 from ._utils import Omit, plain_repr
@@ -13,8 +14,8 @@ else:
     EllipsisType = Any
 
 __all__ = 'HasLen', 'Contains', 'IsListOrTuple', 'IsList', 'IsTuple'
-T = TypeVar('T', List[Any], Tuple[Any, ...])
-LengthType: 'TypeAlias' = 'Union[None, int, Tuple[int, Union[int, Any]], EllipsisType]'
+T = TypeVar('T', list[Any], tuple[Any, ...])
+LengthType: 'TypeAlias' = 'Union[None, int, tuple[int, Union[int, Any]], EllipsisType]'
 
 
 class HasLen(DirtyEquals[Sized]):
@@ -81,7 +82,7 @@ class Contains(DirtyEquals[Container[Any]]):
         assert [1, 2, 3] != Contains(10)
         ```
         """
-        self.contained_values: Tuple[Any, ...] = (contained_value,) + more_contained_values
+        self.contained_values: tuple[Any, ...] = (contained_value,) + more_contained_values
         super().__init__(*self.contained_values)
 
     def equals(self, other: Any) -> bool:
@@ -93,18 +94,18 @@ class IsListOrTuple(DirtyEquals[T]):
     Check that some object is a list or tuple and optionally its values match some constraints.
     """
 
-    allowed_type: Union[Type[T], Tuple[Type[List[Any]], Type[Tuple[Any, ...]]]] = (list, tuple)
+    allowed_type: Union[type[T], tuple[type[list[Any]], type[tuple[Any, ...]]]] = (list, tuple)
 
     @overload
     def __init__(self, *items: Any, check_order: bool = True, length: 'LengthType' = None): ...
 
     @overload
-    def __init__(self, positions: Dict[int, Any], length: 'LengthType' = None): ...
+    def __init__(self, positions: dict[int, Any], length: 'LengthType' = None): ...
 
     def __init__(
         self,
         *items: Any,
-        positions: Optional[Dict[int, Any]] = None,
+        positions: Optional[dict[int, Any]] = None,
         check_order: bool = True,
         length: 'LengthType' = None,
     ):
@@ -115,15 +116,15 @@ class IsListOrTuple(DirtyEquals[T]):
             *items: Positional members of an object to check. These must start from the zeroth position, but
                 (depending on the value of `length`) may not include all values of the list/tuple being checked.
             check_order: Whether to enforce the order of the items.
-            length (Union[int, Tuple[int, Union[int, Any]]]): length constraints, int or tuple matching the arguments
+            length (Union[int, tuple[int, Union[int, Any]]]): length constraints, int or tuple matching the arguments
                 of [`HasLen`][dirty_equals.HasLen].
 
         or,
 
         Args:
-            positions (Dict[int, Any]): Instead of `*items`, a dictionary of positions and
+            positions (dict[int, Any]): Instead of `*items`, a dictionary of positions and
                 values to check and be provided.
-            length (Union[int, Tuple[int, Union[int, Any]]]): length constraints, int or tuple matching the arguments
+            length (Union[int, tuple[int, Union[int, Any]]]): length constraints, int or tuple matching the arguments
                 of [`HasLen`][dirty_equals.HasLen].
 
         ```py title="IsListOrTuple"
@@ -160,7 +161,7 @@ class IsListOrTuple(DirtyEquals[T]):
             you can use [`AnyThing`][dirty_equals.AnyThing] in your arguments.
         """
         if positions is not None:
-            self.positions: Optional[Dict[int, Any]] = positions
+            self.positions: Optional[dict[int, Any]] = positions
             if items:
                 raise TypeError(f'{self.__class__.__name__} requires either args or positions, not both')
             if not check_order:
@@ -214,7 +215,7 @@ class IsListOrTuple(DirtyEquals[T]):
             return True
 
 
-class IsList(IsListOrTuple[List[Any]]):
+class IsList(IsListOrTuple[list[Any]]):
     """
     All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a list.
 
@@ -235,7 +236,7 @@ class IsList(IsListOrTuple[List[Any]]):
     allowed_type = list
 
 
-class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
+class IsTuple(IsListOrTuple[tuple[Any, ...]]):
     """
     All the same functionality as [`IsListOrTuple`][dirty_equals.IsListOrTuple], but the compared value must be a tuple.
 
@@ -259,7 +260,7 @@ class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
 def _length_repr(length: 'LengthType') -> Any:
     if length is None:
         return Omit
-    elif isinstance(length, int):
+    elif isinstance(length, int) or length is Ellipsis:
         return length
     else:
         if len(length) != 2:

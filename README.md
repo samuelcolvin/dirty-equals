@@ -96,4 +96,4 @@ Simply:
 pip install dirty-equals
 ```
 
-**dirty-equals** requires **Python 3.8+**.
+**dirty-equals** requires **Python 3.9+**.
