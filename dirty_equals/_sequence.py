@@ -259,7 +259,7 @@ class IsTuple(IsListOrTuple[Tuple[Any, ...]]):
 def _length_repr(length: 'LengthType') -> Any:
     if length is None:
         return Omit
-    elif isinstance(length, int):
+    elif isinstance(length, int) or length is Ellipsis:
         return length
     else:
         if len(length) != 2:

@@ -307,7 +307,7 @@ class IsHash(DirtyEquals[str]):
 
         allowed_hashes = HashTypes.__args__  # type: ignore[attr-defined]
         if hash_type not in allowed_hashes:
-            raise ValueError(f"Hash type must be one of the following values: {', '.join(allowed_hashes)}")
+            raise ValueError(f'Hash type must be one of the following values: {", ".join(allowed_hashes)}')
 
         self.hash_type = hash_type
         super().__init__(hash_type)

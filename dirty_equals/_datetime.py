@@ -152,8 +152,7 @@ class IsNow(IsDatetime):
             format_string: if provided, `format_string` is used with `datetime.strptime` to parse strings
             enforce_tz: whether timezone should be enforced in comparison, see below for more details
             tz: either a `ZoneInfo`, a `datetime.timezone` or a string which will be passed to `ZoneInfo`,
-                (or `pytz.timezone` on 3.8) to get a timezone,
-                if provided now will be converted to this timezone.
+                to get a timezone, if provided now will be converted to this timezone.
 
         ```py title="IsNow"
         from datetime import datetime, timezone
