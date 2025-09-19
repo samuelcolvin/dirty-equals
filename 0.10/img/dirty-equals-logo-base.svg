@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="440.75958"
+   height="74.999977"
+   viewBox="0 0 116.61763 19.843745"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="dirty-equals-logo-base.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.5554293"
+     inkscape:cx="221.48226"
+     inkscape:cy="-7.0720026"
+     inkscape:window-width="2192"
+     inkscape:window-height="1169"
+     inkscape:window-x="2192"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-104.104,-160.86163)">
+    <path
+       d="m 124.41745,172.11711 c 0.19306,-0.49069 0.29327,-1.01378 0.29327,-1.54271 0,-2.31875 -1.89076,-4.21953 -4.26337,-4.34317 0.26717,-0.96218 0.2569,-1.9758 -0.032,-3.02262 -0.18239,-0.66127 -0.44474,-1.20549 -0.63269,-1.54564 -0.086,-0.15557 -0.17479,-0.30267 -0.26392,-0.43711 -0.12474,-0.18808 -0.2667,-0.40144 -0.57592,-0.35871 h -5e-5 c -0.14266,0.0196 -0.26984,0.10111 -0.34784,0.22299 -0.67664,1.05792 -1.96382,1.6175 -3.82582,1.66344 -1.77419,0.0438 -3.33138,1.03743 -3.96714,2.53146 -0.19857,0.46659 -0.29698,0.8159 -0.34407,1.06475 -0.0591,0.0135 -0.12514,0.0292 -0.19833,0.0475 -2.37522,0.59145 -3.79323,2.26475 -3.79323,4.47615 0,0.5193 0.0975,1.0362 0.28463,1.52083 -0.68274,0.30039 -1.28858,0.76657 -1.74195,1.34722 -0.5921,0.7584 -0.90502,1.66238 -0.90502,2.61429 0,2.39837 2.02298,4.34959 4.5096,4.34959 h 14.79324 c 2.48662,0 4.50966,-1.95122 4.50966,-4.34959 0,-2.049 -1.48818,-3.79334 -3.4991,-4.23868"
+       fill="#000000"
+       id="path828"
+       style="fill:#d84315;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.264583"
+       sodipodi:nodetypes="csccscsscssccsccssssc" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.267396"
+       id="rect8569"
+       width="10.992173"
+       height="2.2582648"
+       x="110.40061"
+       y="169.73238"
+       rx="0.5053162"
+       ry="0.5053162" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.267396"
+       id="rect8905"
+       width="10.992173"
+       height="2.2582648"
+       x="110.40061"
+       y="174.49481"
+       rx="0.5053162"
+       ry="0.5053162" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.7461px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#d84315;fill-opacity:1;stroke:none;stroke-width:0.418653"
+       x="131.13019"
+       y="176.68103"
+       id="text10607"><tspan
+         sodipodi:role="line"
+         id="tspan10605"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#d84315;fill-opacity:1;stroke-width:0.418653"
+         x="131.13019"
+         y="176.68103">dirty-equals</tspan></text>
+  </g>
+</svg>
