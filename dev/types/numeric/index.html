@@ -1244,12 +1244,12 @@
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumeric" href="#dirty_equals.IsNumeric">IsNumeric</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumeric" optional hover>IsNumeric</autoref>[<autoref identifier="int" optional>int</autoref>]</code></p>
 
 
       <p>Checks that a value is an integer.</p>
 <p>Inherits from <a class="autorefs autorefs-internal" href="#dirty_equals.IsNumeric"><code>IsNumeric</code></a> and can therefore be initialised with any of its arguments.</p>
-<div class="highlight"><span class="filename">IsInt</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsInt</span>
+<div class="highlight"><span class="filename">IsInt</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsInt</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">IsInt</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="o">-</span><span class="mi">2</span> <span class="o">==</span> <span class="n">IsInt</span>
@@ -1317,12 +1317,12 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumeric" href="#dirty_equals.IsNumeric">IsNumeric</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumeric" optional hover>IsNumeric</autoref>[<autoref identifier="float" optional>float</autoref>]</code></p>
 
 
       <p>Checks that a value is a float.</p>
 <p>Inherits from <a class="autorefs autorefs-internal" href="#dirty_equals.IsNumeric"><code>IsNumeric</code></a> and can therefore be initialised with any of its arguments.</p>
-<div class="highlight"><span class="filename">IsFloat</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsFloat</span>
+<div class="highlight"><span class="filename">IsFloat</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsFloat</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsFloat</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">!=</span> <span class="n">IsFloat</span>
@@ -1386,14 +1386,14 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumber" href="#dirty_equals.IsNumber">IsNumber</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumber" optional hover>IsNumber</autoref></code></p>
 
 
       <p>Check that a value is positive (<code>&gt; 0</code>), can be an <code>int</code>, a <code>float</code> or a <code>Decimal</code>
 (or indeed any value which implements <code>__gt__</code> for <code>0</code>).</p>
-<div class="highlight"><span class="filename">IsPositive</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsPositive</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsPositive</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsPositive</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsPositive</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">IsPositive</span>
@@ -1436,14 +1436,14 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumber" href="#dirty_equals.IsNumber">IsNumber</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumber" optional hover>IsNumber</autoref></code></p>
 
 
       <p>Check that a value is negative (<code>&lt; 0</code>), can be an <code>int</code>, a <code>float</code> or a <code>Decimal</code>
 (or indeed any value which implements <code>__lt__</code> for <code>0</code>).</p>
-<div class="highlight"><span class="filename">IsNegative</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsNegative</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNegative</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNegative</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsNegative</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">IsNegative</span>
@@ -1486,14 +1486,14 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumber" href="#dirty_equals.IsNumber">IsNumber</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumber" optional hover>IsNumber</autoref></code></p>
 
 
       <p>Check that a value is positive or zero (<code>&gt;= 0</code>), can be an <code>int</code>, a <code>float</code> or a <code>Decimal</code>
 (or indeed any value which implements <code>__ge__</code> for <code>0</code>).</p>
-<div class="highlight"><span class="filename">IsNonNegative</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsNonNegative</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNonNegative</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNonNegative</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsNonNegative</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">IsNonNegative</span>
@@ -1537,14 +1537,14 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumber" href="#dirty_equals.IsNumber">IsNumber</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumber" optional hover>IsNumber</autoref></code></p>
 
 
       <p>Check that a value is negative or zero (<code>&lt;=0</code>), can be an <code>int</code>, a <code>float</code> or a <code>Decimal</code>
 (or indeed any value which implements <code>__le__</code> for <code>0</code>).</p>
-<div class="highlight"><span class="filename">IsNonPositive</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsNonPositive</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNonPositive</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNonPositive</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsNonPositive</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">IsNonPositive</span>
@@ -1589,13 +1589,13 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsInt" href="#dirty_equals.IsInt">IsInt</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsInt" optional hover>IsInt</autoref></code></p>
 
 
       <p>Like <a class="autorefs autorefs-internal" href="#dirty_equals.IsPositive"><code>IsPositive</code></a> but only for <code>int</code>s.</p>
-<div class="highlight"><span class="filename">IsPositiveInt</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsPositiveInt</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsPositiveInt</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsPositiveInt</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">IsPositiveInt</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">!=</span> <span class="n">IsPositiveInt</span>
@@ -1638,13 +1638,13 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsInt" href="#dirty_equals.IsInt">IsInt</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsInt" optional hover>IsInt</autoref></code></p>
 
 
       <p>Like <a class="autorefs autorefs-internal" href="#dirty_equals.IsNegative"><code>IsNegative</code></a> but only for <code>int</code>s.</p>
-<div class="highlight"><span class="filename">IsNegativeInt</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsNegativeInt</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNegativeInt</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNegativeInt</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">==</span> <span class="n">IsNegativeInt</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">!=</span> <span class="n">IsNegativeInt</span>
@@ -1687,13 +1687,13 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsFloat" href="#dirty_equals.IsFloat">IsFloat</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsFloat" optional hover>IsFloat</autoref></code></p>
 
 
       <p>Like <a class="autorefs autorefs-internal" href="#dirty_equals.IsPositive"><code>IsPositive</code></a> but only for <code>float</code>s.</p>
-<div class="highlight"><span class="filename">IsPositiveFloat</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsPositiveFloat</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsPositiveFloat</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsPositiveFloat</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsPositiveFloat</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">!=</span> <span class="n">IsPositiveFloat</span>
@@ -1736,13 +1736,13 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsFloat" href="#dirty_equals.IsFloat">IsFloat</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsFloat" optional hover>IsFloat</autoref></code></p>
 
 
       <p>Like <a class="autorefs autorefs-internal" href="#dirty_equals.IsNegative"><code>IsNegative</code></a> but only for <code>float</code>s.</p>
-<div class="highlight"><span class="filename">IsNegativeFloat</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<div class="highlight"><span class="filename">IsNegativeFloat</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNegativeFloat</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNegativeFloat</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsNegativeFloat</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="o">-</span><span class="mi">1</span> <span class="o">!=</span> <span class="n">IsNegativeFloat</span>
@@ -1785,12 +1785,12 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsFloat" href="#dirty_equals.IsFloat">IsFloat</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsFloat" optional hover>IsFloat</autoref></code></p>
 
 
       <p>Checks that a value is float and infinite (positive or negative).</p>
 <p>Inherits from <a class="autorefs autorefs-internal" href="#dirty_equals.IsFloat"><code>IsFloat</code></a>.</p>
-<div class="highlight"><span class="filename">IsFloatInf</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsFloatInf</span>
+<div class="highlight"><span class="filename">IsFloatInf</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsFloatInf</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatInf</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatInf</span>
@@ -1831,12 +1831,12 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsFloatInf" href="#dirty_equals.IsFloatInf">IsFloatInf</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsFloatInf" optional hover>IsFloatInf</autoref></code></p>
 
 
       <p>Checks that a value is float and positive infinite.</p>
 <p>Inherits from <a class="autorefs autorefs-internal" href="#dirty_equals.IsFloatInf"><code>IsFloatInf</code></a>.</p>
-<div class="highlight"><span class="filename">IsFloatInfPos</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsFloatInfPos</span>
+<div class="highlight"><span class="filename">IsFloatInfPos</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsFloatInfPos</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatInfPos</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatInfPos</span>
@@ -1878,12 +1878,12 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsFloatInf" href="#dirty_equals.IsFloatInf">IsFloatInf</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsFloatInf" optional hover>IsFloatInf</autoref></code></p>
 
 
       <p>Checks that a value is float and negative infinite.</p>
 <p>Inherits from <a class="autorefs autorefs-internal" href="#dirty_equals.IsFloatInf"><code>IsFloatInf</code></a>.</p>
-<div class="highlight"><span class="filename">IsFloatInfNeg</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsFloatInfNeg</span>
+<div class="highlight"><span class="filename">IsFloatInfNeg</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsFloatInfNeg</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatInfNeg</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatInfNeg</span>
@@ -1925,12 +1925,12 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsFloat" href="#dirty_equals.IsFloat">IsFloat</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsFloat" optional hover>IsFloat</autoref></code></p>
 
 
       <p>Checks that a value is float and nan (not a number).</p>
 <p>Inherits from <a class="autorefs autorefs-internal" href="#dirty_equals.IsFloat"><code>IsFloat</code></a>.</p>
-<div class="highlight"><span class="filename">IsFloatNan</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsFloatNan</span>
+<div class="highlight"><span class="filename">IsFloatNan</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsFloatNan</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsFloatNan</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">!=</span> <span class="n">IsFloatNan</span>
@@ -1966,12 +1966,12 @@ technically they are sub-types of <code>int</code>.</p>
 
 
 <a href="#dirty_equals.IsApprox" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsApprox</span><span class="p">(</span><span class="n">approx</span><span class="p">:</span> <span class="n"><span title="dirty_equals._numeric.Num">Num</span></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.Num">Num</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsApprox</span><span class="p">(</span><span class="n">approx</span><span class="p">:</span> <span class="n"><autoref identifier="dirty_equals._numeric.Num" optional hover>Num</autoref></span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.Num" optional hover>Num</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumber" href="#dirty_equals.IsNumber">IsNumber</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumber" optional hover>IsNumber</autoref></code></p>
 
 
       <p>Simplified subclass of <a class="autorefs autorefs-internal" href="#dirty_equals.IsNumber"><code>IsNumber</code></a> that only allows approximate comparisons.</p>
@@ -1992,7 +1992,7 @@ technically they are sub-types of <code>int</code>.</p>
           <tr class="doc-section-item">
             <td><code>approx</code></td>
             <td>
-                  <code><span title="dirty_equals._numeric.Num">Num</span></code>
+                  <code><autoref identifier="dirty_equals._numeric.Num" optional hover>Num</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2006,7 +2006,7 @@ technically they are sub-types of <code>int</code>.</p>
           <tr class="doc-section-item">
             <td><code>delta</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.Num">Num</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.Num" optional hover>Num</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2019,7 +2019,7 @@ technically they are sub-types of <code>int</code>.</p>
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">IsApprox</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsApprox</span>
+      <div class="highlight"><span class="filename">IsApprox</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsApprox</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsApprox</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="mi">123</span> <span class="o">==</span> <span class="n">IsApprox</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -2061,7 +2061,7 @@ technically they are sub-types of <code>int</code>.</p>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumeric" href="#dirty_equals.IsNumeric">IsNumeric</a>[<span title="dirty_equals._numeric.AnyNumber">AnyNumber</span>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumeric" optional hover>IsNumeric</autoref>[<autoref identifier="dirty_equals._numeric.AnyNumber" optional hover>AnyNumber</autoref>]</code></p>
 
 
       <p>Base class for all types that can be used with all number types, e.g. numeric but not <code>date</code> or <code>datetime</code>.</p>
@@ -2092,7 +2092,7 @@ technically they are sub-types of <code>int</code>.</p>
   </span>
 
 <a href="#dirty_equals.IsNumber.allowed_types" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="decimal.Decimal" href="https://docs.python.org/3/library/decimal.html#decimal.Decimal">Decimal</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span><span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span> <span class="n"><autoref identifier="float" optional>float</autoref></span><span class="p">,</span> <span class="n"><autoref identifier="decimal.Decimal" optional hover>Decimal</autoref></span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2121,12 +2121,21 @@ technically they are sub-types of <code>int</code>.</p>
 
 
 <a href="#dirty_equals.IsNumeric" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsNumeric</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">exactly</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsNumeric</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">exactly</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">approx</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">delta</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">gt</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">lt</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">ge</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">le</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._numeric.N">N</span>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._base.DirtyEquals" optional hover>DirtyEquals</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code></p>
 
 
       <p>Base class for all numeric types, <code>IsNumeric</code> implements approximate and inequality comparisons,
@@ -2149,7 +2158,7 @@ as well as the type checks.</p>
           <tr class="doc-section-item">
             <td><code>exactly</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2164,7 +2173,7 @@ while also checking its value.</p>
           <tr class="doc-section-item">
             <td><code>approx</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2178,7 +2187,7 @@ while also checking its value.</p>
           <tr class="doc-section-item">
             <td><code>delta</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2193,7 +2202,7 @@ if omitted <code>value / 100</code> is used except for datetimes where 2 seconds
           <tr class="doc-section-item">
             <td><code>gt</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2207,7 +2216,7 @@ if omitted <code>value / 100</code> is used except for datetimes where 2 seconds
           <tr class="doc-section-item">
             <td><code>lt</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2221,7 +2230,7 @@ if omitted <code>value / 100</code> is used except for datetimes where 2 seconds
           <tr class="doc-section-item">
             <td><code>ge</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2235,7 +2244,7 @@ if omitted <code>value / 100</code> is used except for datetimes where 2 seconds
           <tr class="doc-section-item">
             <td><code>le</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a>[<span title="dirty_equals._numeric.N">N</span>]</code>
+                  <code><autoref identifier="typing.Optional" optional hover>Optional</autoref>[<autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2251,9 +2260,9 @@ if omitted <code>value / 100</code> is used except for datetimes where 2 seconds
       <p>If not values are provided, only the type is checked.</p>
 <p>If <code>approx</code> is provided as well a <code>gt</code>, <code>lt</code>, <code>ge</code>, or <code>le</code>, a <code>TypeError</code> is raised.</p>
 <p>Example of direct usage:</p>
-<div class="highlight"><span class="filename">IsNumeric</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<div class="highlight"><span class="filename">IsNumeric</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNumeric</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNumeric</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">assert</span> <span class="mf">1.0</span> <span class="o">==</span> <span class="n">IsNumeric</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="mi">4</span> <span class="o">==</span> <span class="n">IsNumeric</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -2286,7 +2295,13 @@ if omitted <code>value / 100</code> is used except for datetimes where 2 seconds
   </span>
 
 <a href="#dirty_equals.IsNumeric.allowed_types" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">allowed_types</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Type" href="https://docs.python.org/3/library/typing.html#typing.Type">Type</a></span><span class="p">[</span><span class="n"><span title="dirty_equals._numeric.N">N</span></span><span class="p">],</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#type">type</a></span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="decimal.Decimal" href="https://docs.python.org/3/library/decimal.html#decimal.Decimal">Decimal</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">allowed_types</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Union" optional hover>Union</autoref></span><span class="p">[</span><span class="n"><autoref identifier="type" optional>type</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dirty_equals._numeric.N" optional hover>N</autoref></span><span class="p">],</span> <span class="n"><autoref identifier="tuple" optional>tuple</autoref></span><span class="p">[</span><span class="n"><autoref identifier="type" optional>type</autoref></span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n"><autoref identifier="float" optional>float</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n"><autoref identifier="decimal.Decimal" optional hover>Decimal</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n"><autoref identifier="datetime.date" optional hover>date</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n"><autoref identifier="datetime.datetime" optional hover>datetime</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

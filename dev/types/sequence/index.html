@@ -840,12 +840,17 @@
 
 
 <a href="#dirty_equals.IsListOrTuple" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsListOrTuple</span><span class="p">(</span><span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">check_order</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="n"><span title="dirty_equals._sequence.LengthType">LengthType</span></span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsListOrTuple</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">positions</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dict" optional>dict</autoref></span><span class="p">[</span><span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">check_order</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">length</span><span class="p">:</span> <span class="n"><autoref identifier="dirty_equals._sequence.LengthType" optional hover>LengthType</autoref></span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<span title="dirty_equals._sequence.T">T</span>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._base.DirtyEquals" optional hover>DirtyEquals</autoref>[<autoref identifier="dirty_equals._sequence.T" optional hover>T</autoref>]</code></p>
 
 
       <p>Check that some object is a list or tuple and optionally its values match some constraints.</p>
@@ -867,7 +872,7 @@
           <tr class="doc-section-item">
             <td><code>*items</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -882,7 +887,7 @@
           <tr class="doc-section-item">
             <td><code>check_order</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -896,7 +901,7 @@
           <tr class="doc-section-item">
             <td><code>length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -927,7 +932,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>positions</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
+                  <code><autoref identifier="dict" optional>dict</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -942,7 +947,7 @@ values to check and be provided.</p>
           <tr class="doc-section-item">
             <td><code>length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -956,7 +961,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">IsListOrTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">IsListOrTuple</span>
+      <div class="highlight"><span class="filename">IsListOrTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">IsListOrTuple</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">IsListOrTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsListOrTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">check_order</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1019,16 +1024,21 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
 
 
 <a href="#dirty_equals.IsList" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsList</span><span class="p">(</span><span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">check_order</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="n"><span title="dirty_equals._sequence.LengthType">LengthType</span></span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsList</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">positions</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dict" optional>dict</autoref></span><span class="p">[</span><span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">check_order</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">length</span><span class="p">:</span> <span class="n"><autoref identifier="dirty_equals._sequence.LengthType" optional hover>LengthType</autoref></span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._sequence.IsListOrTuple" href="#dirty_equals.IsListOrTuple">IsListOrTuple</a>[<a class="autorefs autorefs-external" title="typing.List" href="https://docs.python.org/3/library/typing.html#typing.List">List</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._sequence.IsListOrTuple" optional hover>IsListOrTuple</autoref>[<autoref identifier="list" optional>list</autoref>[<autoref identifier="typing.Any" optional hover>Any</autoref>]]</code></p>
 
 
       <p>All the same functionality as <a class="autorefs autorefs-internal" href="#dirty_equals.IsListOrTuple"><code>IsListOrTuple</code></a>, but the compared value must be a list.</p>
-<div class="highlight"><span class="filename">IsList</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsList</span>
+<div class="highlight"><span class="filename">IsList</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsList</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">IsList</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">IsList</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
@@ -1057,7 +1067,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>*items</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1072,7 +1082,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>check_order</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1086,7 +1096,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1117,7 +1127,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>positions</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
+                  <code><autoref identifier="dict" optional>dict</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1132,7 +1142,7 @@ values to check and be provided.</p>
           <tr class="doc-section-item">
             <td><code>length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1146,7 +1156,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">IsListOrTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">IsListOrTuple</span>
+      <div class="highlight"><span class="filename">IsListOrTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">IsListOrTuple</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">IsListOrTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsListOrTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">check_order</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1209,16 +1219,21 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
 
 
 <a href="#dirty_equals.IsTuple" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsTuple</span><span class="p">(</span><span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="n">positions</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Optional" href="https://docs.python.org/3/library/typing.html#typing.Optional">Optional</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">check_order</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="n"><span title="dirty_equals._sequence.LengthType">LengthType</span></span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsTuple</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">positions</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Optional" optional hover>Optional</autoref></span><span class="p">[</span><span class="n"><autoref identifier="dict" optional>dict</autoref></span><span class="p">[</span><span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">check_order</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">length</span><span class="p">:</span> <span class="n"><autoref identifier="dirty_equals._sequence.LengthType" optional hover>LengthType</autoref></span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._sequence.IsListOrTuple" href="#dirty_equals.IsListOrTuple">IsListOrTuple</a>[<a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>, ...]]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._sequence.IsListOrTuple" optional hover>IsListOrTuple</autoref>[<autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="typing.Any" optional hover>Any</autoref>, ...]]</code></p>
 
 
       <p>All the same functionality as <a class="autorefs autorefs-internal" href="#dirty_equals.IsListOrTuple"><code>IsListOrTuple</code></a>, but the compared value must be a tuple.</p>
-<div class="highlight"><span class="filename">IsTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsTuple</span>
+<div class="highlight"><span class="filename">IsTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsTuple</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsTuple</span><span class="p">(</span><span class="n">positions</span><span class="o">=</span><span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>
@@ -1247,7 +1262,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>*items</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1262,7 +1277,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>check_order</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1276,7 +1291,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1307,7 +1322,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>positions</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Dict" href="https://docs.python.org/3/library/typing.html#typing.Dict">Dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
+                  <code><autoref identifier="dict" optional>dict</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1322,7 +1337,7 @@ values to check and be provided.</p>
           <tr class="doc-section-item">
             <td><code>length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Tuple" href="https://docs.python.org/3/library/typing.html#typing.Tuple">Tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="tuple" optional>tuple</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Union" optional hover>Union</autoref>[<autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]]]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1336,7 +1351,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">IsListOrTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">IsListOrTuple</span>
+      <div class="highlight"><span class="filename">IsListOrTuple</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnyThing</span><span class="p">,</span> <span class="n">IsListOrTuple</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">IsListOrTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsListOrTuple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">check_order</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1399,12 +1414,15 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
 
 
 <a href="#dirty_equals.HasLen" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">HasLen</span><span class="p">(</span><span class="n">min_length</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n">max_length</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a></span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">HasLen</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">min_length</span><span class="p">:</span> <span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">max_length</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Union" optional hover>Union</autoref></span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n"><autoref identifier="int" optional>int</autoref></span><span class="p">,</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<a class="autorefs autorefs-external" title="typing.Sized" href="https://docs.python.org/3/library/typing.html#typing.Sized">Sized</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._base.DirtyEquals" optional hover>DirtyEquals</autoref>[<autoref identifier="collections.abc.Sized" optional hover>Sized</autoref>]</code></p>
 
 
       <p>Check that some has a given length, or length in a given range.</p>
@@ -1425,7 +1443,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>min_length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>
+                  <code><autoref identifier="int" optional>int</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1439,7 +1457,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>max_length</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Union" href="https://docs.python.org/3/library/typing.html#typing.Union">Union</a>[None, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a>, <a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]</code>
+                  <code><autoref identifier="typing.Union" optional hover>Union</autoref>[None, <autoref identifier="int" optional>int</autoref>, <autoref identifier="typing.Any" optional hover>Any</autoref>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1452,7 +1470,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">HasLen</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">HasLen</span>
+      <div class="highlight"><span class="filename">HasLen</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">HasLen</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">HasLen</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># (1)!</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="s1">&#39;123&#39;</span> <span class="o">==</span> <span class="n">HasLen</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>  <span class="c1"># (2)!</span>
@@ -1496,12 +1514,12 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
 
 
 <a href="#dirty_equals.Contains" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">Contains</span><span class="p">(</span><span class="n">contained_value</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="o">*</span><span class="n">more_contained_values</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">Contains</span><span class="p">(</span><span class="n">contained_value</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">,</span> <span class="o">*</span><span class="n">more_contained_values</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<a class="autorefs autorefs-external" title="typing.Container" href="https://docs.python.org/3/library/typing.html#typing.Container">Container</a>[<a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>]]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._base.DirtyEquals" optional hover>DirtyEquals</autoref>[<autoref identifier="collections.abc.Container" optional hover>Container</autoref>[<autoref identifier="typing.Any" optional hover>Any</autoref>]]</code></p>
 
 
       <p>Check that an object contains one or more values.</p>
@@ -1522,7 +1540,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>contained_value</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1536,7 +1554,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           <tr class="doc-section-item">
             <td><code>*more_contained_values</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1549,7 +1567,7 @@ of <a class="autorefs autorefs-internal" href="#dirty_equals.HasLen"><code>HasLe
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">Contains</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">Contains</span>
+      <div class="highlight"><span class="filename">Contains</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">Contains</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">Contains</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">Contains</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>

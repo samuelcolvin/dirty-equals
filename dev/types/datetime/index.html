@@ -852,12 +852,24 @@
 
 
 <a href="#dirty_equals.IsDatetime" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsDatetime</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.timedelta" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta">timedelta</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">unix_number</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsDatetime</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">approx</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.datetime" optional hover>datetime</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">delta</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.timedelta" optional hover>timedelta</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="int" optional>int</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="float" optional>float</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">gt</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.datetime" optional hover>datetime</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">lt</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.datetime" optional hover>datetime</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">ge</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.datetime" optional hover>datetime</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">le</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.datetime" optional hover>datetime</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">unix_number</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">iso_string</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">format_string</span><span class="p">:</span> <span class="n"><autoref identifier="str" optional>str</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">enforce_tz</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumeric" href="../numeric/#dirty_equals.IsNumeric">IsNumeric</a>[<a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumeric" optional hover>IsNumeric</autoref>[<autoref identifier="datetime.datetime" optional hover>datetime</autoref>]</code></p>
 
 
       <p>Check if the value is a datetime, and matches the given conditions.</p>
@@ -878,7 +890,7 @@
           <tr class="doc-section-item">
             <td><code>approx</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a> | None</code>
+                  <code><autoref identifier="datetime.datetime" optional hover>datetime</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -892,7 +904,7 @@
           <tr class="doc-section-item">
             <td><code>delta</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.timedelta" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta">timedelta</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a> | None</code>
+                  <code><autoref identifier="datetime.timedelta" optional hover>timedelta</autoref> | <autoref identifier="int" optional>int</autoref> | <autoref identifier="float" optional>float</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -907,7 +919,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>gt</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a> | None</code>
+                  <code><autoref identifier="datetime.datetime" optional hover>datetime</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -921,7 +933,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>lt</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a> | None</code>
+                  <code><autoref identifier="datetime.datetime" optional hover>datetime</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -935,7 +947,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>ge</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a> | None</code>
+                  <code><autoref identifier="datetime.datetime" optional hover>datetime</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -949,7 +961,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>le</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.datetime" href="https://docs.python.org/3/library/datetime.html#datetime.datetime">datetime</a> | None</code>
+                  <code><autoref identifier="datetime.datetime" optional hover>datetime</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -963,7 +975,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>unix_number</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -977,7 +989,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>iso_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -991,7 +1003,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>format_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None</code>
+                  <code><autoref identifier="str" optional>str</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1005,7 +1017,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>enforce_tz</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1019,9 +1031,9 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
       </tbody>
     </table>
       <p>Examples of basic usage:</p>
-<div class="highlight"><span class="filename">IsDatetime</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<div class="highlight"><span class="filename">IsDatetime</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsDatetime</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsDatetime</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">y2k</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsDatetime</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">y2k</span><span class="p">)</span>
@@ -1073,10 +1085,10 @@ based on the <code>enforce_tz</code> parameter:</p>
 </li>
 </ul>
 <p>Example</p>
-<div class="highlight"><span class="filename">IsDatetime & timezones</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">zoneinfo</span> <span class="kn">import</span> <span class="n">ZoneInfo</span>
+<div class="highlight"><span class="filename">IsDatetime & timezones</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsDatetime</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsDatetime</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">tz_london</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="s1">&#39;Europe/London&#39;</span><span class="p">)</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">new_year_london</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tz_london</span><span class="p">)</span>
@@ -1105,12 +1117,20 @@ based on the <code>enforce_tz</code> parameter:</p>
 
 
 <a href="#dirty_equals.IsNow" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsNow</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.timedelta" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta">timedelta</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">unix_number</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">enforce_tz</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">tz</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.tzinfo" href="https://docs.python.org/3/library/datetime.html#datetime.tzinfo">tzinfo</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsNow</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">delta</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.timedelta" optional hover>timedelta</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="int" optional>int</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="float" optional>float</autoref></span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">unix_number</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">iso_string</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">format_string</span><span class="p">:</span> <span class="n"><autoref identifier="str" optional>str</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">enforce_tz</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">tz</span><span class="p">:</span> <span class="n"><autoref identifier="str" optional>str</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="datetime.tzinfo" optional hover>tzinfo</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._datetime.IsDatetime" href="#dirty_equals.IsDatetime">IsDatetime</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._datetime.IsDatetime" optional hover>IsDatetime</autoref></code></p>
 
 
       <p>Check if a datetime is close to now, this is similar to <code>IsDatetime(approx=datetime.now())</code>,
@@ -1132,7 +1152,7 @@ but slightly more powerful.</p>
           <tr class="doc-section-item">
             <td><code>delta</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.timedelta" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta">timedelta</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></code>
+                  <code><autoref identifier="datetime.timedelta" optional hover>timedelta</autoref> | <autoref identifier="int" optional>int</autoref> | <autoref identifier="float" optional>float</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1147,7 +1167,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>unix_number</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1161,7 +1181,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>iso_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1175,7 +1195,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>format_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None</code>
+                  <code><autoref identifier="str" optional>str</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1189,7 +1209,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>enforce_tz</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1203,13 +1223,12 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>tz</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | <a class="autorefs autorefs-external" title="datetime.tzinfo" href="https://docs.python.org/3/library/datetime.html#datetime.tzinfo">tzinfo</a> | None</code>
+                  <code><autoref identifier="str" optional>str</autoref> | <autoref identifier="datetime.tzinfo" optional hover>tzinfo</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
                 <p>either a <code>ZoneInfo</code>, a <code>datetime.timezone</code> or a string which will be passed to <code>ZoneInfo</code>,
-(or <code>pytz.timezone</code> on 3.8) to get a timezone,
-if provided now will be converted to this timezone.</p>
+to get a timezone, if provided now will be converted to this timezone.</p>
               </div>
             </td>
             <td>
@@ -1218,9 +1237,9 @@ if provided now will be converted to this timezone.</p>
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">IsNow</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+      <div class="highlight"><span class="filename">IsNow</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsNow</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsNow</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="n">now</span> <span class="o">==</span> <span class="n">IsNow</span>
@@ -1263,12 +1282,22 @@ if provided now will be converted to this timezone.</p>
 
 
 <a href="#dirty_equals.IsDate" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsDate</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">approx</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.timedelta" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta">timedelta</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">gt</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lt</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ge</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">le</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsDate</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">approx</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.date" optional hover>date</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">delta</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.timedelta" optional hover>timedelta</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="int" optional>int</autoref></span> <span class="o">|</span> <span class="n"><autoref identifier="float" optional>float</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">gt</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.date" optional hover>date</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">lt</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.date" optional hover>date</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">ge</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.date" optional hover>date</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">le</span><span class="p">:</span> <span class="n"><autoref identifier="datetime.date" optional hover>date</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">iso_string</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">format_string</span><span class="p">:</span> <span class="n"><autoref identifier="str" optional>str</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._numeric.IsNumeric" href="../numeric/#dirty_equals.IsNumeric">IsNumeric</a>[<a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._numeric.IsNumeric" optional hover>IsNumeric</autoref>[<autoref identifier="datetime.date" optional hover>date</autoref>]</code></p>
 
 
       <p>Check if the value is a date, and matches the given conditions.</p>
@@ -1289,7 +1318,7 @@ if provided now will be converted to this timezone.</p>
           <tr class="doc-section-item">
             <td><code>approx</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a> | None</code>
+                  <code><autoref identifier="datetime.date" optional hover>date</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1303,7 +1332,7 @@ if provided now will be converted to this timezone.</p>
           <tr class="doc-section-item">
             <td><code>delta</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.timedelta" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta">timedelta</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a> | None</code>
+                  <code><autoref identifier="datetime.timedelta" optional hover>timedelta</autoref> | <autoref identifier="int" optional>int</autoref> | <autoref identifier="float" optional>float</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1318,7 +1347,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>gt</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a> | None</code>
+                  <code><autoref identifier="datetime.date" optional hover>date</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1332,7 +1361,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>lt</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a> | None</code>
+                  <code><autoref identifier="datetime.date" optional hover>date</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1346,7 +1375,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>ge</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a> | None</code>
+                  <code><autoref identifier="datetime.date" optional hover>date</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1360,7 +1389,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>le</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="datetime.date" href="https://docs.python.org/3/library/datetime.html#datetime.date">date</a> | None</code>
+                  <code><autoref identifier="datetime.date" optional hover>date</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1374,7 +1403,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>iso_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1388,7 +1417,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>format_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None</code>
+                  <code><autoref identifier="str" optional>str</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1402,9 +1431,9 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
       </tbody>
     </table>
       <p>Examples of basic usage:</p>
-<div class="highlight"><span class="filename">IsDate</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<div class="highlight"><span class="filename">IsDate</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsDate</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsDate</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">y2k</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="n">date</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">IsDate</span><span class="p">(</span><span class="n">approx</span><span class="o">=</span><span class="n">y2k</span><span class="p">)</span>
@@ -1444,12 +1473,16 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
 
 
 <a href="#dirty_equals.IsToday" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsToday</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">iso_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">format_string</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsToday</span><span class="p">(</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">iso_string</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">format_string</span><span class="p">:</span> <span class="n"><autoref identifier="str" optional>str</autoref></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._datetime.IsDate" href="#dirty_equals.IsDate">IsDate</a></code></p>
+              Bases: <code><autoref identifier="dirty_equals._datetime.IsDate" optional hover>IsDate</autoref></code></p>
 
 
       <p>Check if a date is today, this is similar to <code>IsDate(approx=date.today())</code>, but slightly more powerful.</p>
@@ -1470,7 +1503,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>iso_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1484,7 +1517,7 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           <tr class="doc-section-item">
             <td><code>format_string</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | None</code>
+                  <code><autoref identifier="str" optional>str</autoref> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -1497,9 +1530,9 @@ ints and floats are assumed to represent seconds and converted to <code>timedelt
           </tr>
       </tbody>
     </table>
-      <div class="highlight"><span class="filename">IsToday</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">timedelta</span>
+      <div class="highlight"><span class="filename">IsToday</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">timedelta</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsToday</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsToday</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">assert</span> <span class="n">today</span> <span class="o">==</span> <span class="n">IsToday</span>

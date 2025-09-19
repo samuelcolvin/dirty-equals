@@ -774,18 +774,18 @@
 
 
 <a href="#dirty_equals.IsTrueLike" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsTrueLike</span><span class="p">(</span><span class="o">*</span><span class="n">repr_args</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">,</span> <span class="o">**</span><span class="n">repr_kwargs</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsTrueLike</span><span class="p">(</span><span class="o">*</span><span class="n">repr_args</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">,</span> <span class="o">**</span><span class="n">repr_kwargs</span><span class="p">:</span> <span class="n"><autoref identifier="typing.Any" optional hover>Any</autoref></span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._base.DirtyEquals" optional hover>DirtyEquals</autoref>[<autoref identifier="bool" optional>bool</autoref>]</code></p>
 
 
       <p>Check if the value is True like. <code>IsTrueLike</code> allows comparison to anything and effectively uses just
 <code>return bool(other)</code>.</p>
 <p>Example of basic usage:</p>
-<div class="highlight"><span class="filename">IsTrueLike</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsTrueLike</span>
+<div class="highlight"><span class="filename">IsTrueLike</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsTrueLike</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="kc">True</span> <span class="o">==</span> <span class="n">IsTrueLike</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">IsTrueLike</span>
@@ -813,7 +813,7 @@
           <tr class="doc-section-item">
             <td><code>*repr_args</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -827,7 +827,7 @@
           <tr class="doc-section-item">
             <td><code>**repr_kwargs</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" title="typing.Any" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></code>
+                  <code><autoref identifier="typing.Any" optional hover>Any</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -871,12 +871,12 @@
 
 
 <a href="#dirty_equals.IsFalseLike" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsFalseLike</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">allow_strings</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">IsFalseLike</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">allow_strings</span><span class="p">:</span> <span class="n"><autoref identifier="bool" optional>bool</autoref></span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="dirty_equals._base.DirtyEquals" href="../custom/#dirty_equals._base.DirtyEquals">DirtyEquals</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a>]</code></p>
+              Bases: <code><autoref identifier="dirty_equals._base.DirtyEquals" optional hover>DirtyEquals</autoref>[<autoref identifier="bool" optional>bool</autoref>]</code></p>
 
 
       <p>Check if the value is False like. <code>IsFalseLike</code> allows comparison to anything and effectively uses
@@ -898,7 +898,7 @@
           <tr class="doc-section-item">
             <td><code>allow_strings</code></td>
             <td>
-                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+                  <code><autoref identifier="bool" optional>bool</autoref></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -913,7 +913,7 @@
       </tbody>
     </table>
       <p>Example of basic usage:</p>
-<div class="highlight"><span class="filename">IsFalseLike</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">dirty_equals</span> <span class="kn">import</span> <span class="n">IsFalseLike</span>
+<div class="highlight"><span class="filename">IsFalseLike</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dirty_equals</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsFalseLike</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">assert</span> <span class="kc">False</span> <span class="o">==</span> <span class="n">IsFalseLike</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">assert</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">IsFalseLike</span>
