@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from dataclasses import asdict, is_dataclass
+from dataclasses import fields, is_dataclass
 from enum import Enum
 from functools import lru_cache
 from ipaddress import IPv4Address, IPv4Network, IPv6Address, IPv6Network, ip_network
@@ -486,10 +486,11 @@ class IsDataclass(DirtyEquals[Any]):
         """
         Checks exactness of fields using [`IsDict`][dirty_equals.IsDict] with given settings.
 
-        Remark that if this method is called, then `other` is an instance of a dataclass, therefore we can call
-        `dataclasses.asdict` to convert to a dict.
+        Remark that if this method is called, then `other` is an instance of a dataclass, therefore we can use
+        `dataclasses.fields` to get its fields. We use a shallow conversion to preserve nested dataclass instances.
         """
-        return asdict(other) == IsDict(self._repr_kwargs).settings(strict=self.strict, partial=self.partial)
+        other_dict = {field.name: getattr(other, field.name) for field in fields(other)}
+        return other_dict == IsDict(self._repr_kwargs).settings(strict=self.strict, partial=self.partial)
 
 
 class IsPartialDataclass(IsDataclass):

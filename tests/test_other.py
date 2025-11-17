@@ -39,6 +39,21 @@ class Foo:
 foo = Foo(1, 2, 'c')
 
 
+@dataclass
+class Address:
+    street: str
+    zip_code: str
+
+
+@dataclass
+class Person:
+    name: str
+    address: Address
+
+
+person = Person(name='Alice', address=Address(street='123 Main St', zip_code='12345'))
+
+
 @pytest.mark.parametrize(
     'other,dirty',
     [
@@ -371,6 +386,10 @@ def test_is_dataclass_true(other, dirty):
 )
 def test_is_dataclass_false(other, dirty):
     assert other != dirty
+
+
+def test_is_dataclass_nested():
+    assert person == IsDataclass(name='Alice', address=IsDataclass(street='123 Main St', zip_code='12345'))
 
 
 @pytest.mark.parametrize(
