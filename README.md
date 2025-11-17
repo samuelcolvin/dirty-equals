@@ -7,21 +7,11 @@
   <em>Doing dirty (but extremely useful) things with equals.</em>
 </p>
 <p align="center">
-  <a href="https://github.com/samuelcolvin/dirty-equals/actions?query=event%3Apush+branch%3Amain+workflow%3ACI">
-    <img src="https://github.com/samuelcolvin/dirty-equals/workflows/CI/badge.svg?event=push" alt="CI">
-  </a>
-  <a href="https://codecov.io/gh/samuelcolvin/dirty-equals">
-    <img src="https://codecov.io/gh/samuelcolvin/dirty-equals/branch/main/graph/badge.svg" alt="Coverage">
-  </a>
-  <a href="https://pypi.python.org/pypi/dirty-equals">
-    <img src="https://img.shields.io/pypi/v/dirty-equals.svg" alt="pypi">
-  </a>
-  <a href="https://github.com/samuelcolvin/dirty-equals">
-    <img src="https://img.shields.io/pypi/pyversions/dirty-equals.svg" alt="versions">
-  </a>
-  <a href="https://github.com/samuelcolvin/dirty-equals/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/samuelcolvin/dirty-equals.svg" alt="license">
-  </a>
+  <a href="https://github.com/samuelcolvin/dirty-equals/actions?query=event%3Apush+branch%3Amain+workflow%3ACI"><img src="https://github.com/samuelcolvin/dirty-equals/workflows/CI/badge.svg?event=push" alt="CI"></a>
+  <a href="https://codecov.io/gh/samuelcolvin/dirty-equals"><img src="https://codecov.io/gh/samuelcolvin/dirty-equals/branch/main/graph/badge.svg" alt="Coverage"></a>
+  <a href="https://pypi.python.org/pypi/dirty-equals"><img src="https://img.shields.io/pypi/v/dirty-equals.svg" alt="pypi"></a>
+  <a href="https://github.com/samuelcolvin/dirty-equals"><img src="https://img.shields.io/pypi/pyversions/dirty-equals.svg" alt="versions"></a>
+  <a href="https://github.com/samuelcolvin/dirty-equals/blob/main/LICENSE"><img src="https://img.shields.io/github/license/samuelcolvin/dirty-equals.svg" alt="license"></a>
 </p>
 
 ---
