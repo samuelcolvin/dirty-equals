@@ -1,3 +1,4 @@
+import sys
 import uuid
 from dataclasses import dataclass
 from enum import Enum, auto
@@ -183,9 +184,21 @@ def test_json_both():
     'other,dirty',
     [
         (IPv4Address('127.0.0.1'), IsIP()),
-        (IPv4Network('43.48.0.0/12'), IsIP()),
+        pytest.param(
+            IPv4Network('43.48.0.0/12'),
+            IsIP(),
+            marks=pytest.mark.xfail(
+                sys.version_info >= (3, 14), reason='https://github.com/python/cpython/issues/141647'
+            ),
+        ),
         (IPv6Address('::eeff:ae3f:d473'), IsIP()),
-        (IPv6Network('::eeff:ae3f:d473/128'), IsIP()),
+        pytest.param(
+            IPv6Network('::eeff:ae3f:d473/128'),
+            IsIP(),
+            marks=pytest.mark.xfail(
+                sys.version_info >= (3, 14), reason='https://github.com/python/cpython/issues/141647'
+            ),
+        ),
         ('2001:0db8:0a0b:12f0:0000:0000:0000:0001', IsIP()),
         ('179.27.154.96', IsIP),
         ('43.62.123.119', IsIP(version=4)),
@@ -199,6 +212,7 @@ def test_json_both():
         (338288524927261089654018896845572831328, IsIP(version=6)),
         (b'\x20\x01\x06\x58\x02\x2a\xca\xfe\x02\x00\x00\x00\x00\x00\x00\x01', IsIP(version=6)),
     ],
+    ids=repr,
 )
 def test_is_ip_true(other, dirty):
     assert other == dirty
