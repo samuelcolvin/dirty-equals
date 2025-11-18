@@ -22,7 +22,7 @@ class IsUUID(DirtyEquals[UUID]):
     A class that checks if a value is a valid UUID, optionally checking UUID version.
     """
 
-    def __init__(self, version: Literal[None, 1, 2, 3, 4, 5] = None):
+    def __init__(self, version: Literal[None, 1, 2, 3, 4, 5, 6, 7, 8] = None):
         """
         Args:
             version: The version of the UUID to check, if omitted, all versions are accepted.
