@@ -56,7 +56,6 @@ dev = [
     "pytest-examples>=0.0.18",
     "pytest-pretty>=1.2.0",
     "ruff>=0.13.1",
-    "types-pytz>=2024.2.0.20241221",
 ]
 # TODO update these deps to newer versions, I just froze them while migrationg from requirements files
 docs = [
