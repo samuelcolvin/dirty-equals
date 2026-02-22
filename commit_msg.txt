@@ -1,0 +1,9 @@
+Fix IsNow/IsDatetime unix_number with timezone
+
+When using unix_number=True with a timezone (e.g. IsNow(unix_number=True,
+tz="UTC")), datetime.fromtimestamp() was called without a timezone, producing
+a naive datetime. This caused the comparison to fail because the approx
+datetime had a timezone but the converted timestamp did not.
+
+Pass the approx datetime's timezone to fromtimestamp() so both datetimes
+have matching timezone info.

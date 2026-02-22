@@ -88,7 +88,8 @@ class IsDatetime(IsNumeric[datetime]):
             dt = other
         elif isinstance(other, (float, int)):
             if self.unix_number:
-                dt = datetime.fromtimestamp(other)
+                tz = self.approx.tzinfo if self.approx is not None else None
+                dt = datetime.fromtimestamp(other, tz=tz)
             else:
                 raise TypeError('numbers not allowed')
         elif isinstance(other, str):
