@@ -104,6 +104,11 @@ def test_repr():
     assert str(v) == 'IsDatetime(approx=datetime.datetime(2032, 1, 2, 3, 4, 5), iso_string=True)'
 
 
+def test_repr_enforce_tz_false():
+    v = IsDatetime(approx=datetime(2032, 1, 2, 3, 4, 5), enforce_tz=False)
+    assert str(v) == 'IsDatetime(approx=datetime.datetime(2032, 1, 2, 3, 4, 5), enforce_tz=False)'
+
+
 @pytest.mark.skipif(ZoneInfo is None, reason='requires zoneinfo')
 def test_is_now_tz():
     utc_now = datetime.now(timezone.utc)
