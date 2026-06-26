@@ -1,5 +1,5 @@
 from ._base import AnyThing, DirtyEquals, IsOneOf
-from ._boolean import IsFalseLike, IsTrueLike
+from ._boolean import IsBool, IsFalseLike, IsTrueLike
 from ._datetime import IsDate, IsDatetime, IsNow, IsToday
 from ._dict import IsDict, IsIgnoreDict, IsPartialDict, IsStrictDict
 from ._inspection import HasAttributes, HasName, HasRepr, IsInstance
@@ -47,6 +47,7 @@ __all__ = (
     # boolean
     'IsTrueLike',
     'IsFalseLike',
+    'IsBool',
     # dataclass
     'IsDataclass',
     'IsDataclassType',
