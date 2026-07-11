@@ -1,12 +1,14 @@
 import platform
-import pprint
 from functools import singledispatch
 
 import packaging.version
 import pytest
+from _pytest._io.pprint import PrettyPrinter
 
 from dirty_equals import Contains, DirtyEquals, IsApprox, IsInt, IsList, IsNegative, IsOneOf, IsPositive, IsStr
 from dirty_equals.version import VERSION
+
+pprint = PrettyPrinter()
 
 
 def test_or():
@@ -134,30 +136,39 @@ def test_pprint():
 
     assert repr(v) == (f'[{lorem}, 1, [{lorem}, 2], 3, IsInt()]')
     assert pprint.pformat(v) == (
-        "[['lorem',\n"
-        "  'ipsum',\n"
-        "  'dolor',\n"
-        "  'sit',\n"
-        "  'amet',\n"
-        "  'lorem',\n"
-        "  'ipsum',\n"
-        "  'dolor',\n"
-        "  'sit',\n"
-        "  'amet'],\n"
-        ' 1,\n'
-        " [['lorem',\n"
-        "   'ipsum',\n"
-        "   'dolor',\n"
-        "   'sit',\n"
-        "   'amet',\n"
-        "   'lorem',\n"
-        "   'ipsum',\n"
-        "   'dolor',\n"
-        "   'sit',\n"
-        "   'amet'],\n"
-        '  2],\n'
-        ' 3,\n'
-        ' IsInt()]'
+        """\
+[
+    [
+        'lorem',
+        'ipsum',
+        'dolor',
+        'sit',
+        'amet',
+        'lorem',
+        'ipsum',
+        'dolor',
+        'sit',
+        'amet',
+    ],
+    1,
+    [
+        [
+            'lorem',
+            'ipsum',
+            'dolor',
+            'sit',
+            'amet',
+            'lorem',
+            'ipsum',
+            'dolor',
+            'sit',
+            'amet',
+        ],
+        2,
+    ],
+    3,
+    IsInt(),
+]"""
     )
 
 
