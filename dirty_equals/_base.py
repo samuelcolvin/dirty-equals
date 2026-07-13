@@ -1,8 +1,14 @@
 import io
 from abc import ABCMeta
 from collections.abc import Iterable
-from pprint import PrettyPrinter
 from typing import TYPE_CHECKING, Any, Generic, Optional, Protocol, TypeVar
+
+try:
+    from _pytest._io.pprint import PrettyPrinter
+except ImportError:
+    # support for pytest 7.4.4
+    from pprint import PrettyPrinter  # type: ignore
+
 
 from ._utils import Omit
 
