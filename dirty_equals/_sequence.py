@@ -199,7 +199,7 @@ class IsListOrTuple(DirtyEquals[T]):
                 else:
                     return list(self.items) == list(other[: len(self.items)])
             else:
-                return all(v == other[k] for k, v in self.positions.items())
+                return all(-len(other) <= k < len(other) and v == other[k] for k, v in self.positions.items())
         else:
             # order insensitive comparison
             # if we haven't checked length yet, check it now
