@@ -121,6 +121,10 @@ def test_is_now_tz():
 
     assert utc_now == IsNow(tz=timezone.utc)
 
+    # unix_number with tz should work (#113)
+    assert utc_now.timestamp() == IsNow(unix_number=True, tz='UTC')
+    assert utc_now.timestamp() == IsNow(unix_number=True, tz=timezone.utc)
+
 
 def test_delta():
     assert IsNow(delta=timedelta(hours=2)).delta == timedelta(seconds=7200)
