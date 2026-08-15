@@ -249,6 +249,20 @@ def test_ip_bad_netmask():
 
 
 @pytest.mark.parametrize(
+    'network',
+    [
+        IPv4Network('43.48.0.0/12'),
+        IPv6Network('::eeff:ae3f:d473/128'),
+    ],
+)
+def test_is_ip_network_left_hand_side(network):
+    # `_BaseNetwork.__eq__` is duck-typed on `other.version`/`other.netmask`, so `IsIP` must not
+    # expose attributes with those names or it never gets a chance to compare (see #112).
+    assert network == IsIP()
+    assert network != IsIP(version=6 if network.version == 4 else 4)
+
+
+@pytest.mark.parametrize(
     'other,dirty',
     [
         ('f1e069787ECE74531d112559945c6871', IsHash('md5')),

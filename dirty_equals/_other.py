@@ -358,10 +358,13 @@ class IsIP(DirtyEquals[IP]):
         assert 3232235521 == IsIP
         ```
         """
-        self.version = version
-        if netmask and not self.version:
+        # NOTE: these are deliberately private. `ipaddress._BaseNetwork.__eq__` is duck-typed on
+        # `other.version`/`other.netmask`, so public attributes of those names make it return
+        # `False` instead of `NotImplemented`, and our reflected `__eq__` is never called.
+        self._version = version
+        if netmask and not self._version:
             raise TypeError('To check the netmask you must specify the IP version')
-        self.netmask = netmask
+        self._netmask = netmask
         super().__init__(version=version or Omit, netmask=netmask or Omit)
 
     def equals(self, other: Any) -> bool:
@@ -372,13 +375,13 @@ class IsIP(DirtyEquals[IP]):
         else:
             return False
 
-        if self.version:
-            if self.netmask:
-                version_check = self.version == ip.version
-                address_format = {4: IPv4Address, 6: IPv6Address}[self.version]
-                netmask_check = int(address_format(self.netmask)) == int(ip.netmask)
+        if self._version:
+            if self._netmask:
+                version_check = self._version == ip.version
+                address_format = {4: IPv4Address, 6: IPv6Address}[self._version]
+                netmask_check = int(address_format(self._netmask)) == int(ip.netmask)
                 return version_check and netmask_check
-            elif self.version != ip.version:
+            elif self._version != ip.version:
                 return False
 
         return True
