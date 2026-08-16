@@ -134,6 +134,23 @@ def test_is_now_relative(monkeypatch):
     assert IsNow() == datetime(2020, 1, 1, 12, 13, 14)
 
 
+def test_is_now_tz_format_string_enforce_tz_false(monkeypatch):
+    # https://github.com/samuelcolvin/dirty-equals/issues/48
+    # `format_string` with a literal 'Z' (rather than `%z`) parses to a naive datetime, since strptime
+    # consumes the 'Z' as a plain character rather than a UTC offset. With `enforce_tz=False` and `tz='utc'`,
+    # the naive parsed value should still be compared against `approx` on delta alone, instead of silently
+    # failing to match because of a `TypeError` from mixing naive and aware datetimes.
+    mock = Mock(return_value=datetime(2022, 7, 15, 10, 56, 30, tzinfo=timezone.utc))
+    monkeypatch.setattr(IsNow, '_get_now', mock)
+
+    assert '2022-07-15T10:56:38.311Z' == IsNow(
+        delta=10, tz='utc', format_string='%Y-%m-%dT%H:%M:%S.%fZ', enforce_tz=False
+    )
+    assert '2022-07-15T10:00:00.000Z' != IsNow(
+        delta=10, tz='utc', format_string='%Y-%m-%dT%H:%M:%S.%fZ', enforce_tz=False
+    )
+
+
 @pytest.mark.skipif(ZoneInfo is None, reason='requires zoneinfo')
 def test_tz():
     new_year_london = datetime(2000, 1, 1, tzinfo=ZoneInfo('Europe/London'))

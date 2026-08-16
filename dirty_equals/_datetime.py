@@ -101,8 +101,19 @@ class IsDatetime(IsNumeric[datetime]):
         else:
             raise ValueError(f'{type(other)} not valid as datetime')
 
-        if self.approx is not None and not self.enforce_tz and self.approx.tzinfo is None and dt.tzinfo is not None:
-            dt = dt.replace(tzinfo=None)
+        if self.approx is not None and not self.enforce_tz:
+            if self.approx.tzinfo is None and dt.tzinfo is not None:
+                dt = dt.replace(tzinfo=None)
+            elif self.approx.tzinfo is not None and dt.tzinfo is None and isinstance(other, str):
+                # `other` was a string parsed via `iso_string`/`format_string` with no timezone offset in it
+                # (e.g. a literal 'Z' consumed by `format_string` instead of being parsed as an offset), so
+                # there was never any way for it to carry timezone info of its own. Since `approx` is
+                # timezone-aware and enforce_tz is False, assume the parsed value was meant to represent a
+                # point in time in approx's timezone, so the delta comparison below is meaningful instead of
+                # raising a TypeError (naive minus aware) that would otherwise be silently swallowed as a
+                # non-match. This does not apply to a real `datetime` object passed in naive, since there's
+                # no evidence at all of what timezone (if any) it was meant to represent.
+                dt = dt.replace(tzinfo=self.approx.tzinfo)
         return dt
 
     def approx_equals(self, other: datetime, delta: timedelta) -> bool:
