@@ -76,7 +76,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         """
         Abstract method, must be implemented by subclasses.
 
-        `TypeError` and `ValueError` are caught in `__eq__` and indicate `other` is not equals to this type.
+        `TypeError` and `ValueError` are caught in `__eq__` and indicate `other` is not equal to this type.
         """
         raise NotImplementedError()
 
@@ -85,7 +85,7 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
         """
         Property to get the value last successfully compared to this object.
 
-        This is seldom very useful, put it's provided for completeness.
+        This is seldom very useful, but it's provided for completeness.
 
         Example of usage:
 
