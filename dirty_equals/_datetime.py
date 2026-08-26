@@ -80,7 +80,7 @@ class IsDatetime(IsNumeric[datetime]):
             unix_number=Omit if unix_number is False else unix_number,
             iso_string=Omit if iso_string is False else iso_string,
             format_string=Omit if format_string is None else format_string,
-            enforce_tz=Omit if enforce_tz is True else format_string,
+            enforce_tz=Omit if enforce_tz is True else enforce_tz,
         )
 
     def prepare(self, other: Any) -> datetime:
