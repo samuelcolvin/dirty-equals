@@ -69,6 +69,7 @@ person = Person(name='Alice', address=Address(street='123 Main St', zip_code='12
         (uuid.uuid1(), IsUUID(1)),
         (str(uuid.uuid1()), IsUUID(1)),
         ('ea9e828d-fd18-3898-99f3-5a46dbcee036', IsUUID(3)),
+        ('019a968b-403c-759f-b756-f8b9fd4d2281', IsUUID(7)),
     ],
 )
 def test_is_uuid_true(other, dirty):
