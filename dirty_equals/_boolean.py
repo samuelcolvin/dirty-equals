@@ -77,3 +77,30 @@ class IsFalseLike(DirtyEquals[bool]):
             return float(other) == 0
         except ValueError:
             return False
+
+
+class IsBool(DirtyEquals[bool]):
+    """
+    Check if the value is a boolean, that is exactly `True` or `False`.
+
+    Unlike [`IsTrueLike`][dirty_equals.IsTrueLike] and [`IsFalseLike`][dirty_equals.IsFalseLike], this
+    performs a strict check and does not coerce other types: a comparison only succeeds for the actual
+    `bool` values `True` and `False`, and notably **not** for the integers `1` and `0` (even though
+    `True == 1` and `False == 0` in Python).
+
+    Example of basic usage:
+
+    ```py title="IsBool"
+    from dirty_equals import IsBool
+
+    assert True == IsBool
+    assert False == IsBool
+    assert 1 != IsBool
+    assert 0 != IsBool
+    assert None != IsBool
+    assert 'true' != IsBool
+    ```
+    """
+
+    def equals(self, other: Any) -> bool:
+        return other is True or other is False

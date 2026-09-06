@@ -2,7 +2,7 @@ import platform
 
 import pytest
 
-from dirty_equals import IsFalseLike, IsTrueLike
+from dirty_equals import IsBool, IsFalseLike, IsTrueLike
 
 
 @pytest.mark.parametrize(
@@ -83,3 +83,42 @@ def test_invalid_initialization():
 )
 def test_is_true_like(other, expected):
     assert other == expected
+
+
+@pytest.mark.parametrize(
+    'other, expected',
+    [
+        (True, IsBool),
+        (False, IsBool),
+        (1, ~IsBool),
+        (0, ~IsBool),
+        (1.0, ~IsBool),
+        (0.0, ~IsBool),
+        (None, ~IsBool),
+        ('True', ~IsBool),
+        ('', ~IsBool),
+        ([], ~IsBool),
+        ([True], ~IsBool),
+        ({}, ~IsBool),
+    ],
+)
+def test_is_bool(other, expected):
+    assert other == expected
+
+
+def test_is_bool_repr():
+    assert repr(IsBool) == 'IsBool'
+    assert repr(IsBool()) == 'IsBool()'
+
+
+@pytest.mark.skipif(platform.python_implementation() == 'PyPy', reason='PyPy does not metaclass dunder methods')
+def test_is_bool_dirty_not_equals():
+    value = True
+    with pytest.raises(AssertionError):
+        assert value != IsBool
+
+
+def test_is_bool_dirty_not_equals_instance():
+    value = True
+    with pytest.raises(AssertionError):
+        assert value != IsBool()
