@@ -106,6 +106,13 @@ def test_is_uuid4_false_repr():
     assert str(is_uuid) == 'IsUUID(4)'
 
 
+def test_is_uuid_hashable():
+    # see https://github.com/samuelcolvin/dirty-equals/issues/138
+    is_uuid = IsUUID()
+    assert isinstance(hash(is_uuid), int)
+    assert is_uuid in {is_uuid: 'bla'}
+
+
 @pytest.mark.parametrize('json_value', ['null', '"xyz"', '[1, 2, 3]', '{"a": 1}'])
 def test_is_json_any_true(json_value):
     assert json_value == IsJson()
