@@ -61,6 +61,8 @@ class DirtyEquals(Generic[T], metaclass=DirtyEqualsMeta):
 
     __slots__ = '_other', '_was_equal', '_repr_args', '_repr_kwargs'
 
+    __hash__ = object.__hash__
+
     def __init__(self, *repr_args: Any, **repr_kwargs: Any):
         """
         Args:
