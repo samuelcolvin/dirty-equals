@@ -1,3 +1,5 @@
+from functools import partial
+
 import pytest
 
 from dirty_equals import IsDict, IsIgnoreDict, IsPartialDict, IsPositiveInt, IsStr, IsStrictDict
@@ -120,6 +122,31 @@ def test_callable_ignore():
 )
 def test_not_equals_repr(d, expected_repr):
     assert repr(d) == expected_repr
+
+
+def test_callable_object_ignore_repr():
+    class IgnoreNone:
+        def __call__(self, value):
+            return value is None
+
+    predicate = IgnoreNone()
+    check = IsDict(a=1).settings(ignore=predicate)
+
+    assert repr(check) == f'IsDict[ignore={predicate!r}](a=1)'
+    assert {'a': 1, 'b': None} == check
+    assert {'a': 2} != check
+
+
+def test_partial_ignore_repr():
+    def equal_to(expected, value):
+        return value == expected
+
+    predicate = partial(equal_to, None)
+    check = IsDict(a=1).settings(ignore=predicate)
+
+    assert repr(check) == f'IsDict[ignore={predicate!r}](a=1)'
+    assert {'a': 1, 'b': None} == check
+    assert {'a': 2} != check
 
 
 def test_ignore():

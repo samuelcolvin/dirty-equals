@@ -142,7 +142,11 @@ class IsDict(DirtyEquals[dict[Any, Any]]):
         if self.partial != (name == 'IsPartialDict'):
             modifiers += [f'partial={self.partial}']
         if (self.ignore == {None}) != (name == 'IsIgnoreDict') or self.ignore not in (None, {None}):
-            r = self.ignore.__name__ if callable(self.ignore) else repr(self.ignore)
+            r = (
+                getattr(self.ignore, '__name__', None) or repr(self.ignore)
+                if callable(self.ignore)
+                else repr(self.ignore)
+            )
             modifiers += [f'ignore={r}']
         if self.strict != (name == 'IsStrictDict'):
             modifiers += [f'strict={self.strict}']
