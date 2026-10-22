@@ -320,9 +320,9 @@ class IsHash(DirtyEquals[str]):
         else:
             return False
         hash_type_regex_patterns = {
-            'md5': r'[a-fA-F\d]{32}',
-            'sha-1': r'[a-fA-F\d]{40}',
-            'sha-256': r'[a-fA-F\d]{64}',
+            'md5': r'[a-fA-F0-9]{32}',
+            'sha-1': r'[a-fA-F0-9]{40}',
+            'sha-256': r'[a-fA-F0-9]{64}',
         }
         return bool(re.fullmatch(hash_type_regex_patterns[self.hash_type], s))
 

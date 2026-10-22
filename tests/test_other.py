@@ -277,6 +277,16 @@ def test_is_hash_false(other, dirty):
     assert other != dirty
 
 
+@pytest.mark.parametrize('hash_type,length', [('md5', 32), ('sha-1', 40), ('sha-256', 64)])
+@pytest.mark.parametrize('digit', ['\u0661', '\uff11'])
+@pytest.mark.parametrize('value_type', [str, bytes, bytearray])
+def test_is_hash_rejects_non_ascii_digits(hash_type, length, digit, value_type):
+    value = 'a' * (length - 1) + digit
+    if value_type is not str:
+        value = value_type(value, 'utf-8')
+    assert value != IsHash(hash_type)
+
+
 @pytest.mark.parametrize(
     'hash_type',
     ['md5', 'sha-1', 'sha-256'],
