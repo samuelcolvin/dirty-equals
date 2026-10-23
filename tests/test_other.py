@@ -249,6 +249,30 @@ def test_ip_bad_netmask():
 
 
 @pytest.mark.parametrize(
+    'version,network,expected',
+    [
+        (4, '0.0.0.0/0', True),
+        (4, '192.0.2.0/24', False),
+        (4, '192.0.2.1', False),
+        (6, '::/0', True),
+        (6, '2001:db8::/32', False),
+        (6, '2001:db8::1', False),
+    ],
+)
+def test_is_ip_zero_netmask(version, network, expected):
+    assert (network == IsIP(version=version, netmask=0)) is expected
+
+
+def test_is_ip_zero_netmask_requires_version():
+    with pytest.raises(TypeError, match='To check the netmask you must specify the IP version'):
+        IsIP(netmask=0)
+
+
+def test_is_ip_zero_netmask_repr():
+    assert repr(IsIP(version=4, netmask=0)) == 'IsIP(version=4, netmask=0)'
+
+
+@pytest.mark.parametrize(
     'other,dirty',
     [
         ('f1e069787ECE74531d112559945c6871', IsHash('md5')),

@@ -335,7 +335,7 @@ class IsIP(DirtyEquals[IP]):
     A class that checks if a value is a valid IP address, optionally checking IP version, netmask.
     """
 
-    def __init__(self, *, version: Literal[None, 4, 6] = None, netmask: str | None = None):
+    def __init__(self, *, version: Literal[None, 4, 6] = None, netmask: str | int | None = None):
         """
         Args:
             version: The version of the IP to check, if omitted, versions 4 and 6 are both accepted.
@@ -359,10 +359,10 @@ class IsIP(DirtyEquals[IP]):
         ```
         """
         self.version = version
-        if netmask and not self.version:
+        if netmask is not None and not self.version:
             raise TypeError('To check the netmask you must specify the IP version')
         self.netmask = netmask
-        super().__init__(version=version or Omit, netmask=netmask or Omit)
+        super().__init__(version=version or Omit, netmask=netmask if netmask is not None else Omit)
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, (IPv4Network, IPv6Network)):
@@ -373,7 +373,7 @@ class IsIP(DirtyEquals[IP]):
             return False
 
         if self.version:
-            if self.netmask:
+            if self.netmask is not None:
                 version_check = self.version == ip.version
                 address_format = {4: IPv4Address, 6: IPv6Address}[self.version]
                 netmask_check = int(address_format(self.netmask)) == int(ip.netmask)
