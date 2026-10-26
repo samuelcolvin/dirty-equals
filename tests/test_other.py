@@ -430,3 +430,16 @@ def test_is_enum_true(other, dirty):
 )
 def test_is_enum_false(other, dirty):
     assert other != dirty
+
+
+@pytest.mark.parametrize('enum_cls', [Enum, FooEnum])
+def test_is_enum_repr(enum_cls):
+    matcher = IsEnum(enum_cls)
+    expected = 'IsEnum()' if enum_cls is Enum else f'IsEnum({enum_cls!r})'
+    assert repr(matcher) == expected
+
+    assert not matcher == 4
+    assert repr(matcher) == expected
+
+    assert matcher == FooEnum.a
+    assert repr(matcher) == repr(FooEnum.a)

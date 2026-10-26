@@ -581,6 +581,7 @@ class IsEnum(DirtyEquals[Enum]):
         """
         self._enum_cls = enum_cls
         self._enum_values = {i.value for i in enum_cls}
+        super().__init__(enum_cls if enum_cls is not Enum else Omit)
 
     def equals(self, other: Any) -> bool:
         if isinstance(other, Enum):
