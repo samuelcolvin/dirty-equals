@@ -81,6 +81,29 @@ def test_regex_true():
     assert str(reg) == "'whatever'"
 
 
+@pytest.mark.parametrize('regex_kind', ['str', 'bytes', 'compiled_str', 'compiled_bytes'])
+@pytest.mark.parametrize(
+    'value,constraints,match',
+    [
+        ('é', {'max_length': 1}, True),
+        ('é', {'min_length': 2}, False),
+        ('é', {'case': 'lower'}, True),
+        ('É', {'case': 'upper'}, True),
+        ('é', {'min_length': 1}, True),
+        ('é', {'case': 'upper'}, False),
+        (b'\xc3\xa9', {'max_length': 1}, False),
+        (b'\xc3\xa9', {'min_length': 2}, True),
+        (b'\xc3\xa9', {'case': 'lower'}, False),
+    ],
+)
+def test_is_any_str_regex_preserves_constraints(value, constraints, match, regex_kind):
+    text = value.decode() if isinstance(value, bytes) else value
+    regex = text.encode() if regex_kind.endswith('bytes') else text
+    if regex_kind.startswith('compiled'):
+        regex = re.compile(regex)
+    assert (value == IsAnyStr(regex=regex, **constraints)) is match
+
+
 def test_regex_bytes_true():
     assert b'whatever' == IsBytes(regex=b'whatever')
     assert b'whatever' == IsBytes(regex=b'wh.*er')
