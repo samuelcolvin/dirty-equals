@@ -80,10 +80,8 @@ class IsAnyStr(DirtyEquals[T]):
             return False
 
         if self.regex is not None:
-            if self._flex and isinstance(other, str):
-                other = other.encode()
-
-            if not re.fullmatch(self.regex, other, flags=self.regex_flags):
+            regex_value: Any = other.encode() if self._flex and isinstance(other, str) else other
+            if not re.fullmatch(self.regex, regex_value, flags=self.regex_flags):
                 return False
 
         len_ = len(other)
