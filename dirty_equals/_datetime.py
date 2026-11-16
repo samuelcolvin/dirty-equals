@@ -276,6 +276,8 @@ class IsDate(IsNumeric[date]):
 class IsToday(IsDate):
     """
     Check if a date is today, this is similar to `IsDate(approx=date.today())`, but slightly more powerful.
+
+    The current date is refreshed on every comparison, so an instance can be reused across days.
     """
 
     def __init__(
@@ -304,3 +306,7 @@ class IsToday(IsDate):
         """
 
         super().__init__(approx=date.today(), iso_string=iso_string, format_string=format_string)
+
+    def prepare(self, other: Any) -> date:
+        self.approx = date.today()
+        return super().prepare(other)
