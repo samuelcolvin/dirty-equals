@@ -309,4 +309,5 @@ class IsToday(IsDate):
 
     def prepare(self, other: Any) -> date:
         self.approx = date.today()
+        self._repr_kwargs['approx'] = self.approx
         return super().prepare(other)

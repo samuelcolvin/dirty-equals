@@ -226,5 +226,6 @@ def test_is_today_refreshes_when_reused(monkeypatch, start, format_string):
         current = start + timedelta(days=offset)
         today = FrozenDate.today()
         assert value(today) == matcher
-        assert value(first) != matcher
+        assert not matcher == value(first)
+        assert f'approx={today!r}' in repr(matcher)
         assert 'not a date' != matcher
