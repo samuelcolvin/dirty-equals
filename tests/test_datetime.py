@@ -193,3 +193,39 @@ def test_is_today():
     assert today.isoformat() != IsToday()
     assert today.strftime('%Y/%m/%d') == IsToday(format_string='%Y/%m/%d')
     assert today.strftime('%Y/%m/%d') != IsToday()
+
+
+@pytest.mark.parametrize('start', [date(2024, 2, 28), date(2024, 12, 31)])
+@pytest.mark.parametrize('format_string', [None, 'iso', '%Y/%m/%d'])
+def test_is_today_refreshes_when_reused(monkeypatch, start, format_string):
+    current = start
+
+    class FrozenDate(date):
+        @classmethod
+        def today(cls):
+            return cls.fromordinal(current.toordinal())
+
+    monkeypatch.setattr('dirty_equals._datetime.date', FrozenDate)
+    if format_string == 'iso':
+        matcher = IsToday(iso_string=True)
+    elif format_string:
+        matcher = IsToday(format_string=format_string)
+    else:
+        matcher = IsToday()
+
+    def value(day):
+        if format_string == 'iso':
+            return day.isoformat()
+        elif format_string:
+            return day.strftime(format_string)
+        return day
+
+    first = FrozenDate.today()
+    assert value(first) == matcher
+    for offset in (1, 2):
+        current = start + timedelta(days=offset)
+        today = FrozenDate.today()
+        assert value(today) == matcher
+        assert not matcher == value(first)
+        assert f'approx={today!r}' in repr(matcher)
+        assert 'not a date' != matcher
