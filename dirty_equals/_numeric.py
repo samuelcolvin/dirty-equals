@@ -422,6 +422,8 @@ class IsFloatInf(IsFloat):
 
     Inherits from [`IsFloat`][dirty_equals.IsFloat].
 
+    Approximate comparisons only match infinity of the same sign, with a non-negative delta.
+
     ```py title="IsFloatInf"
     from dirty_equals import IsFloatInf
 
@@ -434,6 +436,11 @@ class IsFloatInf(IsFloat):
     def equals(self, other: Any) -> bool:
         other = self.prepare(other)
         return math.isinf(other) and self.bounds_checks(other)
+
+    def approx_equals(self, other: Any, delta: Any) -> bool:
+        # Subtracting matching infinities gives NaN, while an infinite delta
+        # would otherwise allow a finite target or the opposite infinity.
+        return self.approx == other and delta >= 0
 
 
 class IsFloatInfPos(IsFloatInf):

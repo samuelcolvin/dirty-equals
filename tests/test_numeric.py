@@ -169,3 +169,45 @@ def test_not_negative():
 )
 def test_float_inf_constraints(other, kwargs, expected):
     assert (other == IsFloatInf(**kwargs)) is expected
+
+
+@pytest.mark.parametrize(
+    'other,approx,matches',
+    [
+        (float('inf'), 1.0, False),
+        (float('-inf'), 1.0, False),
+        (float('inf'), float('inf'), True),
+        (float('-inf'), float('-inf'), True),
+        (float('inf'), float('-inf'), False),
+        (float('-inf'), float('inf'), False),
+        (float('inf'), float('nan'), False),
+        (float('-inf'), float('nan'), False),
+    ],
+)
+@pytest.mark.parametrize(
+    'kwargs,valid_delta',
+    [
+        ({}, True),
+        ({'delta': 0}, True),
+        ({'delta': 0.1}, True),
+        ({'delta': float('inf')}, True),
+        ({'delta': -0.1}, False),
+        ({'delta': float('nan')}, False),
+    ],
+)
+def test_float_inf_approx(other, approx, matches, kwargs, valid_delta):
+    assert (other == IsFloatInf(approx=approx, **kwargs)) is (matches and valid_delta)
+
+
+@pytest.mark.parametrize('other', [float('inf'), float('-inf')])
+@pytest.mark.parametrize('exactly', [1.0, float('inf'), float('-inf'), float('nan')])
+@pytest.mark.parametrize('kwargs', [{}, {'delta': 0}, {'delta': float('inf')}, {'delta': -1}])
+def test_float_inf_exactly_with_delta(other, exactly, kwargs):
+    # Exactly takes precedence over delta, as for the other numeric matchers.
+    assert (other == IsFloatInf(exactly=exactly, **kwargs)) is (other == exactly)
+
+
+@pytest.mark.parametrize('other', [float('inf'), float('-inf')])
+@pytest.mark.parametrize('delta', [0, 0.1, float('inf'), -1, float('nan')])
+def test_float_inf_delta_without_approx(other, delta):
+    assert other == IsFloatInf(delta=delta)
