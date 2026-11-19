@@ -143,3 +143,29 @@ def test_not_negative():
     with pytest.raises(AssertionError):
         assert 1 == d
     assert repr(d) == 'IsNegativeInt'
+
+
+@pytest.mark.parametrize(
+    'other,kwargs,expected',
+    [
+        (float('inf'), {'gt': 0}, True),
+        (float('-inf'), {'gt': 0}, False),
+        (float('inf'), {'lt': 0}, False),
+        (float('-inf'), {'lt': 0}, True),
+        (float('inf'), {'ge': 0}, True),
+        (float('-inf'), {'ge': 0}, False),
+        (float('inf'), {'le': 0}, False),
+        (float('-inf'), {'le': 0}, True),
+        (float('inf'), {'gt': float('inf')}, False),
+        (float('inf'), {'ge': float('inf')}, True),
+        (float('-inf'), {'lt': float('-inf')}, False),
+        (float('-inf'), {'le': float('-inf')}, True),
+        (float('inf'), {'exactly': float('-inf')}, False),
+        (float('-inf'), {'exactly': float('-inf')}, True),
+        (1.0, {'gt': 0}, False),
+        (1, {'gt': 0}, False),
+        (float('nan'), {'gt': 0}, False),
+    ],
+)
+def test_float_inf_constraints(other, kwargs, expected):
+    assert (other == IsFloatInf(**kwargs)) is expected

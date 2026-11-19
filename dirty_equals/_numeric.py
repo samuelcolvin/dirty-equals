@@ -433,7 +433,7 @@ class IsFloatInf(IsFloat):
 
     def equals(self, other: Any) -> bool:
         other = self.prepare(other)
-        return math.isinf(other)
+        return math.isinf(other) and self.bounds_checks(other)
 
 
 class IsFloatInfPos(IsFloatInf):
